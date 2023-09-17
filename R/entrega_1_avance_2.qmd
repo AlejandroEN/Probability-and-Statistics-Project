@@ -36,7 +36,7 @@ RECH0 <- select(RECH0, HHID, HV009, HV015)
 RECH0 <- rename(RECH0, 
                 cuestionario_hogar_id=HHID,
                 personas_en_el_hogar=HV009,
-                resultados_entrevista=HV015)
+                estado_entrevista=HV015)
 ```
 
 ### Tabla REC0111 - Datos básicos del MEF
@@ -66,7 +66,20 @@ summary(RECH5)
 ```
 
 ```{r}
-RECH5 <- select(RECH5, HHID, HA1, HA2, HA3, HA13, HA53, HA54)
+RECH5 <- select(RECH5, HHID, HA1, HA2, HA3, HA13, HA53, HA54, HA55, HA56, HA57, HA67)
+
+RECH5 <- rename(RECH5,
+                cuestionario_individual_id=HHID,
+                edad=HA1,
+                peso=HA2,
+                talla=HA3,
+                estado_medicion=HA13,
+                hemoglobina=HA53,
+                is_embarazada=HA54,
+                estado_medicion_hemoglobina=HA55,
+                homoglobina_ajustada_latitud=HA56,
+                anemia=HA57,
+                nivel_educativo=HA67)
 ```
 
 ### Tabla REC44 - Peso y talla (anemia)
@@ -75,4 +88,19 @@ Características de los infantes de 0 a 59 meses (5 años aproximadamente) por m
 
 ```{r}
 summary(REC44)
+```
+
+```{r}
+REC44 <- select(REC44, CASEID, HW1, HW2, HW3, HW13, HW53, HW55, HW56, HW57)
+
+REC44 <- rename(REC44,
+                cuestionario_individual_id=CASEID,
+                edad=HW1,
+                peso=HW2,
+                talla=HW3,
+                estado_medicion=HW13,
+                hemoglobina=HW53,
+                estado_medicion_hemoglobina=HW55,
+                hemoglobina_ajustada_latitud=HW56,
+                anemia=HW57)
 ```
