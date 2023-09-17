@@ -1,0 +1,78 @@
+---
+title: "Entrega 1 - Avance 2"
+format: html
+editor: visual
+---
+
+## Declaramos las librerías necesarias
+
+```{r, message=FALSE}
+library(readr)
+library(dplyr)
+```
+
+## Leemos las bases de datos
+
+```{r, message=FALSE}
+REC91 <- read_csv("../data/raw_data/REC91.csv")
+REC0111 <- read_csv("../data/raw_data/REC0111.csv")
+RECH5 <- read_csv("../data/raw_data/RECH5.csv")
+REC44 <- read_csv("../data/raw_data/REC44.csv")
+RECH23 <- read_csv("../data/raw_data/RECH23.csv")
+RECH0 <- read_csv("../data/raw_data/RECH0.csv")
+```
+
+## Resumen de los datos
+
+### Tabla RECH0 - Características del hogar
+
+```{r}
+summary(RECH0)
+```
+
+```{r}
+RECH0 <- select(RECH0, HHID, HV009, HV015)
+
+RECH0 <- rename(RECH0, 
+                cuestionario_hogar_id=HHID,
+                personas_en_el_hogar=HV009,
+                resultados_entrevista=HV015)
+```
+
+### Tabla REC0111 - Datos básicos del MEF
+
+Relación entre identificación del cuestionario individual e identificación del cuestionario del hogar.
+
+```{r}
+summary(REC0111)
+```
+
+```{r}
+REC0111 <- select(REC0111, CASEID, HHID, V024, V102)
+
+REC0111 <- rename(REC0111,
+                  cuestionario_individual_id=CASEID,
+                  cuestionario_hogar_id=HHID,
+                  region=V024,
+                  tipo_de_residencia=V102)
+```
+
+### Tabla RECH5 - Peso y talla (anemia)
+
+Características de las mujeres de 12 a 49 años (mamás de los infantes descritos en la tabla REC44).
+
+```{r}
+summary(RECH5)
+```
+
+```{r}
+RECH5 <- select(RECH5, HHID, HA1, HA2, HA3, HA13, HA53, HA54)
+```
+
+### Tabla REC44 - Peso y talla (anemia)
+
+Características de los infantes de 0 a 59 meses (5 años aproximadamente) por mamá.
+
+```{r}
+summary(REC44)
+```
