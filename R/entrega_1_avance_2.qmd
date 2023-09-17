@@ -39,6 +39,10 @@ RECH0 <- rename(RECH0,
                 estado_entrevista=HV015)
 ```
 
+```{r}
+names(RECH0)
+```
+
 ### Tabla REC0111 - Datos básicos del MEF
 
 Relación entre identificación del cuestionario individual e identificación del cuestionario del hogar.
@@ -57,9 +61,17 @@ REC0111 <- rename(REC0111,
                   tipo_de_residencia=V102)
 ```
 
+```{r}
+names(REC0111)
+```
+
+```{r}
+table(REC0111$region)
+```
+
 ### Tabla RECH5 - Peso y talla (anemia)
 
-Características de las mujeres de 12 a 49 años (mamás de los infantes descritos en la tabla REC44).
+Características de las mujeres de 12 a 49 años (madres de los infantes descritos en la tabla REC44).
 
 ```{r}
 summary(RECH5)
@@ -80,6 +92,10 @@ RECH5 <- rename(RECH5,
                 homoglobina_ajustada_latitud=HA56,
                 anemia=HA57,
                 nivel_educativo=HA67)
+```
+
+```{r}
+names(RECH5)
 ```
 
 ### Tabla REC44 - Peso y talla (anemia)
@@ -103,4 +119,46 @@ REC44 <- rename(REC44,
                 estado_medicion_hemoglobina=HW55,
                 hemoglobina_ajustada_latitud=HW56,
                 anemia=HW57)
+```
+
+```{r}
+names(REC44)
+```
+
+Voy a cambiarle las respuestas a anemia, de 1 a 4 a grave o sin anemia.
+
+```{r}
+REC44$anemia[REC44$anemia %in% c(1)] <-"Grave"
+REC44$anemia[REC44$anemia %in% c(2)] <-"Moderado"
+REC44$anemia[REC44$anemia %in% c(3)] <-"Leve"
+REC44$anemia[REC44$anemia %in% c(4)] <-"Sin_Anemia"
+```
+
+```{r}
+incompletos <- filter(RECH0, estado_entrevista!=1)
+#Incompletos son los hogares donde no se pudo hacer obtencion de variables por diversas razones
+incompletos
+inner_join(incompletos, REC0111, "cuestionario_hogar_id")
+#Empatamos la primera tabla con los hogares donde se obtuvieron datos
+```
+
+### Limpieza de datos
+
+Vamos a descartar las observaciones que no otorgen respuesta a nuestra informacion.
+
+Comenzemos con RECH5.
+
+```{r}
+#filter(RECH5, estado_medicion!=0)
+#Las observaciones donde estado_medicion_hemoglobina es distinto de cero no realizaron su medicion de hemoglobina
+RECH5 <- filter(RECH5, estado_medicion_hemoglobina==0)
+#Ahora RECH5 tiene a los valores que si responden. 
+```
+
+Miren otros valores para limpiar.
+
+SIgamos con REC44
+
+```{r}
+REC44 <- filter(REC44, estado_medicion_hemoglobina==0)
 ```
