@@ -40,9 +40,9 @@ Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de n
 RECH0 <- select(RECH0_raw, HHID, HV009, HV015)
 
 RECH0 <- rename(RECH0,
-                cuestionario_hogar_id=HHID,
-                personas_en_el_hogar=HV009,
-                estado_entrevista=HV015)
+                cuestionario_hogar_id = HHID,
+                personas_en_el_hogar = HV009,
+                estado_entrevista = HV015)
 
 RECH0$cuestionario_hogar_id <- as.character(RECH0$cuestionario_hogar_id)
 RECH0$estado_entrevista <- as.character(RECH0$estado_entrevista)
@@ -55,7 +55,7 @@ str(RECH0)
 Relación entre identificación del cuestionario individual e identificación del cuestionario del hogar.
 
 ```{r}
-summary(REC0111)
+summary(REC0111_raw)
 ```
 
 Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
@@ -64,10 +64,10 @@ Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de n
 REC0111 <- select(REC0111_raw, CASEID, HHID, V024, V102)
 
 REC0111 <- rename(REC0111,
-                  cuestionario_individual_id=CASEID,
-                  cuestionario_hogar_id=HHID,
-                  region=V024,
-                  tipo_de_residencia=V102)
+                  cuestionario_individual_id = CASEID,
+                  cuestionario_hogar_id = HHID,
+                  region = V024,
+                  tipo_de_residencia = V102)
 
 REC0111$cuestionario_individual_id <- as.character(REC0111$cuestionario_individual_id)
 REC0111$cuestionario_hogar_id <- as.character(REC0111$cuestionario_hogar_id)
@@ -82,7 +82,7 @@ str(REC0111)
 Características de las mujeres de 12 a 49 años (madres de los infantes descritos en la tabla REC44).
 
 ```{r}
-summary(RECH5)
+summary(RECH5_raw)
 ```
 
 Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
@@ -91,17 +91,17 @@ Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de n
 RECH5 <- select(RECH5_raw, HHID, HA1, HA2, HA3, HA13, HA53, HA54, HA55, HA56, HA57, HA67)
 
 RECH5 <- rename(RECH5,
-                cuestionario_individual_id=HHID,
-                edad=HA1,
-                peso=HA2,
-                talla=HA3,
-                estado_medicion=HA13,
-                hemoglobina=HA53,
-                is_embarazada=HA54,
-                estado_medicion_hemoglobina=HA55,
-                homoglobina_ajustada_latitud=HA56,
-                anemia=HA57,
-                nivel_educativo=HA67)
+                cuestionario_individual_id = HHID,
+                edad = HA1,
+                peso = HA2,
+                talla = HA3,
+                estado_medicion = HA13,
+                hemoglobina = HA53,
+                is_embarazada = HA54,
+                estado_medicion_hemoglobina = HA55,
+                homoglobina_ajustada_latitud = HA56,
+                anemia = HA57,
+                nivel_educativo = HA67)
 
 RECH5$estado_medicion <- as.character(RECH5$estado_medicion)
 RECH5$is_embarazada <- as.character(RECH5$is_embarazada)
@@ -115,10 +115,10 @@ str(RECH5)
 Asignamos la categoría que corresponde a cada número para la variable *anemia*.
 
 ```{r}
-RECH5$anemia[RECH5$anemia %in% c(1)] <-"grave"
-RECH5$anemia[RECH5$anemia %in% c(2)] <-"moderado"
-RECH5$anemia[RECH5$anemia %in% c(3)] <-"leve"
-RECH5$anemia[RECH5$anemia %in% c(4)] <-"sin_anemia"
+RECH5$anemia[RECH5$anemia %in% c(1)] <- "grave"
+RECH5$anemia[RECH5$anemia %in% c(2)] <- "moderado"
+RECH5$anemia[RECH5$anemia %in% c(3)] <- "leve"
+RECH5$anemia[RECH5$anemia %in% c(4)] <- "sin_anemia"
 ```
 
 Cambiamos las unidades de *talla* y *peso*.
@@ -136,7 +136,7 @@ RECH5 <- mutate(RECH5,
 Características de los infantes de 0 a 59 meses (5 años aproximadamente) por mamá.
 
 ```{r}
-summary(REC44)
+summary(REC44_raw)
 ```
 
 Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
@@ -145,15 +145,15 @@ Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de n
 REC44 <- select(REC44_raw, CASEID, HW1, HW2, HW3, HW13, HW53, HW55, HW56, HW57)
 
 REC44 <- rename(REC44,
-                cuestionario_individual_id=CASEID,
-                edad=HW1,
-                peso=HW2,
-                talla=HW3,
-                estado_medicion=HW13,
-                hemoglobina=HW53,
-                estado_medicion_hemoglobina=HW55,
-                hemoglobina_ajustada_latitud=HW56,
-                anemia=HW57)
+                cuestionario_individual_id = CASEID,
+                edad = HW1,
+                peso = HW2,
+                talla = HW3,
+                estado_medicion = HW13,
+                hemoglobina = HW53,
+                estado_medicion_hemoglobina = HW55,
+                hemoglobina_ajustada_latitud = HW56,
+                anemia = HW57)
 
 REC44$estado_medicion <- as.character(REC44$estado_medicion)
 REC44$estado_medicion_hemoglobina <- as.character(REC44$estado_medicion_hemoglobina)
@@ -165,19 +165,19 @@ str(REC44)
 Asignamos la categoría que corresponde a cada número para la variable *anemia*.
 
 ```{r}
-REC44$anemia[REC44$anemia %in% c(1)] <-"grave"
-REC44$anemia[REC44$anemia %in% c(2)] <-"moderado"
-REC44$anemia[REC44$anemia %in% c(3)] <-"leve"
-REC44$anemia[REC44$anemia %in% c(4)] <-"sin_anemia"
+REC44$anemia[REC44$anemia %in% c(1)] <- "grave"
+REC44$anemia[REC44$anemia %in% c(2)] <- "moderado"
+REC44$anemia[REC44$anemia %in% c(3)] <- "leve"
+REC44$anemia[REC44$anemia %in% c(4)] <- "sin_anemia"
 ```
 
 Cambiamos las unidades de *talla* y *peso*.
 
 ```{r}
 REC44 <- mutate(REC44,
-                # Convertimos de centímetros a metros
+                # Agregamos el decimal mencionado en el diccionario.
                 talla = talla / 10,
-                # Convertimos de gramos a kilogramos
+                # Agregamos el decimal mencionado en el diccionario.
                 peso = peso / 10)
 ```
 
@@ -190,7 +190,7 @@ Vamos a descartar las observaciones que no tengan información, no tengan variab
 Realizamos un filtro en función de la variable *estado_entrevista*.
 
 ```{r}
-RECH0 <- filter(RECH0, estado_entrevista==1)
+RECH0 <- filter(RECH0, estado_entrevista == 1)
 ```
 
 ### RECH5
@@ -198,8 +198,8 @@ RECH0 <- filter(RECH0, estado_entrevista==1)
 Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
 
 ```{r}
-RECH5 <- filter(RECH5, estado_medicion==0)
-RECH5 <- filter(RECH5, estado_medicion_hemoglobina==0)
+RECH5 <- filter(RECH5, estado_medicion == 0)
+RECH5 <- filter(RECH5, estado_medicion_hemoglobina == 0)
 ```
 
 ### REC44
@@ -207,8 +207,8 @@ RECH5 <- filter(RECH5, estado_medicion_hemoglobina==0)
 Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
 
 ```{r}
-REC44 <-filter(REC44, estado_medicion==0)
-REC44 <- filter(REC44, estado_medicion_hemoglobina==0)
+REC44 <-filter(REC44, estado_medicion == 0)
+REC44 <- filter(REC44, estado_medicion_hemoglobina == 0)
 ```
 
 ## Análisis de datos
@@ -219,8 +219,38 @@ Describir los casos de anemia y su severidad en niños y madres en el Perú en e
 
 #### Anemia en niños
 
-```{r}
+Promedio de edad, talla, peso y hemoglobina en niños con anemia leve, moderada y grave.
 
+```{r}
+niños_anemia_leve = filter(REC44, anemia == "leve")
+niños_anemia_moderada = filter(REC44, anemia == "moderado")
+niños_anemia_grave = filter(REC44, anemia == "grave")
+
+niños_promedios_anemia_leve <- data.frame(colMeans(anemia_leve[, sapply(anemia_leve, is.numeric)]))
+niños_promedios_anemia_moderada <- data.frame(colMeans(anemia_moderada[, sapply(anemia_moderada, is.numeric)]))
+niños_promedios_anemia_grave <- data.frame(colMeans(anemia_grave[, sapply(anemia_grave, is.numeric)]))
+
+print(niños_promedios_anemia_leve)
+print(niños_promedios_anemia_moderada)
+print(niños_promedios_anemia_grave)
+```
+
+#### Anemia en madres
+
+Promedio de edad, talla, peso y hemoglobina en madres con anemia leve, moderada y grave.
+
+```{r}
+madres_anemia_leve = filter(REC44, anemia == "leve")
+madres_anemia_moderada = filter(REC44, anemia == "moderado")
+madres_anemia_grave = filter(REC44, anemia == "grave")
+
+madres_promedios_anemia_leve <- data.frame(colMeans(anemia_leve[, sapply(anemia_leve, is.numeric)]))
+madres_promedios_anemia_moderada <- data.frame(colMeans(anemia_moderada[, sapply(anemia_moderada, is.numeric)]))
+madres_promedios_anemia_grave <- data.frame(colMeans(anemia_grave[, sapply(anemia_grave, is.numeric)]))
+
+print(madres_promedios_anemia_leve)
+print(madres_promedios_anemia_moderada)
+print(madres_promedios_anemia_grave)
 ```
 
 ### Objetivo 2
