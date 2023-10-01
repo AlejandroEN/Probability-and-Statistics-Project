@@ -226,9 +226,9 @@ niños_anemia_leve = filter(REC44, anemia == "leve")
 niños_anemia_moderada = filter(REC44, anemia == "moderado")
 niños_anemia_grave = filter(REC44, anemia == "grave")
 
-niños_promedios_anemia_leve <- data.frame(colMeans(anemia_leve[, sapply(anemia_leve, is.numeric)]))
-niños_promedios_anemia_moderada <- data.frame(colMeans(anemia_moderada[, sapply(anemia_moderada, is.numeric)]))
-niños_promedios_anemia_grave <- data.frame(colMeans(anemia_grave[, sapply(anemia_grave, is.numeric)]))
+niños_promedios_anemia_leve <- data.frame(colMeans(niños_anemia_leve[, sapply(niños_anemia_leve, is.numeric)]))
+niños_promedios_anemia_moderada <- data.frame(colMeans(niños_anemia_moderada[, sapply(niños_anemia_moderada, is.numeric)]))
+niños_promedios_anemia_grave <- data.frame(colMeans(niños_anemia_grave[, sapply(niños_anemia_grave, is.numeric)]))
 
 print(niños_promedios_anemia_leve)
 print(niños_promedios_anemia_moderada)
@@ -244,9 +244,9 @@ madres_anemia_leve = filter(REC44, anemia == "leve")
 madres_anemia_moderada = filter(REC44, anemia == "moderado")
 madres_anemia_grave = filter(REC44, anemia == "grave")
 
-madres_promedios_anemia_leve <- data.frame(colMeans(anemia_leve[, sapply(anemia_leve, is.numeric)]))
-madres_promedios_anemia_moderada <- data.frame(colMeans(anemia_moderada[, sapply(anemia_moderada, is.numeric)]))
-madres_promedios_anemia_grave <- data.frame(colMeans(anemia_grave[, sapply(anemia_grave, is.numeric)]))
+madres_promedios_anemia_leve <- data.frame(colMeans(madres_anemia_leve[, sapply(madres_anemia_leve, is.numeric)]))
+madres_promedios_anemia_moderada <- data.frame(colMeans(madres_anemia_moderada[, sapply(madres_anemia_moderada, is.numeric)]))
+madres_promedios_anemia_grave <- data.frame(colMeans(madres_anemia_grave[, sapply(madres_anemia_grave, is.numeric)]))
 
 print(madres_promedios_anemia_leve)
 print(madres_promedios_anemia_moderada)
@@ -255,13 +255,17 @@ print(madres_promedios_anemia_grave)
 
 ### Objetivo 2
 
+```{r}
+
+```
+
 Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
 
 ```{r}
 REC44 = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
 ```
 
-Analizar el índice de anemia en niños en las diversas regiones del Perú  en el año 2022.
+Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
 
 ```{r}
 
