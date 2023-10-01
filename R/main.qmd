@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+# [Análisis de los casos de anemia en niños y madres en el Perú en el año 2022]{.underline}
+
 ## Declaramos las librerías necesarias
 
 ```{r, message=FALSE}
@@ -14,12 +16,12 @@ library(dplyr)
 ## Leemos las bases de datos
 
 ```{r, message=FALSE}
-REC91 <- read_csv("../data/raw_data/REC91.csv")
-REC0111 <- read_csv("../data/raw_data/REC0111.csv")
-RECH5 <- read_csv("../data/raw_data/RECH5.csv")
-REC44 <- read_csv("../data/raw_data/REC44.csv")
-RECH23 <- read_csv("../data/raw_data/RECH23.csv")
-RECH0 <- read_csv("../data/raw_data/RECH0.csv")
+REC91_raw <- read_csv("../data/raw_data/REC91.csv")
+REC0111_raw <- read_csv("../data/raw_data/REC0111.csv")
+RECH5_raw <- read_csv("../data/raw_data/RECH5.csv")
+REC44_raw <- read_csv("../data/raw_data/REC44.csv")
+RECH23_raw <- read_csv("../data/raw_data/RECH23.csv")
+RECH0_raw <- read_csv("../data/raw_data/RECH0.csv")
 ```
 
 ## Resumen de los datos
@@ -29,18 +31,23 @@ Realizaremos un resumen de los datos de cada tabla y, además, comenzaremos con 
 ### Tabla RECH0 - Características del hogar
 
 ```{r}
-summary(RECH0)
+summary(RECH0_raw)
 ```
 
+Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
+
 ```{r}
-RECH0 <- select(RECH0, HHID, HV009, HV015)
+RECH0 <- select(RECH0_raw, HHID, HV009, HV015)
 
 RECH0 <- rename(RECH0,
                 cuestionario_hogar_id=HHID,
                 personas_en_el_hogar=HV009,
                 estado_entrevista=HV015)
 
-names(RECH0)
+RECH0$cuestionario_hogar_id <- as.character(RECH0$cuestionario_hogar_id)
+RECH0$estado_entrevista <- as.character(RECH0$estado_entrevista)
+
+str(RECH0)
 ```
 
 ### Tabla REC0111 - Datos básicos del MEF
@@ -51,8 +58,10 @@ Relación entre identificación del cuestionario individual e identificación de
 summary(REC0111)
 ```
 
+Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
+
 ```{r}
-REC0111 <- select(REC0111, CASEID, HHID, V024, V102)
+REC0111 <- select(REC0111_raw, CASEID, HHID, V024, V102)
 
 REC0111 <- rename(REC0111,
                   cuestionario_individual_id=CASEID,
@@ -60,7 +69,12 @@ REC0111 <- rename(REC0111,
                   region=V024,
                   tipo_de_residencia=V102)
 
-names(REC0111)
+REC0111$cuestionario_individual_id <- as.character(REC0111$cuestionario_individual_id)
+REC0111$cuestionario_hogar_id <- as.character(REC0111$cuestionario_hogar_id)
+REC0111$region <- as.character(REC0111$region)
+REC0111$tipo_de_residencia <- as.character(REC0111$tipo_de_residencia)
+
+str(REC0111)
 ```
 
 ### Tabla RECH5 - Peso y talla (anemia)
@@ -71,8 +85,10 @@ Características de las mujeres de 12 a 49 años (madres de los infantes descrit
 summary(RECH5)
 ```
 
+Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
+
 ```{r}
-RECH5 <- select(RECH5, HHID, HA1, HA2, HA3, HA13, HA53, HA54, HA55, HA56, HA57, HA67)
+RECH5 <- select(RECH5_raw, HHID, HA1, HA2, HA3, HA13, HA53, HA54, HA55, HA56, HA57, HA67)
 
 RECH5 <- rename(RECH5,
                 cuestionario_individual_id=HHID,
@@ -87,7 +103,13 @@ RECH5 <- rename(RECH5,
                 anemia=HA57,
                 nivel_educativo=HA67)
 
-names(RECH5)
+RECH5$estado_medicion <- as.character(RECH5$estado_medicion)
+RECH5$is_embarazada <- as.character(RECH5$is_embarazada)
+RECH5$estado_medicion_hemoglobina <- as.character(RECH5$estado_medicion_hemoglobina)
+RECH5$anemia <- as.character(RECH5$anemia)
+RECH5$nivel_educativo <- as.character(RECH5$nivel_educativo)
+
+str(RECH5)
 ```
 
 Asignamos la categoría que corresponde a cada número para la variable *anemia*.
@@ -117,8 +139,10 @@ Características de los infantes de 0 a 59 meses (5 años aproximadamente) por m
 summary(REC44)
 ```
 
+Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
+
 ```{r}
-REC44 <- select(REC44, CASEID, HW1, HW2, HW3, HW13, HW53, HW55, HW56, HW57)
+REC44 <- select(REC44_raw, CASEID, HW1, HW2, HW3, HW13, HW53, HW55, HW56, HW57)
 
 REC44 <- rename(REC44,
                 cuestionario_individual_id=CASEID,
@@ -131,7 +155,11 @@ REC44 <- rename(REC44,
                 hemoglobina_ajustada_latitud=HW56,
                 anemia=HW57)
 
-names(REC44)
+REC44$estado_medicion <- as.character(REC44$estado_medicion)
+REC44$estado_medicion_hemoglobina <- as.character(REC44$estado_medicion_hemoglobina)
+REC44$anemia <- as.character(REC44$anemia)
+
+str(REC44)
 ```
 
 Asignamos la categoría que corresponde a cada número para la variable *anemia*.
@@ -187,6 +215,18 @@ REC44 <- filter(REC44, estado_medicion_hemoglobina==0)
 
 ### Objetivo 1
 
+Describir los casos de anemia y su severidad en niños y madres en el Perú en el año 2022.
+
+#### Anemia en niños
+
+```{r}
+
+```
+
 ### Objetivo 2
 
+Analizar el índice de anemia en las diversas regiones del Perú en el año 2022.
+
 ### Objetivo 3
+
+Describir las características sociales de los grupos vulnerables ---niños y madres--- a la anemia en el Perú en el año 2022.
