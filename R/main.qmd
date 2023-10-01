@@ -240,9 +240,9 @@ print(niños_promedios_anemia_grave)
 Promedio de edad, talla, peso y hemoglobina en madres con anemia leve, moderada y grave.
 
 ```{r}
-madres_anemia_leve = filter(REC44, anemia == "leve")
-madres_anemia_moderada = filter(REC44, anemia == "moderado")
-madres_anemia_grave = filter(REC44, anemia == "grave")
+madres_anemia_leve = filter(RECH5, anemia == "leve")
+madres_anemia_moderada = filter(RECH5, anemia == "moderado")
+madres_anemia_grave = filter(RECH5, anemia == "grave")
 
 madres_promedios_anemia_leve <- data.frame(colMeans(madres_anemia_leve[, sapply(madres_anemia_leve, is.numeric)]))
 madres_promedios_anemia_moderada <- data.frame(colMeans(madres_anemia_moderada[, sapply(madres_anemia_moderada, is.numeric)]))
@@ -262,13 +262,15 @@ print(madres_promedios_anemia_grave)
 Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
 
 ```{r}
-REC44 = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
+#REC44_joined = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
 ```
 
-Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
+Analizar el índice de anemia en madres en las diversas regiones del Perú en el año 2022.
 
 ```{r}
+#RECH5_joined = inner_join(RECH5, REC0111, by = "cuestionario_individual_id")
 
+#REC0111_madres <- inner_join(REC0111, madres_anemia_leve, by = "cuestionario_individual_id")
 ```
 
 ### Objetivo 3
