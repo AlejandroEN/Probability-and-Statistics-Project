@@ -1,5 +1,5 @@
 ---
-title: "Entrega 1 - Avance 2"
+title: "Entrega 1"
 format: html
 editor: visual
 ---
@@ -24,6 +24,8 @@ RECH0 <- read_csv("../data/raw_data/RECH0.csv")
 
 ## Resumen de los datos
 
+Realizaremos un resumen de los datos de cada tabla y, además, comenzaremos con nuestro primer criterio de exclusión: seleccionaremos solo las variables pertinentes para nuestro estudio.
+
 ### Tabla RECH0 - Características del hogar
 
 ```{r}
@@ -33,13 +35,11 @@ summary(RECH0)
 ```{r}
 RECH0 <- select(RECH0, HHID, HV009, HV015)
 
-RECH0 <- rename(RECH0, 
+RECH0 <- rename(RECH0,
                 cuestionario_hogar_id=HHID,
                 personas_en_el_hogar=HV009,
                 estado_entrevista=HV015)
-```
 
-```{r}
 names(RECH0)
 ```
 
@@ -59,14 +59,8 @@ REC0111 <- rename(REC0111,
                   cuestionario_hogar_id=HHID,
                   region=V024,
                   tipo_de_residencia=V102)
-```
 
-```{r}
 names(REC0111)
-```
-
-```{r}
-table(REC0111$region)
 ```
 
 ### Tabla RECH5 - Peso y talla (anemia)
@@ -92,10 +86,27 @@ RECH5 <- rename(RECH5,
                 homoglobina_ajustada_latitud=HA56,
                 anemia=HA57,
                 nivel_educativo=HA67)
+
+names(RECH5)
 ```
 
+Asignamos la categoría que corresponde a cada número para la variable *anemia*.
+
 ```{r}
-names(RECH5)
+RECH5$anemia[RECH5$anemia %in% c(1)] <-"grave"
+RECH5$anemia[RECH5$anemia %in% c(2)] <-"moderado"
+RECH5$anemia[RECH5$anemia %in% c(3)] <-"leve"
+RECH5$anemia[RECH5$anemia %in% c(4)] <-"sin_anemia"
+```
+
+Cambiamos las unidades de *talla* y *peso*.
+
+```{r}
+RECH5 <- mutate(RECH5,
+                # Convertimos de centímetros a metros
+                talla = talla / 1000,
+                # Convertimos de gramos a kilogramos
+                peso = peso / 10)
 ```
 
 ### Tabla REC44 - Peso y talla (anemia)
@@ -119,46 +130,63 @@ REC44 <- rename(REC44,
                 estado_medicion_hemoglobina=HW55,
                 hemoglobina_ajustada_latitud=HW56,
                 anemia=HW57)
-```
 
-```{r}
 names(REC44)
 ```
 
-Voy a cambiarle las respuestas a anemia, de 1 a 4 a grave o sin anemia.
+Asignamos la categoría que corresponde a cada número para la variable *anemia*.
 
 ```{r}
-REC44$anemia[REC44$anemia %in% c(1)] <-"Grave"
-REC44$anemia[REC44$anemia %in% c(2)] <-"Moderado"
-REC44$anemia[REC44$anemia %in% c(3)] <-"Leve"
-REC44$anemia[REC44$anemia %in% c(4)] <-"Sin_Anemia"
+REC44$anemia[REC44$anemia %in% c(1)] <-"grave"
+REC44$anemia[REC44$anemia %in% c(2)] <-"moderado"
+REC44$anemia[REC44$anemia %in% c(3)] <-"leve"
+REC44$anemia[REC44$anemia %in% c(4)] <-"sin_anemia"
 ```
 
+Cambiamos las unidades de *talla* y *peso*.
+
 ```{r}
-incompletos <- filter(RECH0, estado_entrevista!=1)
-#Incompletos son los hogares donde no se pudo hacer obtencion de variables por diversas razones
-incompletos
-inner_join(incompletos, REC0111, "cuestionario_hogar_id")
-#Empatamos la primera tabla con los hogares donde se obtuvieron datos
+REC44 <- mutate(REC44,
+                # Convertimos de centímetros a metros
+                talla = talla / 10,
+                # Convertimos de gramos a kilogramos
+                peso = peso / 10)
 ```
 
-### Limpieza de datos
+## Limpieza de datos
 
-Vamos a descartar las observaciones que no otorgen respuesta a nuestra informacion.
+Vamos a descartar las observaciones que no tengan información, no tengan variabilidad o contengan datos atípicos.
 
-Comenzemos con RECH5.
+### RECH0
+
+Realizamos un filtro en función de la variable *estado_entrevista*.
 
 ```{r}
-#filter(RECH5, estado_medicion!=0)
-#Las observaciones donde estado_medicion_hemoglobina es distinto de cero no realizaron su medicion de hemoglobina
+RECH0 <- filter(RECH0, estado_entrevista==1)
+```
+
+### RECH5
+
+Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
+
+```{r}
+RECH5 <- filter(RECH5, estado_medicion==0)
 RECH5 <- filter(RECH5, estado_medicion_hemoglobina==0)
-#Ahora RECH5 tiene a los valores que si responden. 
 ```
 
-Miren otros valores para limpiar.
+### REC44
 
-SIgamos con REC44
+Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
 
 ```{r}
+REC44 <-filter(REC44, estado_medicion==0)
 REC44 <- filter(REC44, estado_medicion_hemoglobina==0)
 ```
+
+## Análisis de datos
+
+### Objetivo 1
+
+### Objetivo 2
+
+### Objetivo 3
