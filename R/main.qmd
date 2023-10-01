@@ -255,7 +255,17 @@ print(madres_promedios_anemia_grave)
 
 ### Objetivo 2
 
-Analizar el índice de anemia en las diversas regiones del Perú en el año 2022.
+Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
+
+```{r}
+REC44 = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
+```
+
+Analizar el índice de anemia en niños en las diversas regiones del Perú  en el año 2022.
+
+```{r}
+
+```
 
 ### Objetivo 3
 
