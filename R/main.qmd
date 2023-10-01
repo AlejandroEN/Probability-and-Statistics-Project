@@ -222,9 +222,9 @@ Describir los casos de anemia y su severidad en niños y madres en el Perú en e
 Promedio de edad, talla, peso y hemoglobina en niños con anemia leve, moderada y grave.
 
 ```{r}
-niños_anemia_leve = filter(REC44, anemia == "leve")
-niños_anemia_moderada = filter(REC44, anemia == "moderado")
-niños_anemia_grave = filter(REC44, anemia == "grave")
+niños_anemia_leve <- filter(REC44, anemia == "leve")
+niños_anemia_moderada <- filter(REC44, anemia == "moderado")
+niños_anemia_grave <- filter(REC44, anemia == "grave")
 
 niños_promedios_anemia_leve <- data.frame(colMeans(niños_anemia_leve[, sapply(niños_anemia_leve, is.numeric)]))
 niños_promedios_anemia_moderada <- data.frame(colMeans(niños_anemia_moderada[, sapply(niños_anemia_moderada, is.numeric)]))
@@ -240,9 +240,9 @@ print(niños_promedios_anemia_grave)
 Promedio de edad, talla, peso y hemoglobina en madres con anemia leve, moderada y grave.
 
 ```{r}
-madres_anemia_leve = filter(RECH5, anemia == "leve")
-madres_anemia_moderada = filter(RECH5, anemia == "moderado")
-madres_anemia_grave = filter(RECH5, anemia == "grave")
+madres_anemia_leve <- filter(RECH5, anemia == "leve")
+madres_anemia_moderada <- filter(RECH5, anemia == "moderado")
+madres_anemia_grave <- filter(RECH5, anemia == "grave")
 
 madres_promedios_anemia_leve <- data.frame(colMeans(madres_anemia_leve[, sapply(madres_anemia_leve, is.numeric)]))
 madres_promedios_anemia_moderada <- data.frame(colMeans(madres_anemia_moderada[, sapply(madres_anemia_moderada, is.numeric)]))
@@ -255,24 +255,175 @@ print(madres_promedios_anemia_grave)
 
 ### Objetivo 2
 
-```{r}
+Analizamos el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
 
+```{r}
+REC44_joined = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
+REC44_joined$anemia_numeric <- as.numeric(REC44_joined$anemia %in% c("leve", "moderado", "grave"))
+
+# Calculamos el índice de anemia por región
+indice_anemia_por_region <- REC44_joined %>%
+  group_by(region) %>%
+  summarize(anemia = mean(anemia_numeric) * 100)
+  
+# Ordenamos el índice de anemia de mayor a menor
+indice_anemia_por_region <- indice_anemia_por_region %>%
+  arrange(desc(anemia))
+  
+# Mostramos el resultado
+print(indice_anemia_por_region)
 ```
 
-Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
+Analizamos el índice de anemia en madres en las diversas regiones del Perú en el año 2022.
 
 ```{r}
-#REC44_joined = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
-```
+RECH5_joined = inner_join(RECH5, 
+                          mutate(REC0111,
+                                 cuestionario_individual_id = substr(cuestionario_individual_id,
+                                                                     1,
+                                                                     nchar(cuestionario_individual_id) - 3)),
+                          by = "cuestionario_individual_id")
 
-Analizar el índice de anemia en madres en las diversas regiones del Perú en el año 2022.
+RECH5_joined$anemia_numeric <- as.numeric(RECH5_joined$anemia %in% c("leve", "moderado", "grave"))
 
-```{r}
-#RECH5_joined = inner_join(RECH5, REC0111, by = "cuestionario_individual_id")
-
-#REC0111_madres <- inner_join(REC0111, madres_anemia_leve, by = "cuestionario_individual_id")
+# Calculamos el índice de anemia por región
+indice_anemia_por_region <- RECH5_joined %>%
+  group_by(region) %>%
+  summarize(anemia = mean(anemia_numeric) * 100)
+  
+# Ordenamos el índice de anemia de mayor a menor
+indice_anemia_por_region <- indice_anemia_por_region %>%
+  arrange(desc(anemia))
+  
+# Mostramos el resultado
+print(indice_anemia_por_region)
 ```
 
 ### Objetivo 3
 
 Describir las características sociales de los grupos vulnerables ---niños y madres--- a la anemia en el Perú en el año 2022.
+
+#### Características del hogar
+
+Para los niños vamos a revisar sus características de como viven en su hogar
+
+```{r}
+mean(REC44$edad)
+median(REC44$edad)
+
+mean(REC44$peso)
+median(REC44$peso)
+
+mean(REC44$talla)
+median(REC44$talla)
+
+```
+
+```{r}
+mean(RECH5$edad)
+median(RECH5$edad)
+
+mean(RECH5$peso)
+median(RECH5$peso)
+
+mean(RECH5$talla)
+median(RECH5$talla)
+
+names(which.max(table(RECH5$is_embarazada)))
+
+table(RECH5$nivel_educativo)
+```
+
+Vemos que en los datos que los describen la mediana y la media aritmética son semejantes, por lo que es válido usar esos 2 o la moda para calcular una tendencia.
+
+Lo representamos graficamente
+
+```{r}
+boxplot(RECH5$edad)
+```
+
+```{r}
+boxplot(RECH5$peso)
+```
+
+```{r}
+boxplot(RECH5$talla)
+```
+
+Vamos a comparar entre anemia y nivel educativo de las madres, a ver si existe alguna relación.
+
+```{r}
+table(RECH5$anemia, RECH5$nivel_educativo)
+```
+
+#### Relación entre el tipo de residencia y el nivel de anemia de los niños.
+
+```{r}
+niños_anemia <- bind_rows(niños_anemia_leve, niños_anemia_moderada, niños_anemia_grave)
+
+niños <- inner_join(REC0111, niños_anemia, by = "cuestionario_individual_id")
+
+tabla_niños_residencia <- table(niños$tipo_de_residencia, niños$anemia)
+
+tabla_niños_residencia 
+
+```
+
+```{r}
+library(ggplot2)
+
+df <- as.data.frame(tabla_niños_residencia)
+
+colnames(df) <- c("tipo_de_residencia", "anemia", "frecuencia")
+
+df$tipo_de_residencia <- as.factor(df$tipo_de_residencia)
+df$tipo_de_residencia <- recode(df$tipo_de_residencia, 
+                                `1` = "Urbano", 
+                                `2` = "Rural")
+df$anemia <- as.factor(df$anemia)
+
+
+ggplot(df, aes(x = tipo_de_residencia, y = frecuencia, fill = anemia)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Tipo de Residencia", y = "Frecuencia", fill = "Nivel de Anemia en niños") +
+  theme_minimal()
+
+```
+
+```{r}
+library(gt)
+
+df <- data.frame(
+  tipo_de_residencia = c(1, 2),
+  grave = c(14, 13),
+  leve = c(3223, 1891),
+  moderado = c(1232, 967)
+)
+
+df$total <- rowSums(df[,2:4])
+
+df$tipo_de_residencia <- as.factor(df$tipo_de_residencia)
+df$tipo_de_residencia <- recode(df$tipo_de_residencia, 
+                                `1` = "Urbano", 
+                                `2` = "Rural")
+
+gt(df) %>%
+  tab_header(
+    title = "Tabla de Contingencia",
+    subtitle = "Tipo de Residencia vs Nivel de Anemia"
+  ) %>%
+  cols_label(
+    tipo_de_residencia = "Tipo de Residencia",
+    grave = "Grave",
+    leve = "Leve",
+    moderado = "Moderado",
+    total = "Total"
+  ) %>%
+  fmt_number(
+    columns = vars(grave, leve, moderado, total),
+    decimals = 0
+  )
+
+```
+
+Como podemos observar, la proporción entre los distintos tipos de anemia es bastante similar sea el tipo de residencia urbano o rural.
