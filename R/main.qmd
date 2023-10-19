@@ -4,16 +4,119 @@ format: html
 editor: visual
 ---
 
-# [Análisis de los casos de anemia en niños y madres en el Perú en el año 2022]{.underline}
+# [Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022]{.underline}
 
-## Declaramos las librerías necesarias
+## Introducción
 
-```{r, message=FALSE}
-library(readr)
-library(dplyr)
+### Relevancia
+
+La anemia representa un importante desafío de salud pública en nuestro país. La deficiencia de hemoglobina en la sangre puede acarrear graves consecuencias. Entre ellas, se incluye el potencial impacto negativo en el desarrollo físico y cognitivo de los niños, así como el aumento del riesgo de complicaciones durante el embarazo en las mujeres. Por tanto, resulta fundamental comprender tanto la prevalencia como la gravedad de la anemia en estos grupos de población para poder abordar de manera adecuada esta cuestión de salud en nuestra nación.
+
+### Objetivos
+
+-   Describir los casos de anemia y su severidad en niños y mujeres en el Perú en el año 2022.
+
+-   Analizar el índice de anemia en las diversas regiones del Perú en el año 2022.
+
+-   Describir las características sociales de los grupos vulnerables (niños y mujeres) a la anemia en el Perú en el año 2022.
+
+### Contexto
+
+En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar, un estudio que recopiló datos de una muestra representativa de viviendas en todo el territorio peruano. Este estudio se basó en tres cuestionarios diseñados para tres grupos: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.
+
+En el contexto de esta encuesta, se solicitó a los residentes de los hogares su participación en una evaluación destinada a conocer sus niveles de hemoglobina en la sangre, a la que podían optar por unirse o no.
+
+La totalidad de la información recopilada en esta encuesta se encuentra disponible para consulta por parte de cualquier ciudadano en la base de datos del Instituto Nacional de Estadística e Informática (INEI). Los datos se presentan organizados en módulos temáticos, y el enfoque de nuestro interés recae en aquel relacionado con la prevalencia de anemia.
+
+### Planificación.
+
+La forma en que nos organizamos en hacer este proyecto se puede visualizar en este diagrama de Gantt:
+
+```{r warning=FALSE, echo=FALSE}
+
+library(DiagrammeR)
+
+mermaid("
+gantt
+dateFormat  YYYY-MM-DD
+title Diagrama de Gantt
+
+section Main things
+Preparar PG01:first_1,2023-04-15, 3d
+Entrega PG01:first_2,2023-04-18, 2d
+Preparar PG02:first_3,2023-04-20, 11d
+Entrega PG02:first_4,2023-05-01, 2d
+Preparar PG03:first_5,2023-05-03, 21d
+Entrega PG03:first_6,2023-05-24, 2d
+Informe PG1:first_7,2023-05-26, 9d
+Entrega Informe:first_8, 2023-06-04,1d
+
+section PG01
+Diagrama de Gantt:first_1, 2023-04-15, 12h
+Delimitar tema:first_2, after first_1, 12h
+Variables de analisis: first_3, after first_2, 6h
+Limpieza de la base de datos: first_4, after first_2, 12h
+Analizar la factibilidad: first_5, after first_3, 1d
+
+section PG02
+Replantear objetivos:first_6, 2023-04-20, 1d
+Limpieza de tablas:first_7, after first_6, 5d
+Corrección de variables:first_8, after first_7, 5d
+
+section PG03
+Análisis univariado:first_9, 2023-05-03, 12d
+Análisis bivariado:first_10, 2023-05-10, 10d
+Análisis multivariado:first_11, 2023-05-15, 7d
+Escribir análisis:first_12, after first_11, 2d
+
+section Informe PG1
+Correcciones:first_13, 2023-05-26, 3d
+Union de PG0x:first_14, after first_13, 2d
+Verificar ortografía:first_15, after first_14, 2d
+Informe prolijo:first_16, after first_15, 2d
+")
 ```
 
-## Leemos las bases de datos
+## Datos.
+
+En esta sección, detallaremos cómo se llevaron a cabo la recolección de datos, la definición de la población y muestra, así como la explicación de las variables de estudio. Además, se proporcionará una visión general de la limpieza de datos realizada.
+
+### Recolección de datos.
+
+Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y de Salud Familiar realizada en mayo de 2022 en el Perú.
+
+Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y madres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
+
+### Población, muestra y muestreo.
+
+-   **Población:** Son los integrantes del total de viviendas obtenida de los Censos Nacionales 2017: XII de Población y VII de Vivienda y III de Comunidades Indígenas, en el que se registro que en el Perú hay un total de 10 millones 102 mil 849 viviendas particulares.
+
+-   **Muestra:** Se tomaron 36650 del total de viviendas.
+
+-   **Muestreo:** El muestreo ha sido probabilístico, por conglomerados.
+
+### Variables
+
+| Nombre   | Descripción | Restricción               | Tipo de variable |
+|----------|-------------|---------------------------|------------------|
+| Variable | Estrato     | Areas densamente pobladas | Tipo             |
+| Variable | Estrato     | Areas densamente pobladas | Tipo             |
+| Variable | Estrato     | Areas densamente pobladas | Tipo             |
+| Variable | Estrato     | Areas densamente pobladas | Tipo             |
+| variable | Estrato     | Areas densamente pobladas | Tipo             |
+
+### Carga de librerias y datasets
+
+Primero cargamos las librerías necesarias para trabajar
+
+```{r message=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gt)
+```
+
+Cargamos también los datasets.
 
 ```{r, message=FALSE}
 REC91_raw <- read_csv("../data/raw_data/REC91.csv")
@@ -24,11 +127,11 @@ RECH23_raw <- read_csv("../data/raw_data/RECH23.csv")
 RECH0_raw <- read_csv("../data/raw_data/RECH0.csv")
 ```
 
-## Resumen de los datos
+### Resumen de datos y obtención de variables pertinentes
 
 Realizaremos un resumen de los datos de cada tabla y, además, comenzaremos con nuestro primer criterio de exclusión: seleccionaremos solo las variables pertinentes para nuestro estudio.
 
-### Tabla RECH0 - Características del hogar
+#### Tabla RECH0 - Características del hogar
 
 ```{r}
 summary(RECH0_raw)
@@ -50,7 +153,7 @@ RECH0$estado_entrevista <- as.character(RECH0$estado_entrevista)
 str(RECH0)
 ```
 
-### Tabla REC0111 - Datos básicos del MEF
+#### Tabla REC0111 - Datos básicos del MEF
 
 Relación entre identificación del cuestionario individual e identificación del cuestionario del hogar.
 
@@ -61,11 +164,12 @@ summary(REC0111_raw)
 Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
 
 ```{r}
-REC0111 <- select(REC0111_raw, CASEID, HHID, V024, V102)
+REC0111 <- select(REC0111_raw, CASEID, HHID, V015, V024, V102)
 
 REC0111 <- rename(REC0111,
                   cuestionario_individual_id = CASEID,
                   cuestionario_hogar_id = HHID,
+                  estado_entrevista = V015,
                   region = V024,
                   tipo_de_residencia = V102)
 
@@ -74,12 +178,30 @@ REC0111$cuestionario_hogar_id <- as.character(REC0111$cuestionario_hogar_id)
 REC0111$region <- as.character(REC0111$region)
 REC0111$tipo_de_residencia <- as.character(REC0111$tipo_de_residencia)
 
+region_names <- c("1" = "Amazonas", "2" = "Ancash", "3" = "Apurimac", "4" = "Arequipa", 
+                  "5" = "Ayacucho", "6" = "Cajamarca", "7" = "Callao", "8" = "Cusco", 
+                  "9" = "Huancavelica", "10" = "Huanuco", "11" = "Ica", "12" = "Junin",
+                  "13" = "La Libertad", "14" = "Lambayeque", "15" = "Lima",
+                  "16" = "Loreto", "17" = "Madre de Dios", "18" = "Moquegua",
+                  "19" = "Pasco",  "20" =  "Piura",  "21"  =  "Puno",
+                  "22"  =  "San Martin",  "23"  =  "Tacna",
+                  "24"  =  "Tumbes",  "25"  =  "Ucayali")
+
+REC0111$region <- region_names[as.character(REC0111$region)]
+
 str(REC0111)
 ```
 
-### Tabla RECH5 - Peso y talla (anemia)
+Asignamos la categoría que corresponde a cada número para la variable *tipo de residencia*.
 
-Características de las mujeres de 12 a 49 años (madres de los infantes descritos en la tabla REC44).
+```{r}
+REC0111$tipo_de_residencia[REC0111$tipo_de_residencia %in% c(1)] <- "urbano"
+REC0111$tipo_de_residencia[REC0111$tipo_de_residencia %in% c(2)] <- "rural"
+```
+
+#### Tabla RECH5 - Peso y talla (anemia)
+
+Características de las mujeres de 12 a 49 años.
 
 ```{r}
 summary(RECH5_raw)
@@ -88,7 +210,7 @@ summary(RECH5_raw)
 Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
 
 ```{r}
-RECH5 <- select(RECH5_raw, HHID, HA1, HA2, HA3, HA13, HA53, HA54, HA55, HA56, HA57, HA67)
+RECH5 <- select(RECH5_raw, HHID, HA1, HA2, HA3, HA13, HA53, HA54, HA55, HA56, HA57, HA66)
 
 RECH5 <- rename(RECH5,
                 cuestionario_individual_id = HHID,
@@ -99,9 +221,9 @@ RECH5 <- rename(RECH5,
                 hemoglobina = HA53,
                 is_embarazada = HA54,
                 estado_medicion_hemoglobina = HA55,
-                homoglobina_ajustada_latitud = HA56,
+                hemoglobina_ajustada_latitud = HA56,
                 anemia = HA57,
-                nivel_educativo = HA67)
+                nivel_educativo = HA66)
 
 RECH5$estado_medicion <- as.character(RECH5$estado_medicion)
 RECH5$is_embarazada <- as.character(RECH5$is_embarazada)
@@ -121,19 +243,29 @@ RECH5$anemia[RECH5$anemia %in% c(3)] <- "leve"
 RECH5$anemia[RECH5$anemia %in% c(4)] <- "sin_anemia"
 ```
 
+Asignamos la categoría que corresponde a cada número para la variable *nivel_educativo*.
+
+```{r}
+RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(0)] <- "sin_educacion"
+RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(1)] <- "primaria"
+RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(2)] <- "secundaria"
+RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(3)] <- "superior"
+RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(8)] <- "no_sabe"
+```
+
 Cambiamos las unidades de *talla* y *peso*.
 
 ```{r}
 RECH5 <- mutate(RECH5,
                 # Convertimos de centímetros a metros
-                talla = talla / 1000,
+                talla = talla / 10,
                 # Convertimos de gramos a kilogramos
                 peso = peso / 10)
 ```
 
-### Tabla REC44 - Peso y talla (anemia)
+#### Tabla REC44 - Peso y talla (anemia)
 
-Características de los infantes de 0 a 59 meses (5 años aproximadamente) por mamá.
+Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
 
 ```{r}
 summary(REC44_raw)
@@ -181,34 +313,183 @@ REC44 <- mutate(REC44,
                 peso = peso / 10)
 ```
 
-## Limpieza de datos
+#### Tabla RECH23 - Características del hogar de los participantes
+
+Estos contienen las características del modo de vida de los que respondieron la encuesta.
+
+```{r}
+RECH23 <- select(RECH23_raw, HHID, HV201, HV205, HV206, HV226, SH70, HV270)
+
+RECH23 <- rename(RECH23,
+                cuestionario_hogar_id = HHID,
+                fuente_agua = HV201,
+                servicio_higienico = HV205,
+                electricidad = HV206,
+                combustible_cocina = HV226,
+                alumbrado = SH70,
+                indice_riqueza = HV270)
+RECH23$cuestionario_hogar_id <- as.character(RECH23$cuestionario_hogar_id)
+RECH23$fuente_agua <- as.character(RECH23$fuente_agua)
+RECH23$servicio_higienico <- as.character(RECH23$servicio_higienico)
+RECH23$electricidad <- as.character(RECH23$electricidad)
+RECH23$combustible_cocina <- as.character(RECH23$combustible_cocina)
+RECH23$alumbrado <- as.character(RECH23$alumbrado)
+RECH23$indice_riqueza <- as.character(RECH23$indice_riqueza)
+str(RECH23)
+```
+
+Asignamos la categoría que corresponde a cada número para la variable *fuente_agua*
+
+```{r}
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(11)] <- "dentro_vivienda"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(12)] <- "fuera_vivienda"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(13)] <- "pilon/grifo_publico"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(21)] <- "pozo_vivienda"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(22)] <- "pozo_publico"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(41)] <- "manantial"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(43)] <- "rio/acequia/laguna"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(51)] <- "agua_lluvia"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(61)] <- "cisterna"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(71)] <- "agua_embotellada"
+RECH23$fuente_agua[RECH23$fuente_agua %in% c(96)] <- "otro"
+```
+
+Asignamos la categoría que corresponde a cada número para la variable *servicio_higienico*
+
+```{r}
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(11)] <- "dentro_vivienda"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(12)] <- "fuera_vivienda"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(21)] <- "letrina_mejorada_ventilada"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(22)] <- "pozo_septico"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(23)] <- "letrina"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(24)] <- "letrina_mejorada_flotante"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(31)] <- "rio/acequia/canal"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(32)] <- "campo/matorral"
+RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(96)] <- "otro"
+```
+
+Asignamos la categoría que corresponde a cada número para la variable *electricidad*
+
+```{r}
+RECH23$electricidad[RECH23$electricidad %in% c(0)] <- "no"
+RECH23$electricidad[RECH23$electricidad %in% c(1)] <- "si"
+```
+
+Asignamos la categoría que corresponde a cada número para la variable *combustible_cocina*
+
+```{r}
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(1)] <- "electricidad"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(2)] <- "GLP"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(3)] <- "gas natural"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(5)] <- "kerosene"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(6)] <- "carbon vegetal"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(7)] <- "carbon mineral"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(8)] <- "leña"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(9)] <- "caña/arbustos_secos"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(10)] <- "residuos_agricolas"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(11)] <- "bosta"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(95)] <- "no_cocina"
+RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(96)] <- "otro"
+```
+
+Asignamos la categoría que corresponde a cada número para la variable *alumbrado (sh070)*
+
+```{r}
+RECH23$alumbrado[RECH23$alumbrado %in% c(1)] <- "electricidad"
+RECH23$alumbrado[RECH23$alumbrado %in% c(2)] <- "GLP"
+RECH23$alumbrado[RECH23$alumbrado %in% c(3)] <- "gas natural"
+RECH23$alumbrado[RECH23$alumbrado %in% c(4)] <- "kerosene"
+RECH23$alumbrado[RECH23$alumbrado %in% c(5)] <- "velas"
+RECH23$alumbrado[RECH23$alumbrado %in% c(6)] <- "bateria"
+RECH23$alumbrado[RECH23$alumbrado %in% c(96)] <- "otro"
+```
+
+Asignamos la categoría que corresponde a cada número para la variable *indice_riqueza (hv270)*
+
+```{r}
+RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(1)] <- "muy_pobre"
+RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(2)] <- "pobre"
+RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(3)] <- "medio"
+RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(4)] <- "rico"
+RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(5)] <- "muy_rico"
+```
+
+### Filtro de las variables
 
 Vamos a descartar las observaciones que no tengan información, no tengan variabilidad o contengan datos atípicos.
 
-### RECH0
+#### RECH0
 
-Realizamos un filtro en función de la variable *estado_entrevista*.
+En este dataset se encuentra un atributo que determina el si se realizo la entrevista en el hogar seleccionado o no, siendo la opcion 1 que si esta completada. Vamos a requerir las encuestas completadas.
 
 ```{r}
 RECH0 <- filter(RECH0, estado_entrevista == 1)
 ```
 
-### RECH5
+#### REC0111
 
-Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
+En este dataset también se encuentran el estado de las entrevistas, donde el valor 1 significa que esta completada.
+
+```{r}
+REC0111 <- filter(REC0111, estado_entrevista == 1)
+```
+
+#### RECH5
+
+Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina,* en donde el valor 0 significa que si se completo la medición de cada uno.
+
+Existe un valor que rellena los espacios de ciertos atributos debido a que, aun por aceptar ser parte de una medición, no se cumplió, y cuyo espacio se llena con el máximo número que se puede tomar con la cantidad máxima de dígitos disponibles que toma el atributo. Estos los vamos a filtrar con *talla*, que al contener el valor no considerado (999 para la ocasión), da señal que la medición general al final no se pudo tomar. También se va a cambiar el valor de la hemoglobina y hemoglobina ajustada para que se encuentren en la magnitud de gramos de hemoglobina por decilitro, además de filtrar a los atributos que aun presenten datos faltantes.
 
 ```{r}
 RECH5 <- filter(RECH5, estado_medicion == 0)
 RECH5 <- filter(RECH5, estado_medicion_hemoglobina == 0)
+
+RECH5 <- RECH5 %>%
+  mutate(
+    talla = ifelse(talla >= 999, NA, talla),
+    hemoglobina = hemoglobina / 10,  # Convertir 'hemoglobina' a una escala razonable
+    hemoglobina_ajustada_latitud = hemoglobina_ajustada_latitud / 10  # Convertir 'hemoglobina' a una escala razonable
+  ) %>% na.omit()
+
+# Verificar el resumen del marco de datos después de las transformaciones
+
+summary(RECH5)
 ```
 
-### REC44
+#### REC44
 
 Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
 
+Se realiza el mismo filtro que con RECH5.
+
 ```{r}
-REC44 <-filter(REC44, estado_medicion == 0)
-REC44 <- filter(REC44, estado_medicion_hemoglobina == 0)
+REC44 <- select(REC44_raw, CASEID, HW1, HW2, HW3, HW13, HW53, HW55, HW56, HW57)
+
+REC44 <- rename(REC44,
+                cuestionario_individual_id = CASEID,
+                edad = HW1,
+                peso = HW2,
+                talla = HW3,
+                estado_medicion = HW13,
+                hemoglobina = HW53,
+                estado_medicion_hemoglobina = HW55,
+                hemoglobina_ajustada_latitud = HW56,
+                anemia = HW57)
+
+REC44$estado_medicion <- as.character(REC44$estado_medicion)
+REC44$estado_medicion_hemoglobina <- as.character(REC44$estado_medicion_hemoglobina)
+REC44$anemia <- as.character(REC44$anemia)
+
+str(REC44)
+```
+
+#### RECH23
+
+Filtramos a las filas donde los hogares no participaron, tomando a una variable cualquiera y filtrando su fila si su espacio esta vacío o no.
+
+```{r}
+RECH23 <- filter(RECH23, !is.na(fuente_agua))
+str(RECH23)
 ```
 
 ## Análisis de datos
@@ -222,9 +503,9 @@ Describir los casos de anemia y su severidad en niños y madres en el Perú en e
 Promedio de edad, talla, peso y hemoglobina en niños con anemia leve, moderada y grave.
 
 ```{r}
-niños_anemia_leve <- filter(REC44, anemia == "leve")
-niños_anemia_moderada <- filter(REC44, anemia == "moderado")
-niños_anemia_grave <- filter(REC44, anemia == "grave")
+niños_anemia_leve = filter(REC44, anemia == "leve")
+niños_anemia_moderada = filter(REC44, anemia == "moderado")
+niños_anemia_grave = filter(REC44, anemia == "grave")
 
 niños_promedios_anemia_leve <- data.frame(colMeans(niños_anemia_leve[, sapply(niños_anemia_leve, is.numeric)]))
 niños_promedios_anemia_moderada <- data.frame(colMeans(niños_anemia_moderada[, sapply(niños_anemia_moderada, is.numeric)]))
@@ -235,14 +516,14 @@ print(niños_promedios_anemia_moderada)
 print(niños_promedios_anemia_grave)
 ```
 
-#### Anemia en madres
+#### Anemia en mujeres
 
-Promedio de edad, talla, peso y hemoglobina en madres con anemia leve, moderada y grave.
+Promedio de edad, talla, peso y hemoglobina en mujeres con anemia leve, moderada y grave.
 
 ```{r}
-madres_anemia_leve <- filter(RECH5, anemia == "leve")
-madres_anemia_moderada <- filter(RECH5, anemia == "moderado")
-madres_anemia_grave <- filter(RECH5, anemia == "grave")
+madres_anemia_leve = filter(RECH5, anemia == "leve")
+madres_anemia_moderada = filter(RECH5, anemia == "moderado")
+madres_anemia_grave = filter(RECH5, anemia == "grave")
 
 madres_promedios_anemia_leve <- data.frame(colMeans(madres_anemia_leve[, sapply(madres_anemia_leve, is.numeric)]))
 madres_promedios_anemia_moderada <- data.frame(colMeans(madres_anemia_moderada[, sapply(madres_anemia_moderada, is.numeric)]))
@@ -253,110 +534,28 @@ print(madres_promedios_anemia_moderada)
 print(madres_promedios_anemia_grave)
 ```
 
-### Objetivo 2
-
-Analizamos el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
-
-```{r}
-REC44_joined = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
-REC44_joined$anemia_numeric <- as.numeric(REC44_joined$anemia %in% c("leve", "moderado", "grave"))
-
-# Calculamos el índice de anemia por región
-indice_anemia_por_region <- REC44_joined %>%
-  group_by(region) %>%
-  summarize(anemia = mean(anemia_numeric) * 100)
-  
-# Ordenamos el índice de anemia de mayor a menor
-indice_anemia_por_region <- indice_anemia_por_region %>%
-  arrange(desc(anemia))
-  
-# Mostramos el resultado
-print(indice_anemia_por_region)
+```         
 ```
 
-Analizamos el índice de anemia en madres en las diversas regiones del Perú en el año 2022.
+Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
 
 ```{r}
-RECH5_joined = inner_join(RECH5, 
-                          mutate(REC0111,
-                                 cuestionario_individual_id = substr(cuestionario_individual_id,
-                                                                     1,
-                                                                     nchar(cuestionario_individual_id) - 3)),
-                          by = "cuestionario_individual_id")
+#REC44_joined = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
+```
 
-RECH5_joined$anemia_numeric <- as.numeric(RECH5_joined$anemia %in% c("leve", "moderado", "grave"))
+Analizar el índice de anemia en madres en las diversas regiones del Perú en el año 2022.
 
-# Calculamos el índice de anemia por región
-indice_anemia_por_region <- RECH5_joined %>%
-  group_by(region) %>%
-  summarize(anemia = mean(anemia_numeric) * 100)
-  
-# Ordenamos el índice de anemia de mayor a menor
-indice_anemia_por_region <- indice_anemia_por_region %>%
-  arrange(desc(anemia))
-  
-# Mostramos el resultado
-print(indice_anemia_por_region)
+```{r}
+#RECH5_joined = inner_join(RECH5, REC0111, by = "cuestionario_individual_id")
+
+#REC0111_madres <- inner_join(REC0111, madres_anemia_leve, by = "cuestionario_individual_id")
 ```
 
 ### Objetivo 3
 
 Describir las características sociales de los grupos vulnerables ---niños y madres--- a la anemia en el Perú en el año 2022.
 
-#### Características del hogar
-
-Para los niños vamos a revisar sus características de como viven en su hogar
-
-```{r}
-mean(REC44$edad)
-median(REC44$edad)
-
-mean(REC44$peso)
-median(REC44$peso)
-
-mean(REC44$talla)
-median(REC44$talla)
-
-```
-
-```{r}
-mean(RECH5$edad)
-median(RECH5$edad)
-
-mean(RECH5$peso)
-median(RECH5$peso)
-
-mean(RECH5$talla)
-median(RECH5$talla)
-
-names(which.max(table(RECH5$is_embarazada)))
-
-table(RECH5$nivel_educativo)
-```
-
-Vemos que en los datos que los describen la mediana y la media aritmética son semejantes, por lo que es válido usar esos 2 o la moda para calcular una tendencia.
-
-Lo representamos graficamente
-
-```{r}
-boxplot(RECH5$edad)
-```
-
-```{r}
-boxplot(RECH5$peso)
-```
-
-```{r}
-boxplot(RECH5$talla)
-```
-
-Vamos a comparar entre anemia y nivel educativo de las madres, a ver si existe alguna relación.
-
-```{r}
-table(RECH5$anemia, RECH5$nivel_educativo)
-```
-
-#### Relación entre el tipo de residencia y el nivel de anemia de los niños.
+Primero, analizaremos la relación entre el tipo de residencia y el nivel de anemia de los niños.
 
 ```{r}
 niños_anemia <- bind_rows(niños_anemia_leve, niños_anemia_moderada, niños_anemia_grave)
@@ -387,7 +586,6 @@ ggplot(df, aes(x = tipo_de_residencia, y = frecuencia, fill = anemia)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = "Tipo de Residencia", y = "Frecuencia", fill = "Nivel de Anemia en niños") +
   theme_minimal()
-
 ```
 
 ```{r}
@@ -427,3 +625,17 @@ gt(df) %>%
 ```
 
 Como podemos observar, la proporción entre los distintos tipos de anemia es bastante similar sea el tipo de residencia urbano o rural.
+
+# Ideas para graficar (7 horas avanzando, no puedo más 😿)
+
+-   Mediana y promedio de las 3 regiones con mayor cantidad de casos de anemia (o sea, con nivel de anemia cualquiera excepto los que son "sin anemia"). Con ellos obtenemos los coeficientes de variación de cada uno (asi ya cumplimos lo de la rubrica sobre analisis univariado 😼)
+
+-   Obtener el porcentaje de embarazadas de todas las que tienen anemia. Serviría para ver si es necesario atender a ellas con urgencia. Se podría hacer un boxplot tambien para saber los mayores niveles de anemia. Si hay varias que son atipicas, decir que sirvio lo que buscamos, que es preocupante que hayan varias con ese nivel.
+
+-   Diagramas de dispersión de casos de anemia con pesos, tallas y edad. Ver si hay una tendencia.
+
+-   Un grafico de barras multiple con los valores de agua, servicios higienicos, combustible y alumbrado con lso niveles de anemia. Aunque si no quieren tanto trabajo, haganlo nomas con el indice de riqueza, que eso podria bastar xd
+
+## Hay que cumplir con lo de analisis univariado y analisis de descripcion. Minimo es uno con categorico-numerico, categorico-categorico y numerico-numerico.
+
+Eso y ya se acaba gente :,)
