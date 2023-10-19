@@ -626,16 +626,86 @@ gt(df) %>%
 
 Como podemos observar, la proporción entre los distintos tipos de anemia es bastante similar sea el tipo de residencia urbano o rural.
 
-# Ideas para graficar (7 horas avanzando, no puedo más 😿)
+```{r}
 
--   Mediana y promedio de las 3 regiones con mayor cantidad de casos de anemia (o sea, con nivel de anemia cualquiera excepto los que son "sin anemia"). Con ellos obtenemos los coeficientes de variación de cada uno (asi ya cumplimos lo de la rubrica sobre analisis univariado 😼)
+Region_vs_Nivel_de_Anemia <- data.frame(
+  Region = c("Amazonas", "Ancash", "Apurimac", "Arequipa", 
+             "Ayacucho", "Cajamarca", "Callao", "Cusco", 
+             "Huancavelica", "Huanuco", "Ica", "Junin",
+             "La Libertad", "Lambayeque", "Lima",
+             "Loreto", "Madre de Dios", "Moquegua",
+             "Pasco",  "Piura",  "Puno",
+             "San Martin",  "Tacna",
+             "Tumbes",  "Ucayali"),
+  
+  Leve = c(191,182,211,139,233,164,157,168,202,219,130,187,140,155,521,
+           325,241,101,199,165,215,218,106,
+           214 ,331),
+  
+  Moderado = c(83 ,66 ,82 ,36 ,96 ,47 ,57 ,102 ,155 ,115 ,44 ,75 ,59 ,48 ,162 ,
+                173 ,107 ,27 ,118 ,60 ,125 ,79 ,
+                46 ,57 ,180),
 
--   Obtener el porcentaje de embarazadas de todas las que tienen anemia. Serviría para ver si es necesario atender a ellas con urgencia. Se podría hacer un boxplot tambien para saber los mayores niveles de anemia. Si hay varias que son atipicas, decir que sirvio lo que buscamos, que es preocupante que hayan varias con ese nivel.
+  Grave = c(0, 0, 0, 0, 3, 0, 0, 0, 1, 7, 1, 0, 2, 1, 0, 2, 0, 0, 5, 0, 4, 0, 1, 0, 0)
 
--   Diagramas de dispersión de casos de anemia con pesos, tallas y edad. Ver si hay una tendencia.
+ 
+)
 
--   Un grafico de barras multiple con los valores de agua, servicios higienicos, combustible y alumbrado con lso niveles de anemia. Aunque si no quieren tanto trabajo, haganlo nomas con el indice de riqueza, que eso podria bastar xd
+Region_vs_Nivel_de_Anemia$Total <- rowSums(df[,2:4])
 
-## Hay que cumplir con lo de analisis univariado y analisis de descripcion. Minimo es uno con categorico-numerico, categorico-categorico y numerico-numerico.
+gt(Region_vs_Nivel_de_Anemia) %>%
+    tab_header(
+        title = "Tabla de Contingencia",
+        subtitle = "Region vs Nivel de Anemia"
+    ) %>%
+    cols_label(
+        Region = "Region",
+        Grave = "Grave",
+        Moderado = "Moderado",
+        Leve = "Leve",
+        Total = "Total"
+    ) %>%
+    fmt_number(
+        columns = vars(Grave, Leve,Moderado),
+        decimals = 0
+    )
 
-Eso y ya se acaba gente :,)
+
+```
+
+```{r}
+
+# Create a named vector for categorizing
+category_names <- c("Amazonas" = "Selva",
+                    "Ancash" = "Sierra",
+                    "Apurimac" = "Sierra",
+                    "Arequipa" = "Costa",
+                    "Ayacucho" = "Sierra",
+                    "Cajamarca" = "Sierra",
+                    "Callao" = "Costa",
+                    "Cusco" = "Sierra",
+                    "Huancavelica" = "Sierra",
+                    "Huanuco" = 	"Sierra",
+                    "Ica" = 	"Costa",
+                    "Junin" = 	"Sierra",
+                    "La Libertad" = 	"Costa",
+                    "Lambayeque" = 	"Costa",
+                    "Lima" = 	"Costa",
+                    "Loreto" = 	"Selva",
+                    "Madre de Dios" = 	"Selva",
+                    "Moquegua" = 	"Costa",
+                    "Pasco" = 	"Sierra",
+                    "Piura" = 	"Costa",
+                    "Puno" = 	"Sierra",
+                    "San Martin" = 	"Selva",
+                    "Tacna" = 	"Costa",
+                    "Tumbes" = 	"Costa",
+                    "Ucayali" = 	"Selva")
+
+niños$Category <- category_names[niños$region]
+REC0111$Category <- category_names[REC0111$region]
+total_anemia <- table(niños$Category)
+
+pie(total_anemia, main = "Total de niños con anemia por categoría", col = rainbow(length(total_anemia)))
+
+```
