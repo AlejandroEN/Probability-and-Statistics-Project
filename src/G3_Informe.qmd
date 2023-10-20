@@ -421,9 +421,9 @@ RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(4)] <- "4.rico"
 RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(5)] <- "5.muy_rico"
 ```
 
-### FALTA - Filtro de las variables (Cambiar a limpieza de datos y agregar nulos)
+### Limpieza de datos
 
-Vamos a descartar las observaciones que no tengan información, no tengan variabilidad o contengan datos atípicos.
+Vamos a descartar las observaciones que no tengan información.
 
 #### RECH0
 
@@ -491,17 +491,9 @@ RECH23 <- filter(RECH23, !is.na(fuente_agua))
 str(RECH23)
 ```
 
-## [FALTA - Análisis descriptivo]{.underline}
+## [Análisis descriptivo]{.underline}
 
-### [FALTA - Análisis univariado (agregar aquí dentro los objetivos que correspondan ---o les cambiamos de nombre---)]{.underline}
-
-### [FALTA - Análisis de interacción (agregar aquí dentro los objetivos que correspondan ---o les cambiamos de nombre---)]{.underline}
-
-### Lo de aquí debajo tiene que ir dentro de los dos análisis anteriores
-
-### Objetivo 1
-
-Describir los casos de anemia y su severidad en niños y madres en el Perú en el año 2022.
+### [Análisis univariado]{.underline}
 
 #### Anemia en niños
 
@@ -538,6 +530,14 @@ print(madres_promedios_anemia_leve)
 print(madres_promedios_anemia_moderada)
 print(madres_promedios_anemia_grave)
 ```
+
+Análisis de las tablas. Se obtuvo el promedio de datos de los participantes por su nivel de anemia. Esto nos da una idea de por qué valores de edad, talla, peso y hemoglobina se puede encontrar un caso de anemia en estado leve, moderado o grave.
+
+### [Análisis de interacción]{.underline}
+
+### Objetivo 1
+
+Describir los casos de anemia y su severidad en niños y madres en el Perú en el año 2022.
 
 Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
 
