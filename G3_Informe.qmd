@@ -122,7 +122,7 @@ Debido a la extensión de nuestras tablas, solo incluiremos las variables por ta
 Características de las mujeres de 12 a 49 años.
 
 | Nombre |                     Descripción                     |  Tipo de variable  |
-|:------:|:---------------------------------------------------:|:------------------:|
+|:-------------:|:----------------------------------------:|:-------------:|
 |  HHID  |               Identificación del caso               | Categórica nominal |
 |  HA1   |              Edad de la mujer en años               | Numérica discreta  |
 |  HA2   |                 Peso en kilogramos                  | Numérica continua  |
@@ -151,7 +151,7 @@ Relación entre identificación del cuestionario individual e identificación de
 Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
 
 | Nombre |                   Descripción                    |  Tipo de variable  |
-|:------:|:------------------------------------------------:|:------------------:|
+|:-------------:|:----------------------------------------:|:--------------:|
 |  HW1   |                  Edad en meses                   | Numérica discreta  |
 |  HW2   |                Peso en kilogramos                | Numérica continua  |
 |  HW3   |               Talla en centímetros               | Numérica continua  |
@@ -186,12 +186,12 @@ Cargamos también los *datasets*.
 
 ```{r, message=FALSE}
 
-REC91_raw <- read_csv("../data/raw_data/REC91.csv")
-REC0111_raw <- read_csv("../data/raw_data/REC0111.csv")
-RECH5_raw <- read_csv("../data/raw_data/RECH5.csv")
-REC44_raw <- read_csv("../data/raw_data/REC44.csv")
-RECH23_raw <- read_csv("../data/raw_data/RECH23.csv")
-RECH0_raw <- read_csv("../data/raw_data/RECH0.csv")
+REC91_raw <- read_csv("REC91.csv")
+REC0111_raw <- read_csv("REC0111.csv")
+RECH5_raw <- read_csv("RECH5.csv")
+REC44_raw <- read_csv("REC44.csv")
+RECH23_raw <- read_csv("RECH23.csv")
+RECH0_raw <- read_csv("RECH0.csv")
 ```
 
 ### Resumen de datos y obtención de variables pertinentes
