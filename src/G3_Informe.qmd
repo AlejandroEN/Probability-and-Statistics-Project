@@ -325,7 +325,7 @@ REC44 <- mutate(REC44,
 Estos contienen las características del modo de vida de los que respondieron la encuesta.
 
 ```{r}
-RECH23 <- select(RECH23_raw, HHID, HV270)
+RECH23 <- select(RECH23_raw, HHID, HV201, HV270)
 
 RECH23 <- rename(RECH23,
                 cuestionario_hogar_id = HHID,
@@ -411,7 +411,7 @@ summary(REC44)
 Filtramos a las filas donde los hogares no participaron, tomando a una variable cualquiera y filtrando su fila si su espacio esta vacío o no.
 
 ```{r}
-RECH23 <- filter(RECH23, !is.na(fuente_agua))
+RECH23 <- filter(RECH23, !is.na(indice_riqueza))
 str(RECH23)
 ```
 
@@ -704,6 +704,10 @@ legend("topright",legend=c("Leve","Moderado","Grave"),
 col=2:4, cex= 1.0, pch=15,title="Nivel de anemia")
 ```
 
+Se nota que para ambos casos, siempre los casos leves son los predominantes.
+
+La elección de las tres regiones con más casos es porque deben ser las regiones donde hay que preocuparse más en combatir a la enfermedad.
+
 Boxplots entre hemoglobina e indice de riqueza con las mujeres
 
 ```{r}
@@ -713,3 +717,5 @@ ds_hemoglobina_riqueza <- merge((select(RECH5, hemoglobina, cuestionario_individ
 ```{r}
 boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_riqueza, xlab="Indice de riqueza", ylab="Nivel de hemoglobina (gr/dl)")
 ```
+
+De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
