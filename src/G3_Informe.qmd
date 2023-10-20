@@ -2,11 +2,16 @@
 title: "Anemia en infantes y madres"
 format: html
 editor: visual
+authors:
+  - name: "Colque Ordoñez, Patrick Fabrizio "
+  - name: "Rejas Albujar, Alejandro David"
+  - name: "Escobar Núñez, Alejandro Ismael"
+toc: true
 ---
 
 ![](images/UTEC.png){fig-align="left" width="252"}
 
-# [Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022]{.underline}
+# Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022
 
 ## Introducción
 
@@ -86,12 +91,6 @@ mermaid("gantt
 
 En esta sección, detallaremos cómo se llevaron a cabo la recolección de datos, la definición de la población y muestra, así como la explicación de las variables de estudio. Además, se proporcionará una visión general de la limpieza de datos realizada.
 
-### Recolección de datos
-
-Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y de Salud Familiar realizada en mayo de 2022 en el Perú.
-
-Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y madres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
-
 ### Población objetivo, muestra y muestreo
 
 -   **Población:** Son los integrantes del total de viviendas obtenida de los Censos Nacionales 2017: XII de Población y VII de Vivienda y III de Comunidades Indígenas, en el que se registro que en el Perú hay un total de 10 millones 102 mil 849 viviendas particulares.
@@ -100,15 +99,76 @@ Para nuestra investigación, accedimos a la base de datos del Instituto Nacional
 
 -   **Muestreo:** El muestreo ha sido probabilístico por conglomerados.
 
-### FALTA - Variables (incompleto)
+### Recolección de datos
 
-|  Nombre  | Descripción |        Restricción        | Tipo de variable |
-|:--------:|:-----------:|:-------------------------:|:----------------:|
-| Variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
-| Variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
-| Variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
-| Variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
-| variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
+Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y de Salud Familiar realizada en mayo de 2022 en el Perú.
+
+Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y madres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
+
+### Variables (incompleto)
+
+Debido a la extensión de nuestras tablas, solo incluiremos las variables por tabla que nos serán más relevantes para nuestro estudio.
+
+#### Tabla RECH0 - Características del hogar
+
+| Nombre |                Descripción                 |  Tipo de variable  |
+|:------:|:------------------------------------------:|:------------------:|
+|  HHID  | Identificación del cuestionario individual | Categórica nominal |
+| HV009  |       Total de personas en el hogar        | Numérica discreta  |
+| HV015  |   Resultado de la entrevista en el hogar   | Categórica nominal |
+
+#### Tabla RECH5 - Peso y talla (anemia)
+
+Características de las mujeres de 12 a 49 años.
+
+| Nombre |                     Descripción                     |  Tipo de variable  |
+|:-------:|:--------------------------------------------:|:---------------:|
+|  HHID  |               Identificación del caso               | Categórica nominal |
+|  HA1   |              Edad de la mujer en años               | Numérica discreta  |
+|  HA2   |                 Peso en kilogramos                  | Numérica continua  |
+|  HA13  |     Resultados de la medición de la entrevista      | Categórica nominal |
+|  HA53  |             Nivel de hemoglobina (g/dl)             | Numérica continua  |
+|  HA54  |              ¿Actualmente embarazada?               | Categórica nominal |
+|  HA55  |       Resultado de la medición de hemoglobina       | Categórica nominal |
+|  HA56  | Nivel de hemoglobina ajustado por la altitud (g/dl) | Numérica continua  |
+|  HA57  |                   Nivel de anemia                   | Categórica ordinal |
+|  HA67  |    Nivel educativo más alto aprobado de la mujer    | Categórica ordinal |
+
+#### Tabla REC0111 - Datos básicos del MEF
+
+Relación entre identificación del cuestionario individual e identificación del cuestionario del hogar.
+
+| Nombre |                Descripción                 |  Tipo de variable  |
+|:------:|:------------------------------------------:|:------------------:|
+| CASEID | Identificación del cuestionario individual | Categórica nominal |
+|  HHID  | Identificación del cuestionario del hogar  | Categórica nominal |
+|  V024  |                   Región                   | Categórica nominal |
+|  V102  |        Tipo de lugar de residencia         | Categórica nominal |
+|  V113  |      Abastecimiento principal de agua      | Categórica nominal |
+
+#### Tabla REC44 - Peso y talla (anemia)
+
+Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
+
+| Nombre |                   Descripción                    |  Tipo de variable  |
+|:-------:|:--------------------------------------------:|:---------------:|
+|  HW1   |                  Edad en meses                   | Numérica discreta  |
+|  HW2   |                Peso en kilogramos                | Numérica continua  |
+|  HW3   |               Talla en centímetros               | Numérica continua  |
+|  HW13  |       Razón por la que el niño no se midió       | Categórica nominal |
+|  HW53  |           Nivel de hemoglobina (g/dl)            | Numérica continua  |
+|  HW55  |             Resultado de la medición             | Categórica nominal |
+|  HW56  | Nivel de hemoglobina ajustada por altitud (g/dl) | Numérica continua  |
+|  HW57  |                 Nivel de anemia                  | Categórica nominal |
+
+#### Tabla RECH23 - Características del hogar de los participantes
+
+Estos contienen las características del modo de vida de los que respondieron la encuesta.
+
+| Nombre |                Descripción                |  Tipo de variable  |
+|:------:|:-----------------------------------------:|:------------------:|
+|  HHID  | Identificación del cuestionario del hogar | Categórica nominal |
+| HV270  |             Índice de riqueza             | Categórica ordinal |
 
 ### Carga de librerías y *datasets*
 
@@ -122,7 +182,7 @@ library(ggplot2)
 library(gt)
 ```
 
-Cargamos también los datasets.
+Cargamos también los *datasets*.
 
 ```{r, message=FALSE}
 
@@ -161,8 +221,6 @@ str(RECH0)
 ```
 
 #### Tabla REC0111 - Datos básicos del MEF
-
-Relación entre identificación del cuestionario individual e identificación del cuestionario del hogar.
 
 ```{r}
 summary(REC0111_raw)
@@ -207,8 +265,6 @@ REC0111$tipo_de_residencia[REC0111$tipo_de_residencia %in% c(2)] <- "rural"
 ```
 
 #### Tabla RECH5 - Peso y talla (anemia)
-
-Características de las mujeres de 12 a 49 años.
 
 ```{r}
 summary(RECH5_raw)
@@ -272,8 +328,6 @@ RECH5 <- mutate(RECH5,
 
 #### Tabla REC44 - Peso y talla (anemia)
 
-Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
-
 ```{r}
 summary(REC44_raw)
 ```
@@ -322,8 +376,6 @@ REC44 <- mutate(REC44,
 
 #### Tabla RECH23 - Características del hogar de los participantes
 
-Estos contienen las características del modo de vida de los que respondieron la encuesta.
-
 ```{r}
 RECH23 <- select(RECH23_raw, HHID, HV201, HV270)
 
@@ -351,7 +403,7 @@ Vamos a descartar las observaciones que no tengan información.
 
 #### RECH0
 
-En este dataset se encuentra un atributo que determina el si se realizo la entrevista en el hogar seleccionado o no, siendo la opcion 1 que si esta completada. Vamos a requerir las encuestas completadas.
+En este *dataset* se encuentra un atributo que determina el si se realizo la entrevista en el hogar seleccionado o no, siendo la opción 1 que sí esta completada. Vamos a requerir las encuestas completadas.
 
 ```{r}
 RECH0 <- filter(RECH0, estado_entrevista == 1)
@@ -359,7 +411,7 @@ RECH0 <- filter(RECH0, estado_entrevista == 1)
 
 #### REC0111
 
-En este dataset también se encuentran el estado de las entrevistas, donde el valor 1 significa que esta completada.
+En este *dataset* también se encuentran el estado de las entrevistas, donde el valor 1 significa que esta completada.
 
 ```{r}
 REC0111 <- filter(REC0111, estado_entrevista == 1)
@@ -415,9 +467,9 @@ RECH23 <- filter(RECH23, !is.na(indice_riqueza))
 str(RECH23)
 ```
 
-## [Análisis descriptivo]{.underline}
+## FALTA - Análisis descriptivo
 
-### [Análisis univariado]{.underline}
+### Análisis univariado
 
 #### Anemia en niños
 
@@ -457,7 +509,7 @@ print(madres_promedios_anemia_grave)
 
 Análisis de las tablas. Se obtuvo el promedio de datos de los participantes por su nivel de anemia. Esto nos da una idea de por qué valores de edad, talla, peso y hemoglobina se puede encontrar un caso de anemia en estado leve, moderado o grave.
 
-### [Análisis de interacción]{.underline}
+### Análisis de interacción
 
 Analizaremos la relación entre el tipo de residencia y el nivel de anemia de los niños.
 
@@ -719,3 +771,7 @@ boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_rique
 ```
 
 De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
+
+## Conclusiones
+
+En base a los datos proporcionados, podemos extraer significativos en la prevalencia de la anemia en Perú. Destaca principalmente que la región de la Sierra experimenta una alta incidencia de anemia, siendo un hallazgo relevante en la evaluación de la salud en el país. Además, se observa una variación en la prevalencia de anemia según el tipo de residencia, con una mayor proporción de casos en áreas rurales. Asimismo, la relación entre el nivel de riqueza y la anemia muestra que las categorías de "pobre" y "rico" tienden a presentar una mayor incidencia de esta condición.
