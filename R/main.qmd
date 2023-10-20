@@ -10,7 +10,7 @@ editor: visual
 
 ### Relevancia
 
-La anemia representa un importante desafío de salud pública en nuestro país. La deficiencia de hemoglobina en la sangre puede acarrear graves consecuencias. Entre ellas, se incluye el potencial impacto negativo en el desarrollo físico y cognitivo de los niños, así como el aumento del riesgo de complicaciones durante el embarazo en las mujeres. Por tanto, resulta fundamental comprender tanto la prevalencia como la gravedad de la anemia en estos grupos de población para poder abordar de manera adecuada esta cuestión de salud en nuestra nación.
+La anemia es un problema de salud pública de gran relevancia en nuestro país. La falta de hemoglobina en la sangre puede tener consecuencias graves, especialmente en niños y madres. Además, la anemia puede afectar el desarrollo físico y cognitivo de los niños y aumentar el riesgo de complicaciones en el embarazo para las madres; por lo tanto, comprender la prevalencia y severidad de la anemia en estos grupos es esencial para abordar adecuadamente este problema de salud en el país.
 
 ### Objetivos
 
@@ -22,13 +22,13 @@ La anemia representa un importante desafío de salud pública en nuestro país. 
 
 ### Contexto
 
-En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar, un estudio que recopiló datos de una muestra representativa de viviendas en todo el territorio peruano. Este estudio se basó en tres cuestionarios diseñados para tres grupos: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.
+En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar, un estudio que recopiló datos de una muestra representativa de viviendas en todo el territorio peruano. Este estudio se basó en tres cuestionarios diseñados específicamente: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.
 
 En el contexto de esta encuesta, se solicitó a los residentes de los hogares su participación en una evaluación destinada a conocer sus niveles de hemoglobina en la sangre, a la que podían optar por unirse o no.
 
-La totalidad de la información recopilada en esta encuesta se encuentra disponible para consulta por parte de cualquier ciudadano en la base de datos del Instituto Nacional de Estadística e Informática (INEI). Los datos se presentan organizados en módulos temáticos, y el enfoque de nuestro interés recae en aquel relacionado con la prevalencia de anemia.
+La totalidad de la información recopilada en esta encuesta se encuentra disponible para consulta por parte de cualquier ciudadano en la base de datos del Instituto Nacional de Estadística e Informática (INEI). Los datos se presentan organizados en módulos temáticos, y nuestro enfoque recae en los análisis de los casos de anemia en infantes y mujeres.
 
-### Planificación.
+### Planificación
 
 La forma en que nos organizamos en hacer este proyecto se puede visualizar en este diagrama de Gantt:
 
@@ -36,80 +36,80 @@ La forma en que nos organizamos en hacer este proyecto se puede visualizar en es
 
 library(DiagrammeR)
 
-mermaid("
-gantt
-dateFormat  YYYY-MM-DD
-title Diagrama de Gantt
-
-section Main things
-Preparar PG01:first_1,2023-04-15, 3d
-Entrega PG01:first_2,2023-04-18, 2d
-Preparar PG02:first_3,2023-04-20, 11d
-Entrega PG02:first_4,2023-05-01, 2d
-Preparar PG03:first_5,2023-05-03, 21d
-Entrega PG03:first_6,2023-05-24, 2d
-Informe PG1:first_7,2023-05-26, 9d
-Entrega Informe:first_8, 2023-06-04,1d
-
-section PG01
-Diagrama de Gantt:first_1, 2023-04-15, 12h
-Delimitar tema:first_2, after first_1, 12h
-Variables de analisis: first_3, after first_2, 6h
-Limpieza de la base de datos: first_4, after first_2, 12h
-Analizar la factibilidad: first_5, after first_3, 1d
-
-section PG02
-Replantear objetivos:first_6, 2023-04-20, 1d
-Limpieza de tablas:first_7, after first_6, 5d
-Corrección de variables:first_8, after first_7, 5d
-
-section PG03
-Análisis univariado:first_9, 2023-05-03, 12d
-Análisis bivariado:first_10, 2023-05-10, 10d
-Análisis multivariado:first_11, 2023-05-15, 7d
-Escribir análisis:first_12, after first_11, 2d
-
-section Informe PG1
-Correcciones:first_13, 2023-05-26, 3d
-Union de PG0x:first_14, after first_13, 2d
-Verificar ortografía:first_15, after first_14, 2d
-Informe prolijo:first_16, after first_15, 2d
-")
+mermaid("gantt
+        dateFormat  YYYY-MM-DD
+        title Diagrama de Gantt
+        
+        section Main things
+        Preparar PG01:first_1,2023-04-15, 3d
+        Entrega PG01:first_2,2023-04-18, 2d
+        Preparar PG02:first_3,2023-04-20, 11d
+        Entrega PG02:first_4,2023-05-01, 2d
+        Preparar PG03:first_5,2023-05-03, 21d
+        Entrega PG03:first_6,2023-05-24, 2d
+        Informe PG1:first_7,2023-05-26, 9d
+        Entrega Informe:first_8, 2023-06-04,1d
+        
+        section PG01
+        Diagrama de Gantt:first_1, 2023-04-15, 12h
+        Delimitar tema:first_2, after first_1, 12h
+        Variables de analisis: first_3, after first_2, 6h
+        Limpieza de la base de datos: first_4, after first_2, 12h
+        Analizar la factibilidad: first_5, after first_3, 1d
+        
+        section PG02
+        Replantear objetivos:first_6, 2023-04-20, 1d
+        Limpieza de tablas:first_7, after first_6, 5d
+        Corrección de variables:first_8, after first_7, 5d
+        
+        section PG03
+        Análisis univariado:first_9, 2023-05-03, 12d
+        Análisis bivariado:first_10, 2023-05-10, 10d
+        Análisis multivariado:first_11, 2023-05-15, 7d
+        Escribir análisis:first_12, after first_11, 2d
+        
+        section Informe PG1
+        Correcciones:first_13, 2023-05-26, 3d
+        Union de PG0x:first_14, after first_13, 2d
+        Verificar ortografía:first_15, after first_14, 2d
+        Informe prolijo:first_16, after first_15, 2d
+        ")
 ```
 
-## Datos.
+## Datos
 
 En esta sección, detallaremos cómo se llevaron a cabo la recolección de datos, la definición de la población y muestra, así como la explicación de las variables de estudio. Además, se proporcionará una visión general de la limpieza de datos realizada.
 
-### Recolección de datos.
+### Recolección de datos
 
 Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y de Salud Familiar realizada en mayo de 2022 en el Perú.
 
 Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y madres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
 
-### Población, muestra y muestreo.
+### Población, muestra y muestreo
 
 -   **Población:** Son los integrantes del total de viviendas obtenida de los Censos Nacionales 2017: XII de Población y VII de Vivienda y III de Comunidades Indígenas, en el que se registro que en el Perú hay un total de 10 millones 102 mil 849 viviendas particulares.
 
 -   **Muestra:** Se tomaron 36650 del total de viviendas.
 
--   **Muestreo:** El muestreo ha sido probabilístico, por conglomerados.
+-   **Muestreo:** El muestreo ha sido probabilístico por conglomerados.
 
 ### Variables
 
-| Nombre   | Descripción | Restricción               | Tipo de variable |
-|----------|-------------|---------------------------|------------------|
-| Variable | Estrato     | Areas densamente pobladas | Tipo             |
-| Variable | Estrato     | Areas densamente pobladas | Tipo             |
-| Variable | Estrato     | Areas densamente pobladas | Tipo             |
-| Variable | Estrato     | Areas densamente pobladas | Tipo             |
-| variable | Estrato     | Areas densamente pobladas | Tipo             |
+|  Nombre  | Descripción |        Restricción        | Tipo de variable |
+|:--------:|:-----------:|:-------------------------:|:----------------:|
+| Variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
+| Variable |   Estrato   | Áreas densamente pobladas |       Tipo       |
+| Variable |   Estrato   | Areas densamente pobladas |       Tipo       |
+| Variable |   Estrato   | Areas densamente pobladas |       Tipo       |
+| variable |   Estrato   | Areas densamente pobladas |       Tipo       |
 
-### Carga de librerias y datasets
+### Carga de librerías y *datasets*
 
 Primero cargamos las librerías necesarias para trabajar
 
 ```{r message=FALSE}
+
 library(readr)
 library(dplyr)
 library(ggplot2)
@@ -119,6 +119,7 @@ library(gt)
 Cargamos también los datasets.
 
 ```{r, message=FALSE}
+
 REC91_raw <- read_csv("../data/raw_data/REC91.csv")
 REC0111_raw <- read_csv("../data/raw_data/REC0111.csv")
 RECH5_raw <- read_csv("../data/raw_data/RECH5.csv")
@@ -456,31 +457,23 @@ RECH5 <- RECH5 %>%
 summary(RECH5)
 ```
 
-#### REC44
+### REC44
 
 Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
 
-Se realiza el mismo filtro que con RECH5.
+Convertimos 'hemoglobina' y 'hemoglobina_ajustada_latitud' a una escala razonable.
 
 ```{r}
-REC44 <- select(REC44_raw, CASEID, HW1, HW2, HW3, HW13, HW53, HW55, HW56, HW57)
+REC44 <- filter(REC44, estado_medicion == 0)
+REC44 <- filter(REC44, estado_medicion_hemoglobina == 0)
 
-REC44 <- rename(REC44,
-                cuestionario_individual_id = CASEID,
-                edad = HW1,
-                peso = HW2,
-                talla = HW3,
-                estado_medicion = HW13,
-                hemoglobina = HW53,
-                estado_medicion_hemoglobina = HW55,
-                hemoglobina_ajustada_latitud = HW56,
-                anemia = HW57)
+REC44 <- REC44 %>%
+  mutate(
+    hemoglobina = hemoglobina / 10, 
+    hemoglobina_ajustada_latitud = hemoglobina_ajustada_latitud / 10  
+  )
 
-REC44$estado_medicion <- as.character(REC44$estado_medicion)
-REC44$estado_medicion_hemoglobina <- as.character(REC44$estado_medicion_hemoglobina)
-REC44$anemia <- as.character(REC44$anemia)
-
-str(REC44)
+summary(REC44)
 ```
 
 #### RECH23
@@ -516,9 +509,9 @@ print(niños_promedios_anemia_moderada)
 print(niños_promedios_anemia_grave)
 ```
 
-#### Anemia en mujeres
+#### Anemia en madres
 
-Promedio de edad, talla, peso y hemoglobina en mujeres con anemia leve, moderada y grave.
+Promedio de edad, talla, peso y hemoglobina en madres con anemia leve, moderada y grave.
 
 ```{r}
 madres_anemia_leve = filter(RECH5, anemia == "leve")
@@ -532,9 +525,6 @@ madres_promedios_anemia_grave <- data.frame(colMeans(madres_anemia_grave[, sappl
 print(madres_promedios_anemia_leve)
 print(madres_promedios_anemia_moderada)
 print(madres_promedios_anemia_grave)
-```
-
-```         
 ```
 
 Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
@@ -569,43 +559,41 @@ tabla_niños_residencia
 ```
 
 ```{r}
-library(ggplot2)
 
-df <- as.data.frame(tabla_niños_residencia)
+Tipo_de_Residencia_vs_Nivel_de_Anemia <- as.data.frame(tabla_niños_residencia)
 
-colnames(df) <- c("tipo_de_residencia", "anemia", "frecuencia")
+colnames(Tipo_de_Residencia_vs_Nivel_de_Anemia) <- c("tipo_de_residencia", "anemia", "frecuencia")
 
-df$tipo_de_residencia <- as.factor(df$tipo_de_residencia)
-df$tipo_de_residencia <- recode(df$tipo_de_residencia, 
+Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- as.factor(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia)
+Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia, 
                                 `1` = "Urbano", 
                                 `2` = "Rural")
-df$anemia <- as.factor(df$anemia)
+Tipo_de_Residencia_vs_Nivel_de_Anemia$anemia <- as.factor(Tipo_de_Residencia_vs_Nivel_de_Anemia$anemia)
 
 
-ggplot(df, aes(x = tipo_de_residencia, y = frecuencia, fill = anemia)) +
+ggplot(Tipo_de_Residencia_vs_Nivel_de_Anemia, aes(x = tipo_de_residencia, y = frecuencia, fill = anemia)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = "Tipo de Residencia", y = "Frecuencia", fill = "Nivel de Anemia en niños") +
   theme_minimal()
 ```
 
 ```{r}
-library(gt)
 
-df <- data.frame(
+Tipo_de_Residencia_vs_Nivel_de_Anemia <- data.frame(
   tipo_de_residencia = c(1, 2),
   grave = c(14, 13),
   leve = c(3223, 1891),
   moderado = c(1232, 967)
 )
 
-df$total <- rowSums(df[,2:4])
+Tipo_de_Residencia_vs_Nivel_de_Anemia$total <- rowSums(Tipo_de_Residencia_vs_Nivel_de_Anemia[,2:4])
 
-df$tipo_de_residencia <- as.factor(df$tipo_de_residencia)
-df$tipo_de_residencia <- recode(df$tipo_de_residencia, 
+Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- as.factor(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia)
+Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia, 
                                 `1` = "Urbano", 
                                 `2` = "Rural")
 
-gt(df) %>%
+gt(Tipo_de_Residencia_vs_Nivel_de_Anemia) %>%
   tab_header(
     title = "Tabla de Contingencia",
     subtitle = "Tipo de Residencia vs Nivel de Anemia"
@@ -651,7 +639,7 @@ Region_vs_Nivel_de_Anemia <- data.frame(
  
 )
 
-Region_vs_Nivel_de_Anemia$Total <- rowSums(df[,2:4])
+Region_vs_Nivel_de_Anemia$Total <- rowSums(Region_vs_Nivel_de_Anemia[,2:4])
 
 gt(Region_vs_Nivel_de_Anemia) %>%
     tab_header(
@@ -675,7 +663,6 @@ gt(Region_vs_Nivel_de_Anemia) %>%
 
 ```{r}
 
-# Create a named vector for categorizing
 category_names <- c("Amazonas" = "Selva",
                     "Ancash" = "Sierra",
                     "Apurimac" = "Sierra",
@@ -707,5 +694,4 @@ REC0111$Category <- category_names[REC0111$region]
 total_anemia <- table(niños$Category)
 
 pie(total_anemia, main = "Total de niños con anemia por categoría", col = rainbow(length(total_anemia)))
-
 ```
