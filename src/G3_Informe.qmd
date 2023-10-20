@@ -325,90 +325,14 @@ REC44 <- mutate(REC44,
 Estos contienen las características del modo de vida de los que respondieron la encuesta.
 
 ```{r}
-RECH23 <- select(RECH23_raw, HHID, HV201, HV205, HV206, HV226, SH70, HV270)
+RECH23 <- select(RECH23_raw, HHID, HV270)
 
 RECH23 <- rename(RECH23,
                 cuestionario_hogar_id = HHID,
-                fuente_agua = HV201,
-                servicio_higienico = HV205,
-                electricidad = HV206,
-                combustible_cocina = HV226,
-                alumbrado = SH70,
                 indice_riqueza = HV270)
 RECH23$cuestionario_hogar_id <- as.character(RECH23$cuestionario_hogar_id)
-RECH23$fuente_agua <- as.character(RECH23$fuente_agua)
-RECH23$servicio_higienico <- as.character(RECH23$servicio_higienico)
-RECH23$electricidad <- as.character(RECH23$electricidad)
-RECH23$combustible_cocina <- as.character(RECH23$combustible_cocina)
-RECH23$alumbrado <- as.character(RECH23$alumbrado)
 RECH23$indice_riqueza <- as.character(RECH23$indice_riqueza)
 str(RECH23)
-```
-
-Asignamos la categoría que corresponde a cada número para la variable *fuente_agua*
-
-```{r}
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(11)] <- "dentro_vivienda"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(12)] <- "fuera_vivienda"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(13)] <- "pilon/grifo_publico"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(21)] <- "pozo_vivienda"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(22)] <- "pozo_publico"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(41)] <- "manantial"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(43)] <- "rio/acequia/laguna"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(51)] <- "agua_lluvia"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(61)] <- "cisterna"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(71)] <- "agua_embotellada"
-RECH23$fuente_agua[RECH23$fuente_agua %in% c(96)] <- "otro"
-```
-
-Asignamos la categoría que corresponde a cada número para la variable *servicio_higienico*
-
-```{r}
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(11)] <- "dentro_vivienda"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(12)] <- "fuera_vivienda"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(21)] <- "letrina_mejorada_ventilada"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(22)] <- "pozo_septico"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(23)] <- "letrina"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(24)] <- "letrina_mejorada_flotante"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(31)] <- "rio/acequia/canal"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(32)] <- "campo/matorral"
-RECH23$servicio_higienico[RECH23$servicio_higienico %in% c(96)] <- "otro"
-```
-
-Asignamos la categoría que corresponde a cada número para la variable *electricidad*
-
-```{r}
-RECH23$electricidad[RECH23$electricidad %in% c(0)] <- "no"
-RECH23$electricidad[RECH23$electricidad %in% c(1)] <- "si"
-```
-
-Asignamos la categoría que corresponde a cada número para la variable *combustible_cocina*
-
-```{r}
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(1)] <- "electricidad"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(2)] <- "GLP"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(3)] <- "gas natural"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(5)] <- "kerosene"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(6)] <- "carbon vegetal"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(7)] <- "carbon mineral"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(8)] <- "leña"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(9)] <- "caña/arbustos_secos"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(10)] <- "residuos_agricolas"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(11)] <- "bosta"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(95)] <- "no_cocina"
-RECH23$combustible_cocina[RECH23$combustible_cocina %in% c(96)] <- "otro"
-```
-
-Asignamos la categoría que corresponde a cada número para la variable *alumbrado (sh070)*
-
-```{r}
-RECH23$alumbrado[RECH23$alumbrado %in% c(1)] <- "electricidad"
-RECH23$alumbrado[RECH23$alumbrado %in% c(2)] <- "GLP"
-RECH23$alumbrado[RECH23$alumbrado %in% c(3)] <- "gas natural"
-RECH23$alumbrado[RECH23$alumbrado %in% c(4)] <- "kerosene"
-RECH23$alumbrado[RECH23$alumbrado %in% c(5)] <- "velas"
-RECH23$alumbrado[RECH23$alumbrado %in% c(6)] <- "bateria"
-RECH23$alumbrado[RECH23$alumbrado %in% c(96)] <- "otro"
 ```
 
 Asignamos la categoría que corresponde a cada número para la variable *indice_riqueza (hv270)*
@@ -736,9 +660,6 @@ gt(Riqueza_vs_Nivel_de_Anemia) %>%
         decimals = 0
     )
 
-
-
-
 Riqueza_vs_Nivel_de_Anemia$Porcentaje_Leve <- Riqueza_vs_Nivel_de_Anemia$Leve / Riqueza_vs_Nivel_de_Anemia$Total * 100
 Riqueza_vs_Nivel_de_Anemia$Porcentaje_Moderado <- Riqueza_vs_Nivel_de_Anemia$Moderado / Riqueza_vs_Nivel_de_Anemia$Total * 100
 Riqueza_vs_Nivel_de_Anemia$Porcentaje_Grave <- Riqueza_vs_Nivel_de_Anemia$Grave / Riqueza_vs_Nivel_de_Anemia$Total * 100
@@ -758,14 +679,10 @@ tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region, tres_regiones_
 ```
 
 ```{r}
-tabla_tres_regiones_i
-```
-
-```{r}
-barplot(t(tabla_tres_regiones_i), col = 2:4, xlab="Nivel de anemia",
-ylab="Regiones", ylim=c(0,1000), main="Distribución según
+barplot(t(tabla_tres_regiones_i), col = 2:4, xlab="Regiones",
+ylab="Nivel de anemia", ylim=c(0,1000), main="Distribución según
 anemia y region")
-legend("topright",legend=c("1.Lima","2.Loreto","3.Ucayali"),
+legend("topright",legend=c("Leve","Moderado","Grave"),
 col=2:4, cex= 1.0, pch=15,title="Nivel de anemia")
 ```
 
@@ -776,14 +693,14 @@ regiones_casos_mujeres <- merge((select(RECH5, anemia, cuestionario_individual_i
 regiones_casos_mujeres_orden <- sort(table(regiones_casos_mujeres$region), decreasing = TRUE)
 tres_regiones_mas_casos_m <- head(regiones_casos_mujeres_orden,3)
 tres_regiones_mas_casos_m <- regiones_casos_mujeres[(regiones_casos_mujeres$region %in% names(tres_regiones_mas_casos_m)),]
-tabla_tres_regiones_m <- prop.table(table(tres_regiones_mas_casos_m$anemia,tres_regiones_mas_casos_m$region))
+tabla_tres_regiones_m <- table(tres_regiones_mas_casos_m$region, tres_regiones_mas_casos_m$anemia)
 ```
 
 ```{r}
-barplot(t(tabla_tres_regiones_m*100), col = 2:4, xlab="Nivel de anemia",
-ylab="Regiones", ylim=c(0,100), main="Distribución según
+barplot(t(tabla_tres_regiones_m), col = 2:4, xlab="Region",
+ylab="Nivel de anemia", ylim=c(0,2000), main="Distribución según
 anemia y region")
-legend("topright",legend=c("1.Lima","2.Loreto","3.Ucayali"),
+legend("topright",legend=c("Leve","Moderado","Grave"),
 col=2:4, cex= 1.0, pch=15,title="Nivel de anemia")
 ```
 
@@ -796,5 +713,3 @@ ds_hemoglobina_riqueza <- merge((select(RECH5, hemoglobina, cuestionario_individ
 ```{r}
 boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_riqueza, xlab="Indice de riqueza", ylab="Nivel de hemoglobina (gr/dl)")
 ```
-
-Se puede usar coeficiente de variacion
