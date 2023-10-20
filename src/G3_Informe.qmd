@@ -50,7 +50,7 @@ library(DiagrammeR)
 mermaid("gantt
         dateFormat  YYYY-MM-DD
         title Diagrama de Gantt
-        
+
         section Main things
         Preparar PG01:first_1,2023-04-15, 3d
         Entrega PG01:first_2,2023-04-18, 2d
@@ -60,25 +60,25 @@ mermaid("gantt
         Entrega PG03:first_6,2023-05-24, 2d
         Informe PG1:first_7,2023-05-26, 9d
         Entrega Informe:first_8, 2023-06-04,1d
-        
+
         section PG01
         Diagrama de Gantt:first_1, 2023-04-15, 12h
         Delimitar tema:first_2, after first_1, 12h
         Variables de analisis: first_3, after first_2, 6h
         Limpieza de la base de datos: first_4, after first_2, 12h
         Analizar la factibilidad: first_5, after first_3, 1d
-        
+
         section PG02
         Replantear objetivos:first_6, 2023-04-20, 1d
         Limpieza de tablas:first_7, after first_6, 5d
         Corrección de variables:first_8, after first_7, 5d
-        
+
         section PG03
         Análisis univariado:first_9, 2023-05-03, 12d
         Análisis bivariado:first_10, 2023-05-10, 10d
         Análisis multivariado:first_11, 2023-05-15, 7d
         Escribir análisis:first_12, after first_11, 2d
-        
+
         section Informe PG1
         Correcciones:first_13, 2023-05-26, 3d
         Union de PG0x:first_14, after first_13, 2d
@@ -105,7 +105,7 @@ Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y
 
 Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y madres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
 
-### Variables (incompleto)
+### Variables
 
 Debido a la extensión de nuestras tablas, solo incluiremos las variables por tabla que nos serán más relevantes para nuestro estudio.
 
@@ -122,7 +122,7 @@ Debido a la extensión de nuestras tablas, solo incluiremos las variables por ta
 Características de las mujeres de 12 a 49 años.
 
 | Nombre |                     Descripción                     |  Tipo de variable  |
-|:-------:|:--------------------------------------------:|:---------------:|
+|:------:|:---------------------------------------------------:|:------------------:|
 |  HHID  |               Identificación del caso               | Categórica nominal |
 |  HA1   |              Edad de la mujer en años               | Numérica discreta  |
 |  HA2   |                 Peso en kilogramos                  | Numérica continua  |
@@ -151,7 +151,7 @@ Relación entre identificación del cuestionario individual e identificación de
 Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
 
 | Nombre |                   Descripción                    |  Tipo de variable  |
-|:-------:|:--------------------------------------------:|:---------------:|
+|:------:|:------------------------------------------------:|:------------------:|
 |  HW1   |                  Edad en meses                   | Numérica discreta  |
 |  HW2   |                Peso en kilogramos                | Numérica continua  |
 |  HW3   |               Talla en centímetros               | Numérica continua  |
@@ -243,8 +243,8 @@ REC0111$cuestionario_hogar_id <- as.character(REC0111$cuestionario_hogar_id)
 REC0111$region <- as.character(REC0111$region)
 REC0111$tipo_de_residencia <- as.character(REC0111$tipo_de_residencia)
 
-region_names <- c("1" = "Amazonas", "2" = "Ancash", "3" = "Apurimac", "4" = "Arequipa", 
-                  "5" = "Ayacucho", "6" = "Cajamarca", "7" = "Callao", "8" = "Cusco", 
+region_names <- c("1" = "Amazonas", "2" = "Ancash", "3" = "Apurimac", "4" = "Arequipa",
+                  "5" = "Ayacucho", "6" = "Cajamarca", "7" = "Callao", "8" = "Cusco",
                   "9" = "Huancavelica", "10" = "Huanuco", "11" = "Ica", "12" = "Junin",
                   "13" = "La Libertad", "14" = "Lambayeque", "15" = "Lima",
                   "16" = "Loreto", "17" = "Madre de Dios", "18" = "Moquegua",
@@ -451,8 +451,8 @@ REC44 <- filter(REC44, estado_medicion_hemoglobina == 0)
 
 REC44 <- REC44 %>%
   mutate(
-    hemoglobina = hemoglobina / 10, 
-    hemoglobina_ajustada_latitud = hemoglobina_ajustada_latitud / 10  
+    hemoglobina = hemoglobina / 10,
+    hemoglobina_ajustada_latitud = hemoglobina_ajustada_latitud / 10
   )
 
 summary(REC44)
@@ -467,7 +467,7 @@ RECH23 <- filter(RECH23, !is.na(indice_riqueza))
 str(RECH23)
 ```
 
-## FALTA - Análisis descriptivo
+## Análisis descriptivo
 
 ### Análisis univariado
 
@@ -520,7 +520,7 @@ niños <- inner_join(REC0111, niños_anemia, by = "cuestionario_individual_id")
 
 tabla_niños_residencia <- table(niños$tipo_de_residencia, niños$anemia)
 
-tabla_niños_residencia 
+tabla_niños_residencia
 
 ```
 
@@ -531,8 +531,8 @@ Tipo_de_Residencia_vs_Nivel_de_Anemia <- as.data.frame((tabla_niños_residencia/
 colnames(Tipo_de_Residencia_vs_Nivel_de_Anemia) <- c("tipo_de_residencia", "anemia", "frecuencia")
 
 Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- as.factor(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia)
-Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia, 
-                                `1` = "Urbano", 
+Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia,
+                                `1` = "Urbano",
                                 `2` = "Rural")
 Tipo_de_Residencia_vs_Nivel_de_Anemia$anemia <- as.factor(Tipo_de_Residencia_vs_Nivel_de_Anemia$anemia)
 
@@ -555,8 +555,8 @@ Tipo_de_Residencia_vs_Nivel_de_Anemia <- data.frame(
 Tipo_de_Residencia_vs_Nivel_de_Anemia$total <- rowSums(Tipo_de_Residencia_vs_Nivel_de_Anemia[,2:4])
 
 Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- as.factor(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia)
-Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia, 
-                                `1` = "Urbano", 
+Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <- recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia,
+                                `1` = "Urbano",
                                 `2` = "Rural")
 
 gt(Tipo_de_Residencia_vs_Nivel_de_Anemia) %>%
@@ -585,26 +585,26 @@ Se hará la visión de casos de anemia por región del Perú.
 ```{r}
 
 Region_vs_Nivel_de_Anemia <- data.frame(
-  Region = c("Amazonas", "Ancash", "Apurimac", "Arequipa", 
-             "Ayacucho", "Cajamarca", "Callao", "Cusco", 
+  Region = c("Amazonas", "Ancash", "Apurimac", "Arequipa",
+             "Ayacucho", "Cajamarca", "Callao", "Cusco",
              "Huancavelica", "Huanuco", "Ica", "Junin",
              "La Libertad", "Lambayeque", "Lima",
              "Loreto", "Madre de Dios", "Moquegua",
              "Pasco",  "Piura",  "Puno",
              "San Martin",  "Tacna",
              "Tumbes",  "Ucayali"),
-  
+
   Leve = c(191,182,211,139,233,164,157,168,202,219,130,187,140,155,521,
            325,241,101,199,165,215,218,106,
            214 ,331),
-  
+
   Moderado = c(83 ,66 ,82 ,36 ,96 ,47 ,57 ,102 ,155 ,115 ,44 ,75 ,59 ,48 ,162 ,
                 173 ,107 ,27 ,118 ,60 ,125 ,79 ,
                 46 ,57 ,180),
 
   Grave = c(0, 0, 0, 0, 3, 0, 0, 0, 1, 7, 1, 0, 2, 1, 0, 2, 0, 0, 5, 0, 4, 0, 1, 0, 0)
 
- 
+
 )
 
 Region_vs_Nivel_de_Anemia$Total <- rowSums(Region_vs_Nivel_de_Anemia[,2:4])
@@ -680,16 +680,16 @@ Anemia_Riqueza_Madres$anemia <- as.factor(Anemia_Riqueza_Madres$anemia)
 
 Riqueza_vs_Nivel_de_Anemia <- data.frame(
   Riqueza = c("Muy Pobre","Pobre", "Medio", "Rico", "Muy Rico"),
-  
+
 
   Leve = c(193, 259, 100, 269, 157),
-  
-  Moderado = c(1327, 2461, 565, 1888, 900),
-  
-  Grave = c(17, 21, 11, 20, 14)
-  
 
-  
+  Moderado = c(1327, 2461, 565, 1888, 900),
+
+  Grave = c(17, 21, 11, 20, 14)
+
+
+
 )
 
 Riqueza_vs_Nivel_de_Anemia$Total <- rowSums(Riqueza_vs_Nivel_de_Anemia[,2:4])
