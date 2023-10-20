@@ -535,29 +535,7 @@ Análisis de las tablas. Se obtuvo el promedio de datos de los participantes por
 
 ### [Análisis de interacción]{.underline}
 
-### Objetivo 1
-
-Describir los casos de anemia y su severidad en niños y madres en el Perú en el año 2022.
-
-Analizar el índice de anemia en niños en las diversas regiones del Perú en el año 2022.
-
-```{r}
-#REC44_joined = inner_join(REC44, REC0111, by = "cuestionario_individual_id")
-```
-
-Analizar el índice de anemia en madres en las diversas regiones del Perú en el año 2022.
-
-```{r}
-#RECH5_joined = inner_join(RECH5, REC0111, by = "cuestionario_individual_id")
-
-#REC0111_madres <- inner_join(REC0111, madres_anemia_leve, by = "cuestionario_individual_id")
-```
-
-### Objetivo 3
-
-Describir las características sociales de los grupos vulnerables ---niños y madres--- a la anemia en el Perú en el año 2022.
-
-Primero, analizaremos la relación entre el tipo de residencia y el nivel de anemia de los niños.
+Analizaremos la relación entre el tipo de residencia y el nivel de anemia de los niños.
 
 ```{r}
 niños_anemia <- bind_rows(niños_anemia_leve, niños_anemia_moderada, niños_anemia_grave)
@@ -572,7 +550,7 @@ tabla_niños_residencia
 
 ```{r}
 
-Tipo_de_Residencia_vs_Nivel_de_Anemia <- as.data.frame(tabla_niños_residencia)
+Tipo_de_Residencia_vs_Nivel_de_Anemia <- as.data.frame((tabla_niños_residencia/rowSums(tabla_niños_residencia))*100)
 
 colnames(Tipo_de_Residencia_vs_Nivel_de_Anemia) <- c("tipo_de_residencia", "anemia", "frecuencia")
 
@@ -625,6 +603,8 @@ gt(Tipo_de_Residencia_vs_Nivel_de_Anemia) %>%
 ```
 
 Como podemos observar, la proporción entre los distintos tipos de anemia es bastante similar sea el tipo de residencia urbano o rural.
+
+Se hará la visión de casos de anemia por región del Perú.
 
 ```{r}
 
@@ -708,6 +688,10 @@ total_anemia <- table(niños$Category)
 pie(total_anemia, main = "Total de niños con anemia por categoría", col = rainbow(length(total_anemia)))
 ```
 
+En la distribución por regiones, Lima es la que tiene mayor cantidad de observaciones. Eso claramente por la cantidad de población que se concentra ahí.
+
+En cuanto a separación por costa, sierra y selva, es en la sierra donde hay mas casos de anemia con poca diferencia con las demás.
+
 ```{r}
 RECH5$cuestionario_individual_id <- sub("^0+", "", RECH5$cuestionario_individual_id)
 
@@ -766,16 +750,20 @@ print(Riqueza_vs_Nivel_de_Anemia)
 Gráfico donde se tomen las tres regiones con mas casos en infantes para luego compararlos.
 
 ```{r}
-regiones_casos_infantes <- merge((select(REC44, anemia, cuestionario_individual_id))[REC44$anemia!="0.sin_anemia",], REC0111, by= "cuestionario_individual_id")
+regiones_casos_infantes <- merge(REC0111, (select(REC44, anemia, cuestionario_individual_id))[REC44$anemia!="0.sin_anemia",], by= "cuestionario_individual_id")
 regiones_casos_infantes_orden <- sort(table(regiones_casos_infantes$region), decreasing = TRUE)
 tres_regiones_mas_casos_i <- head(regiones_casos_infantes_orden,3)
 tres_regiones_mas_casos_i <- regiones_casos_infantes[(regiones_casos_infantes$region %in% names(tres_regiones_mas_casos_i)),]
-tabla_tres_regiones_i <- prop.table(table(tres_regiones_mas_casos_i$anemia,tres_regiones_mas_casos_i$region))
+tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region, tres_regiones_mas_casos_i$anemia))
 ```
 
 ```{r}
-barplot(t(tabla_tres_regiones_i*100), col = 2:4, xlab="Nivel de anemia",
-ylab="Regiones", ylim=c(0,100), main="Distribución según
+tabla_tres_regiones_i
+```
+
+```{r}
+barplot(t(tabla_tres_regiones_i), col = 2:4, xlab="Nivel de anemia",
+ylab="Regiones", ylim=c(0,1000), main="Distribución según
 anemia y region")
 legend("topright",legend=c("1.Lima","2.Loreto","3.Ucayali"),
 col=2:4, cex= 1.0, pch=15,title="Nivel de anemia")
