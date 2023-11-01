@@ -738,6 +738,13 @@ unique(RECH23$indice_riqueza)
 
 **Probabilidad de cada evento:**
 
+$$
+P(x) = f(x)/n
+$$\
+f(x) = número de veces que se cumpla el evento en toda la muestra
+
+n = tamaño de la muestra
+
 ```{r}
 prob_riqueza <- table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza))
 prob_riqueza
@@ -800,7 +807,6 @@ Probabilidad del evento A1.
 
 ```{r}
 table(RECH5$is_embarazada)
-sum(table(RECH5$is_embarazada))
 ```
 
 ```{r}
@@ -815,6 +821,12 @@ A2 <-nrow(filter(RECH5, is_embarazada == 0))/nrow(RECH5)
 A2
 ```
 
+Vamos a probar que un evento puede afectar al otro con la siguiente comprobación.
+
+$$
+P(A1 \mid A2) = \frac{P(A1 \cap A2)}{P(A2)} \ne P(A1) 
+$$
+
 Probabilidad que ocurra A1 y A2, obtenida de forma manual
 
 ```{r}
@@ -824,16 +836,13 @@ Probabilidad que ocurra A1 y A2, obtenida de forma manual
 
 Y vemos la probabilidad de que A1 ocurra dado A2
 
-$$
-P(A1 \mid A2) = \frac{P(A1 \cap A2)}{P(A2)}
-$$
-
 ```{r}
 A1_dado_A2 <- `A1_&_A2`/A2
 A1_dado_A2
+A1
 ```
 
-Al hacer que un evento ocurra dado otro, este da un resultado, por lo que uno si afecta al otro. Eso se debe a que el experimento toma un valor que no se va a reponer, o sea, por cada evento que siga, disminuye el tamaño de la muestra.
+Vemos que A1 dado A2 no resulta igual a A1. Si se hubiese cumplido, estaríamos ante eventos independientes. Por ello, estamos ante eventos no independientes. Eso significa que si un evento ocurre dado otro, el primero si afecta a su predecesor. Eso se debe a que el experimento toma un valor que no se va a reponer, o sea, por cada evento que siga, disminuye el tamaño de la muestra.
 
 Como un evento afecta al otro, estamos hablando de eventos no independientes. O sea, son eventos mutuamente excluyentes.
 
