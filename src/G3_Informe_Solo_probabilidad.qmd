@@ -728,23 +728,23 @@ Para esta parte vamos a usar nuestros conocimientos sobre probabilidades para tr
 
 Primero, seleccionamos dos experimentos, determinando su espacio muestral y sus respectivas probabilidades.
 
-**Experimento 1.** Escoger un hogar que aceptó participar en la encuesta y observar la región a la que pertenece.
+**Experimento 1.** Escoger un hogar que aceptó participar en la encuesta y observar su nivel de riqueza.
 
-**Espacio muestral:** Son los nombres de cada región del Perú, que se encuentran en la variable *region* de la tabla REC0111.
+**Espacio muestral:** Son los niveles de riqueza que se encuentran en la variable *indice_riqueza* de la tabla RECH23.
 
 ```{r}
-unique(REC0111$region)
+unique(RECH23$indice_riqueza)
 ```
 
 **Probabilidad de cada evento:**
 
 ```{r}
-prob_region <- table(REC0111$region)/sum(table(REC0111$region))
-prob_region
+prob_riqueza <- table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza))
+prob_riqueza
 ```
 
 ```{r}
-sum(table(REC0111$region)/sum(table(REC0111$region)))
+sum(table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza)))
 ```
 
 Región con mayor y menor probabilidad de ser escogida.
@@ -754,7 +754,7 @@ names(which.max(prob_region))
 names(which.min(prob_region))
 ```
 
-La región que tiene mayor probabilidad de ser escogida es Lima (razonable porque es la región con mayor población), y quien tiene menor probabilidad es Puno.
+El nivel de riqueza que es más probable de encontrar en al escoger un hogar es muy pobre, mientras que el menos probable de ser escogido es que sea muy rico.
 
 **Experimento 2.** Escoger un infante de los hogares que aceptaron participar en la prueba de hemoglobina y determinar su nivel de anemia.
 
