@@ -754,7 +754,7 @@ names(which.max(prob_region))
 names(which.min(prob_region))
 ```
 
-El nivel de riqueza que es más probable de encontrar en al escoger un hogar es muy pobre, mientras que el menos probable de ser escogido es que sea muy rico.
+Al escoger un hogar para el experimento, es más probable que su nivel de riqueza sea muy pobre, y es menos probable que sea muy rico.
 
 **Experimento 2.** Escoger un infante de los hogares que aceptaron participar en la prueba de hemoglobina y determinar su nivel de anemia.
 
@@ -782,7 +782,7 @@ names(which.max(prob_anemia))
 names(which.min(prob_anemia))
 ```
 
-Por los resultados, es mucho mas probable que de entre los niños escogidos, este no tenga anemia y es menos probable que se encuentre en un estado grave de anemia.
+Por los resultados, es mucho más probable que de entre los niños escogidos, este no tenga anemia y es menos probable que se encuentre en un estado grave de anemia.
 
 ## Probabilidad condicional
 
