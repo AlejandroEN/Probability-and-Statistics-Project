@@ -260,6 +260,13 @@ RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(3)] <- "3.superior"
 RECH5$nivel_educativo[RECH5$nivel_educativo %in% c(8)] <- "no_sabe"
 ```
 
+Asignamos la categoría que corresponde a cada número de la variable is_embarazada.
+
+```{r}
+RECH5$is_embarazada[RECH5$is_embarazada %in% c(1)] <- "embarazada"
+RECH5$is_embarazada[RECH5$is_embarazada %in% c(0)] <- "no embarazada"
+```
+
 Cambiamos las unidades de *talla* y *peso*.
 
 ```{r}
@@ -730,11 +737,27 @@ Primero, seleccionamos dos experimentos, determinando su espacio muestral y sus 
 
 **Experimento 1.** Escoger un hogar que aceptó participar en la encuesta y observar su nivel de riqueza.
 
-**Espacio muestral:** Son los niveles de riqueza que se encuentran en la variable *indice_riqueza* de la tabla RECH23.
+**Espacio muestral (** $\Omega$ **).**
 
 ```{r}
 unique(RECH23$indice_riqueza)
 ```
+
+$$
+\Omega = E1,E2,E3,E4, E5 
+$$
+
+Definición de eventos:
+
+E1: Que se escoja un hogar cuyo indice de riqueza sea muy pobre
+
+E2: Que se escoja un hogar cuyo indice de riqueza sea pobre
+
+E3: Que se escoja un hogar cuyo indice de riqueza sea medio
+
+E4: Que se escoja un hogar cuyo indice de riqueza sea rico
+
+E5: Que se escoja un hogar cuyo indice de riqueza sea muy rico
 
 **Probabilidad de cada evento:**
 
@@ -750,26 +773,50 @@ prob_riqueza <- table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza))
 prob_riqueza
 ```
 
+Comprobamos que todo sume uno (ya que son probabilidades de eventos atómicos en un espacio muestral $\Omega$ ).
+
 ```{r}
 sum(table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza)))
 ```
 
+Correspondiendo cada una con su respectiva probabilidad:
+
+P(E1)=0.3151
+
+P(E2)=0.251
+
+P(E3)=0.1867
+
+P(E4)=0.1395
+
 Región con mayor y menor probabilidad de ser escogida.
 
 ```{r}
-names(which.max(prob_region))
-names(which.min(prob_region))
+names(which.max(prob_riqueza))
+names(which.min(prob_riqueza))
 ```
 
 Al escoger un hogar para el experimento, es más probable que su nivel de riqueza sea muy pobre, y es menos probable que sea muy rico.
 
 **Experimento 2.** Escoger un infante de los hogares que aceptaron participar en la prueba de hemoglobina y determinar su nivel de anemia.
 
-**Espacio muestral:** Son la etiquetas dadas a cada infante según su nivel de anemia. Se encuentran en la variable *anemia* de la tabla REC44.
+**Espacio muestral(** $\Omega$ **).**
 
 ```{r}
 unique(REC44$anemia)
 ```
+
+$$
+\Omega = E1,E2,E3,E4
+$$
+
+E1: Que se escoja un infante participante que no tenga anemia
+
+E2: Que se escoja un infante participante cuyo nivel de anemia sea bajo
+
+E3: Que se escoja un infante participante cuyo nivel de anemia sea moderado
+
+E4: Que se escoja un infante participante cuyo nivel de anemia sea alto
 
 **Probabilidad por evento:**
 
@@ -778,9 +825,21 @@ prob_anemia <- table(REC44$anemia)/length(REC44$anemia)
 prob_anemia
 ```
 
+Comprobamos que todo sume uno.
+
 ```{r}
 sum(table(REC44$anemia)/length(REC44$anemia))
 ```
+
+Correspondiendo cada una con su respectiva probabilidad:
+
+P(E1)=0.6322
+
+P(E2)=0.2563
+
+P(E3)=0.1102
+
+P(E4)=0.0014
 
 Nivel de anemia con mayor y menor probabilidad de ser escogida.
 
@@ -821,26 +880,24 @@ A2 <-nrow(filter(RECH5, is_embarazada == 0))/nrow(RECH5)
 A2
 ```
 
-Vamos a probar que un evento puede afectar al otro con la siguiente comprobación.
+Vamos a probar que ambos eventos no son independientes, comprobando que son mutuamente excluyentes.
 
-$$
-P(A1 \mid A2) = \frac{P(A1 \cap A2)}{P(A2)} \ne P(A1) 
-$$
-
-Probabilidad que ocurra A1 y A2, obtenida de forma manual
+Probabilidad que ocurra A1 y A2.
 
 ```{r}
-'A1_&_A2' <- choose(36368,1)*choose(971,1)/choose(36368,2)
+'A1_&_A2' <- nrow(filter(RECH5, is_embarazada == 1 & is_embarazada == 0))
 `A1_&_A2`
 ```
 
-Y vemos la probabilidad de que A1 ocurra dado A2
+Vemos que la intersección de ambos elementos es igual a cero. Eso lo vamos a demostrar.
 
-```{r}
-A1_dado_A2 <- `A1_&_A2`/A2
-A1_dado_A2
-A1
-```
+Al ser independientes
+
+$$
+A
+$$
+
+Demostrar con lo de ME =/= Ev. Ind.
 
 Vemos que A1 dado A2 no resulta igual a A1. Si se hubiese cumplido, estaríamos ante eventos independientes. Por ello, estamos ante eventos no independientes. Eso significa que si un evento ocurre dado otro, el primero si afecta a su predecesor. Eso se debe a que el experimento toma un valor que no se va a reponer, o sea, por cada evento que siga, disminuye el tamaño de la muestra.
 
@@ -1010,4 +1067,130 @@ Pagina para hacer notación de diversas operaciones:
 
 ```{r}
 table(niños_region$anemia,niños_region$tipo_de_residencia)
+```
+
+### Variables aleatorias discretas.
+
+#### Nivel de anemia.
+
+Vamos a tomar el siguiente evento:
+
+E: seleccionar un estudiante y que su nivel de anemia sea grave.
+
+```{r}
+table(REC44$anemia)
+```
+
+```{r}
+L <- 5114
+M <- 2199
+G <- 27
+Total <- L+M+G
+PL <- L/Total
+PM <- M/Total
+PG <- G/Total
+```
+
+```{r}
+PG
+```
+
+La probabilidad de E: P(E) = 0.0038
+
+Vamos a tomar a todos los niños que tengan anemia y se observará su nivel de la enfermedad.
+
+Definimos nuestra variable.
+
+X: numero de chicos a quien observar hasta que uno tenga anemia grave.
+
+Modelo teórico a utilizar.
+
+**Modelo geométrico**
+
+$$
+X\sim G(PG)
+$$
+
+Parámetro PG: probabilidad que el niño con anemia este en estado grave.
+
+```{r}
+XX <-0:Total-1
+plot(dgeom(XX, PG), type="h", lwd=2, col="blue", ylab = "P(X = x)", xlab = "Número de ensayos")
+```
+
+### Nivel educativo
+
+Tendremos en cuenta nuestro evento:
+
+E: tomar una mujer que participó en la encuesta y saber si máximo nivel de educación es secundaria.
+
+```{r}
+table(RECH5$nivel_educativo)
+```
+
+```{r}
+SE <- 451
+P <- 7357
+SEC <- 23642
+SU <- 4918
+
+Total_E <- SE + P + SEC + SU
+
+PSE <- SE/Total_E
+PP <- P/Total_E
+PSEC <- SEC/Total_E
+PSU <- SU/Total_E
+
+PSEC
+```
+
+La probabilidad de E: P(E) = 0.65
+
+Vamos a tomar a un conjunto al azar de 100 mujeres de la encuesta y veremos su nivel educativo máximo.
+
+Definimos nuestra variable.
+
+X: numero de ensayos hasta obtener una mujer cuyo mayor nivel educativo sea secundaria de un subconjunto de 100 de la muestra.
+
+Modelo teórico: hipergeométrico.
+
+$$
+X \sim H(N,r,n)
+$$
+
+Parámetro N: Es el total de mujeres que participaron en la encuesta.
+
+Parámetro r: Es el número de mujeres cuyo mayor nivel educativo es la secundaria.
+
+Parámetro n: Es el número de elementos que vamos a coger del total.
+
+```{r}
+XX <-0:100
+plot(dhyper(XX, SEC, Total_E - SEC, 100), type="h", lwd=2, col="blue", ylab = "P(X = x)", xlab = "Número de niños con secundaria alcanzada en una muestra de 100")
+```
+
+### Variables aleatorias continuas.
+
+```{r}
+table(RECH5$hemoglobina)
+```
+
+```{r}
+datos <- RECH5$hemoglobina
+
+barplot(table(datos), col = "skyblue", main = "Distribución de Hemoglobina", xlab = "Hemoglobina", ylab = "Frecuencia")
+```
+
+```{r}
+hist(RECH5$hemoglobina,breaks=100, freq=FALSE, main="Histograma de peso", xlab="Nivel de hemoglobina (g/dl))", col="green")
+lines(density(RECH5$hemoglobina, na.rm=TRUE),col="red",lwd=3)
+curve(dnorm(x, mean(RECH5$hemoglobina,na.rm=TRUE), sd(RECH5$hemoglobina,na.rm=TRUE)), lwd = 2, col = "blue", add = T)
+legend("topleft", c("curva observada", "curva (normal) teórca"),
+       lty = 1, lwd = 2, col = c("red", "blue"), bty = "n",
+       cex = 0.8)
+
+mu <- mean(RECH5$hemoglobina,na.rm=TRUE)
+mu
+sigma <- sd(RECH5$hemoglobina,na.rm=TRUE) 
+sigma
 ```
