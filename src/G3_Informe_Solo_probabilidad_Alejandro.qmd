@@ -1069,13 +1069,13 @@ Pagina para hacer notación de diversas operaciones:
 table(niños_region$anemia,niños_region$tipo_de_residencia)
 ```
 
-### Variables aleatorias discretas.
+### Variables aleatorias discretas
 
-#### Nivel de anemia.
+#### - Nivel de anemia.
 
 Vamos a tomar el siguiente evento:
 
-E: seleccionar un estudiante y que su nivel de anemia sea grave.
+E: Seleccionar un estudiante y que su nivel de anemia sea grave.
 
 ```{r}
 table(REC44$anemia)
@@ -1105,73 +1105,20 @@ X: numero de chicos a quien observar hasta que uno tenga anemia grave.
 
 Modelo teórico a utilizar.
 
-**Modelo geométrico**
+#### **Modelo geométrico:**
 
 $$
-X\sim G(p)
+X\sim G(PG)
 $$
 
-Parámetro p: probabilidad que el niño con anemia este en estado grave.
+Parámetro PG: probabilidad que el niño con anemia este en estado grave.
 
 ```{r}
-
-p <- PG # Probabilidad de que un niño tenga anemia grave en el modelo geométrico
-
-X <- 0:500
-
-
-# Graficar la distribución geométrica
-plot(X, dgeom(X, p), type = "h", lwd = 2, col = "blue",
-     ylab = "P(X = x)", xlab = "Número de chicos a observar hasta que uno tenga anemia grave",
-     main = "Distribución Geométrica",
-     sub = paste("Probabilidad de que un niño tenga anemia grave (PG):", p))
+XX <- 0:500
+plot(dgeom(XX, PG), type="h", lwd=2, col="blue", ylab = "P(X = x)", xlab = "Número de ensayos")
 ```
 
-#### Validamos las propiedades.
-
-```{r}
-# Parámetros del problema
-n <- Total # Tamaño de la muestra
-PG <- G / Total # Probabilidad de que un niño tenga anemia grave en el modelo geométrico
-
-# Cálculos teóricos para el modelo geométrico
-mu_geom <- 1 / PG
-variance_geom <- (1 - PG) / PG^2
-sigma_geom <- sqrt(variance_geom)
-cv_geom <- sigma_geom / mu_geom
-
-# Mostrar resultados para el modelo geométrico
-cat("Media teórica (modelo geométrico):", mu_geom, "\n")
-cat("Varianza teórica (modelo geométrico):", variance_geom, "\n")
-cat("Desviación estándar teórica (modelo geométrico):", sigma_geom, "\n")
-cat("Coeficiente de variación teórico (modelo geométrico):", cv_geom, "\n")
-
-# Cálculos prácticos (usando la función dgeom)
-probabilities_geom <- dgeom(0:n, PG) # Ajuste para la función dgeom
-sample_mean_geom <- sum(probabilities_geom * (1:n))
-sample_variance_geom <- sum(probabilities_geom * (1:n - sample_mean_geom)^2)
-sample_sd_geom <- sqrt(sample_variance_geom)
-sample_cv_geom <- sample_sd_geom / sample_mean_geom
-
-# Mostrar resultados prácticos para el modelo geométrico
-cat("\nMedia práctica (modelo geométrico):", sample_mean_geom, "\n")
-cat("Varianza práctica (modelo geométrico):", sample_variance_geom, "\n")
-cat("Desviación estándar práctica (modelo geométrico):", sample_sd_geom, "\n")
-cat("Coeficiente de variación práctico (modelo geométrico):", sample_cv_geom, "\n")
-
-```
-
-#### Experimento.
-
-Se quiere saber la probabilidad de que pasen más de 100 o menos niños de la muestra hasta encontrar un niño que tenga anemia en estado grave.
-
-```{r}
-pgeom(100, p)
-```
-
-Se ve que la probabilidad de encontrar un niño en ese estado es de 0.3102. Llega a ser casi $\frac{1}{3}$ de probabilidad.
-
-### Nivel educativo
+#### - Nivel educativo
 
 Tendremos en cuenta nuestro evento:
 
@@ -1203,7 +1150,7 @@ Vamos a tomar a un conjunto al azar de 100 mujeres de la encuesta y veremos su n
 
 Definimos nuestra variable.
 
-X: Número de ensayos hasta obtener una mujer cuyo mayor nivel educativo sea secundaria.
+X: numero de ensayos hasta obtener una mujer cuyo mayor nivel educativo sea secundaria de un subconjunto de 100 de la muestra.
 
 #### **Modelo hipergeométrico:**
 
@@ -1215,79 +1162,17 @@ Parámetro N: Es el total de mujeres que participaron en la encuesta.
 
 Parámetro r: Es el número de mujeres cuyo mayor nivel educativo es la secundaria.
 
-Parámetro n: Es el número de elementos que vamos a coger del total.
+Parámetro n: Es el número de elementos que vamos a tomar del total.
 
 ```{r}
 
-# Parámetros del problema
-n <- 100 # Tamaño de la muestra
-r <- SEC # Número de mujeres con educación secundaria en la población
-N <- Total_E # Tamaño total de la población
-
-XX <- 0:100
-
-# Graficar la distribución hipergeométrica
-plot(XX, dhyper(0:n, r, (N - r), n), type = "h", lwd = 2, col = "blue",
-     ylab = "P(X = x)", xlab = "Número de estudiantes con educación secundaria en una muestra de 100",
-     main = "Distribución Hipergeométrica",
-     sub = paste("Total de estudiantes con educación secundaria:", SEC))
-
-# Añadir líneas de referencia para la media y desviación estándar
-abline(v = mu, col = "red", lty = 2, lwd = 2)
-abline(v = c(mu - sigma, mu + sigma), col = "green", lty = 3, lwd = 2)
-
-# Añadir leyenda
-legend("topleft", legend = c("Probabilidades", "Media", "Media ± 1 Desviación Estándar"),
-       col = c("blue", "red", "green"), lty = c(1, 2, 3), lwd = 2)
-
-# Interpretación
-cat("La línea roja representa la media teórica de la distribución hipergeométrica.\n")
-cat("Las líneas verdes indican la media ± 1 desviación estándar.\n")
-cat("Esto ayuda a visualizar la dispersión de la distribución.\n")
-
+XX <-0:100
+plot(dhyper(XX, SEC, Total_E - SEC, 100), type="h", lwd=2, col="blue", ylab = "P(X = x)", xlab = "Número de niños con secundaria alcanzada en una muestra de 100")
 ```
 
-**Validamos propiedades.**
+### Variables aleatorias continuas
 
-```{r}
-
-# Cálculos teóricos
-mu <- n * r / N
-variance <- (n * r * (N - r) * (N - n)) / (N^2 * (N - 1))
-sigma <- sqrt(variance)
-cv <- sigma / mu
-
-# Mostrar resultados
-cat("Media teórica:", mu, "\n")
-cat("Varianza teórica:", variance, "\n")
-cat("Desviación estándar teórica:", sigma, "\n")
-cat("Coeficiente de variación teórico:", cv, "\n")
-
-# Cálculos prácticos (usando la función dhyper)
-probabilities <- dhyper(0:n, r, (N - r), n)
-sample_mean <- sum(probabilities * (0:n))
-sample_variance <- sum(probabilities * (0:n - sample_mean)^2)
-sample_sd <- sqrt(sample_variance)
-sample_cv <- sample_sd / sample_mean
-
-# Mostrar resultados
-cat("\nMedia práctica:", sample_mean, "\n")
-cat("Varianza práctica:", sample_variance, "\n")
-cat("Desviación estándar práctica:", sample_sd, "\n")
-cat("Coeficiente de variación práctico:", sample_cv, "\n")
-```
-
-#### Experimento
-
-Se quiere conocer la probabilidad de obtener a lo menos 50 mujeres con nivel de educación alcanzado secundaria de 100 cogidas de la muestra.
-
-```{r}
-phyper(49, r, N, n, lower.tail = F)
-```
-
-Viendo el resultado, es muy poco probable encontrar en ese grupo reducido más de 50 mujeres cuya educación llegó a secundaria.
-
-### Variables aleatorias continuas.
+#### - Nivel de hemoglobina
 
 ```{r}
 table(RECH5$hemoglobina)
@@ -1300,8 +1185,11 @@ hist(RECH5$hemoglobina_ajustada_latitud,breaks=50, freq=FALSE, main="Histograma 
 ```
 
 ```{r}
+
 mu <- mean(RECH5$hemoglobina_ajustada_latitud, na.rm=TRUE);
 mu
+median(RECH5$hemoglobina_ajustada_latitud, na.rm=TRUE)
+
 sigma <- sd(RECH5$hemoglobina_ajustada_latitud, na.rm=TRUE);
 sigma
 
@@ -1312,13 +1200,15 @@ legend("topleft", c("curva observada", "curva (normal) teórica"), lty=1, lwd=2,
 
 hist(RECH5$hemoglobina_ajustada_latitud, breaks=50, freq=FALSE, main="Histograma de hemoglobina", xlab="Nivel de hemoglobina (g/dl)", col="green")
 lines(density(RECH5$hemoglobina_ajustada_latitud, na.rm=TRUE), col="red", lwd=3)
-curve(dnorm(x, 12.81,  1.11), lwd=2, col="blue", add=TRUE)
+curve(dnorm(x, 12.81,  1.12), lwd=2, col="blue", add=TRUE)
 legend("topleft", c("curva observada", "curva (normal) teórica"), lty=1, lwd=2, col=c("red", "blue"), bty="n", cex=0.8)
 ```
 
 Por la forma que tiene el histograma es semejante a una campana. Además que la media y mediana son cercanas. Con estas pruebas, podemos asemejar la variable del nivel de hemoglobina ajustada a un modelo normal.
 
-$$ X \sim N(\mu,\sigma) $$
+$$
+X \sim N(\mu,\sigma)
+$$
 
 Parámetro $\mu$ : Es el valor de la media de la variable.
 
@@ -1327,28 +1217,25 @@ Parámetro $\sigma$ :
 #### - Peso
 
 ```{r}
+
 table(RECH5$peso)
 ```
 
 ```{r}
+
 datos <- RECH5$peso
 
 hist(RECH5$peso,breaks=50, freq=FALSE, main="Histograma de peso", xlab="Peso (kg)", col="green")
 ```
 
 ```{r}
+
 mu <- mean(RECH5$peso, na.rm=TRUE);
 mu
 sigma <- sd(RECH5$peso, na.rm=TRUE);
 sigma
 
-hist(RECH5$peso, breaks=50, freq=FALSE, main="Histograma de peso", xlab="Peso (kg)", col="green")
-lines(density(RECH5$peso, na.rm=TRUE), col="red", lwd=3)
-curve(dnorm(x, mu,  sigma), lwd=2, col="blue", add=TRUE)
-legend("topleft", c("curva observada", "curva (normal) teórica"), lty=1, lwd=2, col=c("red", "blue"), bty="n", cex=0.8)
-
-
-hist(RECH5$peso, breaks=50, freq=FALSE, main="Histograma de peso", xlab="Peso (kg)", col="green")
+hist(RECH5$peso, breaks=50, freq=FALSE, ylim=c(0,0.04) ,main="Histograma de peso", xlab="Peso (kg)", col="green")
 lines(density(RECH5$peso, na.rm=TRUE), col="red", lwd=3)
 curve(dnorm(x, 60.8,  12.5), lwd=2, col="blue", add=TRUE)
 legend("topleft", c("curva observada", "curva (normal) teórica"), lty=1, lwd=2, col=c("red", "blue"), bty="n", cex=0.8)
