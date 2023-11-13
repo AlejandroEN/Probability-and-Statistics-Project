@@ -856,9 +856,9 @@ Ahora vamos a escoger dos pares de eventos, uno será independiente y el otro no
 
 ### Eventos no independientes:
 
--   A1. Seleccionar una mujer de la muestra que este embarazada, sin reposición.
+-   A1. Seleccionar una mujer de la muestra que este embarazada.
 
--   A2. Seleccionar una mujer de la muestra que no este embarazada, sin reposición.
+-   A2. Seleccionar una mujer de la muestra que no este embarazada.
 
 Comprobamos que estos son no independientes.
 
@@ -869,14 +869,14 @@ table(RECH5$is_embarazada)
 ```
 
 ```{r}
-A1 <-nrow(filter(RECH5, is_embarazada == 1))/nrow(RECH5)
+A1 <-nrow(filter(RECH5, is_embarazada == "no embarazada"))/nrow(RECH5)
 A1
 ```
 
 Probabilidad del evento A2.
 
 ```{r}
-A2 <-nrow(filter(RECH5, is_embarazada == 0))/nrow(RECH5)
+A2 <-nrow(filter(RECH5, is_embarazada == "embarazada"))/nrow(RECH5)
 A2
 ```
 
@@ -885,23 +885,15 @@ Vamos a probar que ambos eventos no son independientes, comprobando que son mutu
 Probabilidad que ocurra A1 y A2.
 
 ```{r}
-'A1_&_A2' <- nrow(filter(RECH5, is_embarazada == 1 & is_embarazada == 0))
+'A1_&_A2' <- nrow(filter(RECH5, is_embarazada == "embarazada" & is_embarazada == "no embarazada"))
 `A1_&_A2`
 ```
 
-Vemos que la intersección de ambos elementos es igual a cero. Eso lo vamos a demostrar.
-
-Al ser independientes
+Vemos que la intersección de ambos elementos es igual a cero. Al no haber intersección entre ambos eventos, se puede decir que son eventos no independientes, no cumpliendo la siguiente demostración:
 
 $$
-A
+P(A1 \cap A2) = P(A1)*P(A2)\\ P(A1)>0 \\ P(A2) >0
 $$
-
-Demostrar con lo de ME =/= Ev. Ind.
-
-Vemos que A1 dado A2 no resulta igual a A1. Si se hubiese cumplido, estaríamos ante eventos independientes. Por ello, estamos ante eventos no independientes. Eso significa que si un evento ocurre dado otro, el primero si afecta a su predecesor. Eso se debe a que el experimento toma un valor que no se va a reponer, o sea, por cada evento que siga, disminuye el tamaño de la muestra.
-
-Como un evento afecta al otro, estamos hablando de eventos no independientes. O sea, son eventos mutuamente excluyentes.
 
 Dado que ambos eventos son mutuamente excluyentes y abarcan todo el espacio muestral de un experimento, estamos tratando con una partición. En este contexto, podemos aplicar el teorema de la probabilidad total para analizar la situación.
 
@@ -1073,45 +1065,62 @@ table(niños_region$anemia,niños_region$tipo_de_residencia)
 
 #### Nivel de anemia.
 
-Vamos a tomar el siguiente evento:
+Vamos a tomar el siguiente evento (que vendrá a ser nuestro éxito):
 
-E: seleccionar un estudiante y que su nivel de anemia sea grave.
+**G**: Seleccionar a un estudiante con anemia cuyo nivel sea clasificado como grave.
 
 ```{r}
 table(REC44$anemia)
 ```
 
 ```{r}
+
 L <- 5114
 M <- 2199
 G <- 27
-Total <- L+M+G
-PL <- L/Total
-PM <- M/Total
-PG <- G/Total
+
+Total <- L + M + G
+
+PL <- L / Total
+PM <- M / Total
+PG <- G / Total
+
+cat("Probabilidad de anemia leve (PL):", PL, "\n")
+cat("Probabilidad de anemia moderada (PM):", PM, "\n")
+cat("Probabilidad de anemia grave (PG):", PG, "\n")
 ```
 
 ```{r}
 PG
 ```
 
-La probabilidad de E: P(E) = 0.0038
+La probabilidad de ocurra nuestro éxito (G):
 
-Vamos a tomar a todos los niños que tengan anemia y se observará su nivel de la enfermedad.
+$$
+P(p) = \frac{27}{7340}
+$$
 
-Definimos nuestra variable.
+La probabilidad de ocurra nuestro fracaso:
 
-X: numero de chicos a quien observar hasta que uno tenga anemia grave.
+$$
+P(q) = 1- P(p) = \frac{7313}{7340}
+$$
 
-Modelo teórico a utilizar.
+-   **Definimos nuestra variable aleatoria discreta:**
 
-**Modelo geométrico**
+**X**: Número de niños observados hasta que uno tenga anemia grave.
+
+-   **Vamos a utilizar el modelo geométrico:**
 
 $$
 X\sim G(p)
 $$
 
-Parámetro p: probabilidad que el niño con anemia este en estado grave.
+-   **Definimos parámetros:**
+
+**p**: Probabilidad que el niño tenga anemia grave.
+
+Observemos un gráfico de distribución geométrica en torno a nuestro evento de interés **G:**
 
 ```{r}
 
@@ -1127,7 +1136,7 @@ plot(X, dgeom(X, p), type = "h", lwd = 2, col = "blue",
      sub = paste("Probabilidad de que un niño tenga anemia grave (PG):", p))
 ```
 
-#### Validamos las propiedades.
+-   **Validamos las propiedades de esperanza, varianza, desviación estándar y coeficiente de variación:**
 
 ```{r}
 # Parámetros del problema
@@ -1161,67 +1170,86 @@ cat("Coeficiente de variación práctico (modelo geométrico):", sample_cv_geom,
 
 ```
 
+Los resultados teóricos y prácticos en el modelo geométrico coinciden, demostrando la eficacia del modelo para describir el número de niños observados hasta encontrar uno con anemia grave. La coherencia en estos indicadores estadísticos respalda la validez de la aproximación geométrica en este contexto.
+
 #### Experimento.
 
-Se quiere saber la probabilidad de que pasen más de 100 o menos niños de la muestra hasta encontrar un niño que tenga anemia en estado grave.
+Se quiere averiguar la probabilidad de que se necesite observar más de 100 niños o menos para encontrar uno con anemia grave.
 
 ```{r}
-pgeom(100, p)
+pgeom(100 - 1, p)
 ```
 
-Se ve que la probabilidad de encontrar un niño en ese estado es de 0.3102. Llega a ser casi $\frac{1}{3}$ de probabilidad.
+La probabilidad de encontrar a un niño en estado grave es de aproximadamente 0.31, lo que equivale a casi 1/3 de probabilidad.
 
 ### Nivel educativo
 
-Tendremos en cuenta nuestro evento:
+Tendremos en cuenta nuestro evento (que vendrá a ser nuestro éxito):
 
-E: tomar una mujer que participó en la encuesta y saber si máximo nivel de educación es secundaria.
+**S**: Seleccionar a una madre que participó en la encuesta y determinar si su nivel educativo máximo alcanzado es secundaria.
 
 ```{r}
 table(RECH5$nivel_educativo)
 ```
 
 ```{r}
-SE <- 451
+
+N <- 451
 P <- 7357
-SEC <- 23642
-SU <- 4918
+S <- 23642
+U <- 4918
 
-Total_E <- SE + P + SEC + SU
+Total_E <- N + P + S + U
 
-PSE <- SE/Total_E
-PP <- P/Total_E
-PSEC <- SEC/Total_E
-PSU <- SU/Total_E
+PN <- N / Total_E
+PP <- P / Total_E
+PS <- S / Total_E
+PU <- U / Total_E
 
-PSEC
+verificacion_probabilidades_E <- PN + PP + PS + PU
+
+cat("Probabilidad de no educación (PN):", PN, "\n")
+cat("Probabilidad de educación primaria (PP):", PP, "\n")
+cat("Probabilidad de educación secundaria (PS):", PS, "\n")
+cat("Probabilidad de educación superior (PU):", PU, "\n")
 ```
 
-La probabilidad de E: P(E) = 0.65
+La probabilidad de que ocurra el éxito (**S**):
 
-Vamos a tomar a un conjunto al azar de 100 mujeres de la encuesta y veremos su nivel educativo máximo.
+$$
+P(S) = \frac{23642}{36368}
+$$
 
-Definimos nuestra variable.
+La probabilidad de que ocurra el fracaso:
 
-X: Número de ensayos hasta obtener una mujer cuyo mayor nivel educativo sea secundaria.
+$$
+P(q) = 1 - P(p) = \frac{12726}{36368}
+$$
 
-#### **Modelo hipergeométrico:**
+-   **Definimos nuestra variable aleatoria discreta:**
+
+**X**: Número de madres cuyo mayor nivel educativo alcanzado sea la secundaria en una determinada muestra.
+
+-   **Vamos a utilizar el modelo hipergeométrico:**
 
 $$
 X \sim H(N,r,n)
 $$
 
-Parámetro N: Es el total de mujeres que participaron en la encuesta.
+-   **Definimos parámetros:**
 
-Parámetro r: Es el número de mujeres cuyo mayor nivel educativo es la secundaria.
+**N**: Representa el total de mujeres que participaron en la encuesta.
 
-Parámetro n: Es el número de elementos que vamos a coger del total.
+**r**: Indica el número de mujeres cuyo nivel educativo máximo es la secundaria.
+
+**n**: Es el número de elementos que seleccionaremos de este conjunto total.
+
+Observemos una gráfica de distribución hipergeométrica en torno a los parámetros descritos y a nuestro evento de interés **S** en una muestra de 100:
 
 ```{r}
 
-# Parámetros del problema
 n <- 100 # Tamaño de la muestra
-r <- SEC # Número de mujeres con educación secundaria en la población
+r <- S # Número de mujeres con educación secundaria en la población
 N <- Total_E # Tamaño total de la población
 
 XX <- 0:100
@@ -1230,7 +1258,47 @@ XX <- 0:100
 plot(XX, dhyper(0:n, r, (N - r), n), type = "h", lwd = 2, col = "blue",
      ylab = "P(X = x)", xlab = "Número de estudiantes con educación secundaria en una muestra de 100",
      main = "Distribución Hipergeométrica",
+     sub = paste("Total de estudiantes con educación secundaria:", S))
+```
+
+-   **Validamos las propiedades de esperanza, varianza, desviación estándar y coeficiente de variación:**
+
+```{r}
+
+# Cálculos teóricos
+mu <- n * r / N
+variance <- (n * r * (N - r) * (N - n)) / (N^2 * (N - 1))
+sigma <- sqrt(variance)
+cv <- sigma / mu
+
+cat("Media teórica:", mu, "\n")
+cat("Varianza teórica:", variance, "\n")
+cat("Desviación estándar teórica:", sigma, "\n")
+cat("Coeficiente de variación teórico:", cv, "\n")
+
+# Cálculos prácticos (usando la función dhyper)
+probabilities <- dhyper(0:n, r, (N - r), n)
+sample_mean <- sum(probabilities * (0:n))
+sample_variance <- sum(probabilities * (0:n - sample_mean)^2)
+sample_sd <- sqrt(sample_variance)
+sample_cv <- sample_sd / sample_mean
+
+cat("\nMedia práctica:", sample_mean, "\n")
+cat("Varianza práctica:", sample_variance, "\n")
+cat("Desviación estándar práctica:", sample_sd, "\n")
+cat("Coeficiente de variación práctico:", sample_cv, "\n")
+```
+
+Los resultados teóricos y prácticos en el modelo hipergeométrico coinciden, demostrando la eficacia del modelo para describir el número de niños observados hasta encontrar uno con anemia grave. La coherencia en estos indicadores estadísticos respalda la validez de la aproximación hipergeométrica en este contexto.
+
+```{r}
+
+# Graficar la distribución hipergeométrica
+plot(XX, dhyper(0:n, r, (N - r), n), type = "h", lwd = 2, col = "blue",
+     ylab = "P(X = x)", xlab = "Número de estudiantes con educación secundaria en una muestra de 100",
+     main = "Distribución Hipergeométrica",
      sub = paste("Total de estudiantes con educación secundaria:", SEC))
+
 
 # Añadir líneas de referencia para la media y desviación estándar
 abline(v = mu, col = "red", lty = 2, lwd = 2)
@@ -1244,59 +1312,22 @@ legend("topleft", legend = c("Probabilidades", "Media", "Media ± 1 Desviación 
 cat("La línea roja representa la media teórica de la distribución hipergeométrica.\n")
 cat("Las líneas verdes indican la media ± 1 desviación estándar.\n")
 cat("Esto ayuda a visualizar la dispersión de la distribución.\n")
-
 ```
 
-**Validamos propiedades.**
+-   **Experimento**
+
+Deseamos determinar la probabilidad de seleccionar al menos 50 mujeres cuyo nivel educativo máximo sea la secundaria de una muestra de 100 mujeres.
 
 ```{r}
-
-# Cálculos teóricos
-mu <- n * r / N
-variance <- (n * r * (N - r) * (N - n)) / (N^2 * (N - 1))
-sigma <- sqrt(variance)
-cv <- sigma / mu
-
-# Mostrar resultados
-cat("Media teórica:", mu, "\n")
-cat("Varianza teórica:", variance, "\n")
-cat("Desviación estándar teórica:", sigma, "\n")
-cat("Coeficiente de variación teórico:", cv, "\n")
-
-# Cálculos prácticos (usando la función dhyper)
-probabilities <- dhyper(0:n, r, (N - r), n)
-sample_mean <- sum(probabilities * (0:n))
-sample_variance <- sum(probabilities * (0:n - sample_mean)^2)
-sample_sd <- sqrt(sample_variance)
-sample_cv <- sample_sd / sample_mean
-
-# Mostrar resultados
-cat("\nMedia práctica:", sample_mean, "\n")
-cat("Varianza práctica:", sample_variance, "\n")
-cat("Desviación estándar práctica:", sample_sd, "\n")
-cat("Coeficiente de variación práctico:", sample_cv, "\n")
+phyper(50, r, N - r, n, lower.tail = F)
 ```
 
-#### Experimento
-
-Se quiere conocer la probabilidad de obtener a lo menos 50 mujeres con nivel de educación alcanzado secundaria de 100 cogidas de la muestra.
-
-```{r}
-phyper(49, r, N, n, lower.tail = F)
-```
-
-Viendo el resultado, es muy poco probable encontrar en ese grupo reducido más de 50 mujeres cuya educación llegó a secundaria.
+Dado el resultado, es altamente probable encontrar en esta muestra de tamaño reducido a más de 50 mujeres cuyo máximo nivel educativo fue la secundaria. Esto se debe a la alta probabilidad del evento **S** (0.65).
 
 ### Variables aleatorias continuas.
 
 ```{r}
 table(RECH5$hemoglobina)
-```
-
-```{r}
-datos <- RECH5$hemoglobina_ajustada_latitud
-
-hist(RECH5$hemoglobina_ajustada_latitud,breaks=50, freq=FALSE, main="Histograma de hemoglobina", xlab="Nivel de hemoglobina (g/dl))", col="green")
 ```
 
 ```{r}
