@@ -245,9 +245,13 @@ REC0111 <- rename(REC0111,
                   region = V024,
                   tipo_de_residencia = V102)
 
-REC0111$cuestionario_individual_id <- as.character(REC0111$cuestionario_individual_id)
+REC0111$cuestionario_individual_id <- 
+  as.character(REC0111$cuestionario_individual_id)
+
 REC0111$cuestionario_hogar_id <- as.character(REC0111$cuestionario_hogar_id)
+
 REC0111$region <- as.character(REC0111$region)
+
 REC0111$tipo_de_residencia <- as.character(REC0111$tipo_de_residencia)
 
 region_names <- c("1" = "Amazonas",
@@ -435,8 +439,8 @@ REC44 <- mutate(REC44,
 RECH23 <- select(RECH23_raw, HHID, HV201, HV270)
 
 RECH23 <- rename(RECH23,
-                cuestionario_hogar_id = HHID,
-                indice_riqueza = HV270)
+                 cuestionario_hogar_id = HHID,
+                 indice_riqueza = HV270)
 
 RECH23$cuestionario_hogar_id <- as.character(RECH23$cuestionario_hogar_id)
 RECH23$indice_riqueza <- as.character(RECH23$indice_riqueza)
@@ -488,12 +492,12 @@ RECH5 <- filter(RECH5, estado_medicion == 0)
 RECH5 <- filter(RECH5, estado_medicion_hemoglobina == 0)
 
 RECH5 <- RECH5 %>%
-         mutate(talla = ifelse(talla >= 999, NA, talla),
-                # Convertir 'hemoglobina' a una escala razonable
-                hemoglobina = hemoglobina / 10,
-                # Convertir 'hemoglobina' a una escala razonable
-                hemoglobina_ajustada_latitud =
-                hemoglobina_ajustada_latitud / 10) %>% na.omit()
+          mutate(talla = ifelse(talla >= 999, NA, talla),
+                 # Convertir 'hemoglobina' a una escala razonable
+                 hemoglobina = hemoglobina / 10,
+                 # Convertir 'hemoglobina' a una escala razonable
+                 hemoglobina_ajustada_latitud = 
+                   hemoglobina_ajustada_latitud / 10) %>% na.omit()
 
 # Verificar el resumen del marco de datos después de las transformaciones
 
@@ -704,8 +708,6 @@ gt(Region_vs_Nivel_de_Anemia) %>%
         columns = vars(Grave, Leve,Moderado),
         decimals = 0
     )
-
-
 ```
 
 ```{r}
@@ -740,7 +742,9 @@ niños$Category <- category_names[niños$region]
 REC0111$Category <- category_names[REC0111$region]
 total_anemia <- table(niños$Category)
 
-pie(total_anemia, main = "Total de niños con anemia por categoría", col = rainbow(length(total_anemia)))
+pie(total_anemia,
+    main = "Total de niños con anemia por categoría",
+    col = rainbow(length(total_anemia)))
 ```
 
 En la distribución por regiones, Lima es la que tiene mayor cantidad de observaciones. Eso claramente por la cantidad de población que se concentra ahí.
@@ -749,27 +753,29 @@ En cuanto a separación por costa, sierra y selva, es en la sierra donde hay mas
 
 ```{r}
 
-RECH5$cuestionario_individual_id <- sub("^0+", "", RECH5$cuestionario_individual_id)
+RECH5$cuestionario_individual_id <-
+  sub("^0+",
+      "",
+      RECH5$cuestionario_individual_id)
 
-Anemia_Riqueza_Madres <- merge(RECH5, RECH23, by.x = "cuestionario_individual_id", by.y = "cuestionario_hogar_id")
+Anemia_Riqueza_Madres <- merge(RECH5,
+                               RECH23,
+                               by.x = "cuestionario_individual_id",
+                               by.y = "cuestionario_hogar_id")
 
-
-Anemia_Riqueza_Madres$indice_riqueza <- as.factor(Anemia_Riqueza_Madres$indice_riqueza)
+Anemia_Riqueza_Madres$indice_riqueza <- 
+  as.factor(Anemia_Riqueza_Madres$indice_riqueza)
 
 Anemia_Riqueza_Madres$anemia <- as.factor(Anemia_Riqueza_Madres$anemia)
 
 Riqueza_vs_Nivel_de_Anemia <- data.frame(
-  Riqueza = c("Muy Pobre","Pobre", "Medio", "Rico", "Muy Rico"),
-
-
+  Riqueza = c("Muy Pobre", "Pobre", "Medio", "Rico", "Muy Rico"),
   Leve = c(193, 259, 100, 269, 157),
-
   Moderado = c(1327, 2461, 565, 1888, 900),
-
   Grave = c(17, 21, 11, 20, 14)
 )
 
-Riqueza_vs_Nivel_de_Anemia$Total <- rowSums(Riqueza_vs_Nivel_de_Anemia[,2:4])
+Riqueza_vs_Nivel_de_Anemia$Total <- rowSums(Riqueza_vs_Nivel_de_Anemia[, 2:4])
 
 
 gt(Riqueza_vs_Nivel_de_Anemia) %>%
@@ -789,9 +795,14 @@ gt(Riqueza_vs_Nivel_de_Anemia) %>%
         decimals = 0
     )
 
-Riqueza_vs_Nivel_de_Anemia$Porcentaje_Leve <- Riqueza_vs_Nivel_de_Anemia$Leve / Riqueza_vs_Nivel_de_Anemia$Total * 100
-Riqueza_vs_Nivel_de_Anemia$Porcentaje_Moderado <- Riqueza_vs_Nivel_de_Anemia$Moderado / Riqueza_vs_Nivel_de_Anemia$Total * 100
-Riqueza_vs_Nivel_de_Anemia$Porcentaje_Grave <- Riqueza_vs_Nivel_de_Anemia$Grave / Riqueza_vs_Nivel_de_Anemia$Total * 100
+Riqueza_vs_Nivel_de_Anemia$Porcentaje_Leve <- 
+  Riqueza_vs_Nivel_de_Anemia$Leve / Riqueza_vs_Nivel_de_Anemia$Total * 100
+
+Riqueza_vs_Nivel_de_Anemia$Porcentaje_Moderado <-
+  Riqueza_vs_Nivel_de_Anemia$Moderado / Riqueza_vs_Nivel_de_Anemia$Total * 100
+
+Riqueza_vs_Nivel_de_Anemia$Porcentaje_Grave <-
+  Riqueza_vs_Nivel_de_Anemia$Grave / Riqueza_vs_Nivel_de_Anemia$Total * 100
 
 print(Riqueza_vs_Nivel_de_Anemia)
 ```
@@ -800,40 +811,77 @@ Gráfico donde se tomen las tres regiones con mas casos en infantes para luego c
 
 ```{r}
 
-regiones_casos_infantes <- merge(REC0111, (select(REC44, anemia, cuestionario_individual_id))[REC44$anemia!="0.sin_anemia",], by= "cuestionario_individual_id")
-regiones_casos_infantes_orden <- sort(table(regiones_casos_infantes$region), decreasing = TRUE)
-tres_regiones_mas_casos_i <- head(regiones_casos_infantes_orden,3)
-tres_regiones_mas_casos_i <- regiones_casos_infantes[(regiones_casos_infantes$region %in% names(tres_regiones_mas_casos_i)),]
-tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region, tres_regiones_mas_casos_i$anemia))
-```
+regiones_casos_infantes <- 
+  merge(REC0111, 
+        (select(REC44,
+                anemia,
+                cuestionario_individual_id))[REC44$anemia!="0.sin_anemia", ],
+        by = "cuestionario_individual_id")
 
-```{r}
+regiones_casos_infantes_orden <- sort(table(regiones_casos_infantes$region),
+                                      decreasing = TRUE)
 
-barplot(t(tabla_tres_regiones_i), col = 2:4, xlab="Regiones",
-ylab="Nivel de anemia", ylim=c(0,1000), main="Distribución según
-anemia y region")
-legend("topright",legend=c("Leve","Moderado","Grave"),
-col=2:4, cex= 1.0, pch=15,title="Nivel de anemia")
+tres_regiones_mas_casos_i <- head(regiones_casos_infantes_orden, 3)
+
+tres_regiones_mas_casos_i <- 
+  regiones_casos_infantes[(regiones_casos_infantes$region %in% 
+                             names(tres_regiones_mas_casos_i)), ]
+
+tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region,
+                                tres_regiones_mas_casos_i$anemia))
+
+barplot(t(tabla_tres_regiones_i),
+        col = 2:4,
+        xlab = "Regiones",
+        ylab = "Nivel de anemia",
+        ylim = c(0, 1000),
+        main = "Distribución según anemia y region")
+
+legend("topright",
+       legend = c("Leve", "Moderado", "Grave"),
+       col = 2:4,
+       cex = 1.0,
+       pch = 15,
+       title = "Nivel de anemia")
 ```
 
 Hacemos el mismo proceso con las mujeres seleccionadas.
 
 ```{r}
 
-regiones_casos_mujeres <- merge((select(RECH5, anemia, cuestionario_individual_id))[RECH5$anemia!="0.sin_anemia",], REC0111, by.x= "cuestionario_individual_id", by.y="cuestionario_hogar_id")
-regiones_casos_mujeres_orden <- sort(table(regiones_casos_mujeres$region), decreasing = TRUE)
-tres_regiones_mas_casos_m <- head(regiones_casos_mujeres_orden,3)
-tres_regiones_mas_casos_m <- regiones_casos_mujeres[(regiones_casos_mujeres$region %in% names(tres_regiones_mas_casos_m)),]
-tabla_tres_regiones_m <- table(tres_regiones_mas_casos_m$region, tres_regiones_mas_casos_m$anemia)
-```
+regiones_casos_mujeres <- 
+  merge((select(RECH5,
+                anemia,
+                cuestionario_individual_id))[RECH5$anemia != "0.sin_anemia", ],
+        REC0111,
+        by.x = "cuestionario_individual_id",
+        by.y = "cuestionario_hogar_id")
 
-```{r}
+regiones_casos_mujeres_orden <- sort(table(regiones_casos_mujeres$region),
+                                     decreasing = TRUE)
 
-barplot(t(tabla_tres_regiones_m), col = 2:4, xlab="Region",
-ylab="Nivel de anemia", ylim=c(0,2000), main="Distribución según
-anemia y region")
-legend("topright",legend=c("Leve","Moderado","Grave"),
-col=2:4, cex= 1.0, pch=15,title="Nivel de anemia")
+tres_regiones_mas_casos_m <- head(regiones_casos_mujeres_orden, 3)
+
+tres_regiones_mas_casos_m <- 
+  regiones_casos_mujeres[(regiones_casos_mujeres$region %in% 
+                            names(tres_regiones_mas_casos_m)), ]
+
+tabla_tres_regiones_m <- table(tres_regiones_mas_casos_m$region,
+                               tres_regiones_mas_casos_m$anemia)
+
+barplot(t(tabla_tres_regiones_m),
+        col = 2:4,
+        xlab = "Region",
+        ylab = "Nivel de anemia",
+        ylim = c(0,2000),
+        main = "Distribución según anemia y region")
+
+legend("topright",
+       legend = c("Leve","Moderado","Grave"),
+       col = 2:4,
+       cex = 1.0,
+       pch = 15,
+       title = "Nivel de anemia")
 ```
 
 Se nota que para ambos casos, siempre los casos leves son los predominantes.
@@ -844,12 +892,17 @@ Boxplots entre hemoglobina e indice de riqueza con las mujeres
 
 ```{r}
 
-ds_hemoglobina_riqueza <- merge((select(RECH5, hemoglobina, cuestionario_individual_id)), RECH23, by.x= "cuestionario_individual_id", by.y="cuestionario_hogar_id")
-```
+ds_hemoglobina_riqueza <- 
+  merge((select(RECH5,
+                hemoglobina,
+                cuestionario_individual_id)),
+        RECH23,
+        by.x = "cuestionario_individual_id",
+        by.y = "cuestionario_hogar_id")
 
-```{r}
-
-boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_riqueza, xlab="Indice de riqueza", ylab="Nivel de hemoglobina (gr/dl)")
+boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_riqueza,
+        xlab = "Indice de riqueza",
+        ylab = "Nivel de hemoglobina (gr/dl)")
 ```
 
 De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
