@@ -11,7 +11,7 @@ toc: true
 
 ![](images/UTEC.png){fig-align="left" width="252"}
 
-# Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022
+# Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022 aaaaaaa
 
 ## Introducción
 
@@ -122,7 +122,7 @@ Debido a la extensión de nuestras tablas, solo incluiremos las variables por ta
 Características de las mujeres de 12 a 49 años.
 
 | Nombre |                     Descripción                     |  Tipo de variable  |
-|:------:|:---------------------------------------------------:|:------------------:|
+|:-------------:|:----------------------------------------:|:-------------:|
 |  HHID  |               Identificación del caso               | Categórica nominal |
 |  HA1   |              Edad de la mujer en años               | Numérica discreta  |
 |  HA2   |                 Peso en kilogramos                  | Numérica continua  |
@@ -151,7 +151,7 @@ Relación entre identificación del cuestionario individual e identificación de
 Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
 
 | Nombre |                   Descripción                    |  Tipo de variable  |
-|:------:|:------------------------------------------------:|:------------------:|
+|:-------------:|:----------------------------------------:|:--------------:|
 |  HW1   |                  Edad en meses                   | Numérica discreta  |
 |  HW2   |                Peso en kilogramos                | Numérica continua  |
 |  HW3   |               Talla en centímetros               | Numérica continua  |
