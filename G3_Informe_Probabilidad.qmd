@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-![](images/UTEC.png){fig-align="left" width="252"}
+![](UTEC.png){fig-align="left" width="252"}
 
 # [Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022]{.underline}
 
@@ -34,7 +34,7 @@ La anemia es un problema de salud pública de gran relevancia en nuestro país. 
 
 La forma en que nos organizamos en hacer este proyecto se puede visualizar en este diagrama de Gantt:
 
-![](images/gantt.png){width="692"}
+![](gantt.png)
 
 Este diagrama fue realizado con el siguiente código:
 
@@ -126,12 +126,12 @@ Cargamos también los datasets.
 
 ```{r, message=FALSE}
 
-REC91_raw <- read_csv("../data/raw_data/REC91.csv")
-REC0111_raw <- read_csv("../data/raw_data/REC0111.csv")
-RECH5_raw <- read_csv("../data/raw_data/RECH5.csv")
-REC44_raw <- read_csv("../data/raw_data/REC44.csv")
-RECH23_raw <- read_csv("../data/raw_data/RECH23.csv")
-RECH0_raw <- read_csv("../data/raw_data/RECH0.csv")
+REC91_raw <- read_csv("REC91.csv")
+REC0111_raw <- read_csv("REC0111.csv")
+RECH5_raw <- read_csv("RECH5.csv")
+REC44_raw <- read_csv("REC44.csv")
+RECH23_raw <- read_csv("RECH23.csv")
+RECH0_raw <- read_csv("RECH0.csv")
 ```
 
 ### Resumen de datos y obtención de variables pertinentes
@@ -727,7 +727,7 @@ boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_rique
 
 De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
 
-# 2. Probabilidades
+# Probabilidades
 
 Para esta parte vamos a usar nuestros conocimientos sobre probabilidades para trabajar con los eventos que seleccionamos.
 
