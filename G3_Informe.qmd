@@ -1,5 +1,5 @@
 ---
-title: "Anemia en infantes y madres"
+title: "Anemia en infantes y mujeres"
 format: html
 editor: visual
 authors:
@@ -88,9 +88,18 @@ mermaid("gantt
 
 ### Instalación y carga de librerías
 
+```{r echo=FALSE,message=FALSE}
+if(!require(readr)){install.packages('readr')}
+if(!require(dplyr)){install.packages('dplyr')}
+if(!require(ggplot2)){install.packages('ggplot2')}
+if(!require(gt)){install.packages('gt')}
+```
+
 ```{r}
-
-
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gt)
 ```
 
 ## 2. Datos
@@ -101,13 +110,11 @@ En esta sección, detallaremos cómo se llevaron a cabo la recolección de datos
 
 Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y de Salud Familiar realizada en mayo de 2022 en el Perú.
 
-Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y madres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
+Para nuestra investigación, accedimos a la base de datos del Instituto Nacional de Estadística e Informática (INEI) que contenía la información recopilada en esta encuesta. Se seleccionaron módulos específicos que eran relevantes para nuestro estudio sobre la anemia en niños y mujeres. Estos módulos incluían información sobre las características de los hogares y sus integrantes. El acceso a esta base de datos nos proporcionó una amplia cantidad de información relevante y detallada para nuestros objetivos de investigación.
 
 ### Población objetivo, muestra y muestreo
 
--   **Población:** Hogares particulares y sus miembros obtenidos de la Encuesta Demográfica y de Salud Familiar. (en base a nuestro estudio)
-
-    -   **Tamaño de la población:** 36.650
+-   **Población:** Miembros pertenecientes a los hogares de la Encuesta Demográfica y de Salud Familiar. (en base a nuestro estudio)
 
 -   **Muestra:** Mujeres de 12 a 49 años de edad y niños o niñas menores de 5 años residentes de los hogares particulares recogidos por la encuesta.
 
@@ -133,10 +140,10 @@ Características de las mujeres de 12 a 49 años.
 |:------:|:---------------------------------------------------:|:------------------:|
 |  HHID  |               Identificación del caso               | Categórica nominal |
 |  HA1   |              Edad de la mujer en años               | Numérica discreta  |
-|  HA2   |                 Peso en kilogramos                  | Numérica continua  |
+|  HA2   |           Peso de la mujer en kilogramos            | Numérica continua  |
 |  HA13  |     Resultados de la medición de la entrevista      | Categórica nominal |
 |  HA53  |             Nivel de hemoglobina (g/dl)             | Numérica continua  |
-|  HA54  |              ¿Actualmente embarazada?               | Categórica nominal |
+|  HA54  |          Veracidad del estado de embarazo           | Categórica nominal |
 |  HA55  |       Resultado de la medición de hemoglobina       | Categórica nominal |
 |  HA56  | Nivel de hemoglobina ajustado por la altitud (g/dl) | Numérica continua  |
 |  HA57  |                   Nivel de anemia                   | Categórica ordinal |
@@ -150,7 +157,7 @@ Relación entre identificación del cuestionario individual e identificación de
 |:------:|:------------------------------------------:|:------------------:|
 | CASEID | Identificación del cuestionario individual | Categórica nominal |
 |  HHID  | Identificación del cuestionario del hogar  | Categórica nominal |
-|  V024  |                   Región                   | Categórica nominal |
+|  V024  |     Región donde se encuentra el hogar     | Categórica nominal |
 |  V102  |        Tipo de lugar de residencia         | Categórica nominal |
 |  V113  |      Abastecimiento principal de agua      | Categórica nominal |
 
@@ -178,19 +185,7 @@ Estos contienen las características del modo de vida de los que respondieron la
 |  HHID  | Identificación del cuestionario del hogar | Categórica nominal |
 | HV270  |             Índice de riqueza             | Categórica ordinal |
 
-### Carga de librerías y *datasets*
-
-Primero cargamos las librerías necesarias para trabajar
-
-```{r, message=FALSE}
-
-library(readr)
-library(dplyr)
-library(ggplot2)
-library(gt)
-```
-
-Cargamos también los *datasets*.
+Cargamos los *datasets*.
 
 ```{r, message=FALSE}
 
@@ -212,8 +207,6 @@ Realizaremos un resumen de los datos de cada tabla y, además, comenzaremos con 
 
 summary(RECH0_raw)
 ```
-
-Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
 
 ```{r}
 
@@ -237,8 +230,6 @@ str(RECH0)
 
 summary(REC0111_raw)
 ```
-
-Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
 
 ```{r}
 
@@ -305,8 +296,6 @@ REC0111$tipo_de_residencia[REC0111$tipo_de_residencia %in% c(2)] <- "rural"
 
 summary(RECH5_raw)
 ```
-
-Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
 
 ```{r}
 
@@ -383,8 +372,6 @@ RECH5 <- mutate(RECH5,
 
 summary(REC44_raw)
 ```
-
-Seleccionamos las variables pertinentes en nuestro análisis, les cambiamos de nombres y, de ser necesario, cambiamos el tipo de dato.
 
 ```{r}
 
@@ -466,11 +453,9 @@ RECH23$indice_riqueza[RECH23$indice_riqueza %in% c(5)] <- "5.muy_rico"
 
 ### Limpieza de datos
 
-Vamos a descartar las observaciones que no tengan información.
-
 #### RECH0
 
-En este *dataset* se encuentra un atributo que determina el si se realizo la entrevista en el hogar seleccionado o no, siendo la opción 1 que sí esta completada. Vamos a requerir las encuestas completadas.
+Obtenemos las entrevistas completadas (cuyo estado es 1).
 
 ```{r}
 
@@ -479,7 +464,7 @@ RECH0 <- filter(RECH0, estado_entrevista == 1)
 
 #### REC0111
 
-En este *dataset* también se encuentran el estado de las entrevistas, donde el valor 1 significa que esta completada.
+Obtenemos las entrevistas completadas (cuyo estado es 1).
 
 ```{r}
 
@@ -488,9 +473,7 @@ REC0111 <- filter(REC0111, estado_entrevista == 1)
 
 #### RECH5
 
-Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina,* en donde el valor 0 significa que si se completo la medición de cada uno.
-
-Existe un valor que rellena los espacios de ciertos atributos debido a que, aun por aceptar ser parte de una medición, no se cumplió, y cuyo espacio se llena con el máximo número que se puede tomar con la cantidad máxima de dígitos disponibles que toma el atributo. Estos los vamos a filtrar con *talla*, que al contener el valor no considerado (999 para la ocasión), da señal que la medición general al final no se pudo tomar. También se va a cambiar el valor de la hemoglobina y hemoglobina ajustada para que se encuentren en la magnitud de gramos de hemoglobina por decilitro, además de filtrar a los atributos que aun presenten datos faltantes.
+Filtramos a los casos que aceptaron la prueba de hemoglobina, y de ellos tomamos a quienes hayan obtenido 999 en alguna prueba (ellos si aceptaron participar, pero no asistieron a la prueba) y se vuelven NAs. También se va a cambiar el valor de la hemoglobina y hemoglobina ajustada para que se encuentren en la magnitud de gramos de hemoglobina por decilitro, además de filtrar a los atributos que aún presenten datos faltantes.
 
 ```{r}
 
@@ -512,7 +495,7 @@ summary(RECH5)
 
 ### REC44
 
-Realizamos un filtro en función de la variable *estado_medicion* y *estado_medicion_hemoglobina.*
+Filtramos los casos que si hayan cumplido
 
 Convertimos 'hemoglobina' y 'hemoglobina_ajustada_latitud' a una escala razonable.
 
@@ -546,7 +529,7 @@ str(RECH23)
 
 #### Anemia en niños
 
-Promedio de edad, talla, peso y hemoglobina en niños con anemia leve, moderada y grave.
+Hallamos el promedio de edad, talla, peso y hemoglobina en niños con anemia leve, moderada y grave para comparar la información de los tres tipos de anemia.
 
 ```{r}
 
@@ -575,37 +558,109 @@ print(niños_promedios_anemia_moderada)
 print(niños_promedios_anemia_grave)
 ```
 
-#### Anemia en madres
+Representamos de forma gráfica las edades de cada niño con nivel de anemia.
 
-Promedio de edad, talla, peso y hemoglobina en madres con anemia leve, moderada y grave.
+```{r}
+hist(niños_anemia_leve$edad, main = "Edad de los infantes con anemia leve en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue")
+abline(v=mean(niños_anemia_leve$edad),col="red",lwd=4)
+abline(v=median(niños_anemia_leve$edad),col="orange",lwd=3)
+abline(v=mean(niños_anemia_leve$edad)-1*sd(niños_anemia_leve$edad),col="chartreuse4",lwd=4)
+abline(v=mean(niños_anemia_leve$edad)+1*sd(niños_anemia_leve$edad),col="chartreuse4",lwd=4)
+abline(v=quantile(niños_anemia_leve$edad,0.25,type=3),col="deeppink",lwd=4)
+abline(v=quantile(niños_anemia_leve$edad,0.75,type=3),col="darkorchid4",lwd=4)
+legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+```
+
+```{r}
+hist(niños_anemia_moderada$edad, main = "Edad de los infantes con anemia moderada en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue")
+abline(v=mean(niños_anemia_moderada$edad),col="red",lwd=4)
+abline(v=median(niños_anemia_moderada$edad),col="orange",lwd=3)
+abline(v=mean(niños_anemia_moderada$edad)-1*sd(niños_anemia_moderada$edad),col="chartreuse4",lwd=4)
+abline(v=mean(niños_anemia_moderada$edad)+1*sd(niños_anemia_moderada$edad),col="chartreuse4",lwd=4)
+abline(v=quantile(niños_anemia_moderada$edad,0.25,type=3),col="deeppink",lwd=4)
+abline(v=quantile(niños_anemia_moderada$edad,0.75,type=3),col="darkorchid4",lwd=4)
+legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+```
+
+```{r}
+hist(niños_anemia_grave$edad, main = "Edad de los infantes con anemia grave en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue")
+abline(v=mean(niños_anemia_grave$edad),col="red",lwd=4)
+abline(v=median(niños_anemia_grave$edad),col="orange",lwd=3)
+abline(v=mean(niños_anemia_grave$edad)-1*sd(niños_anemia_grave$edad),col="chartreuse4",lwd=4)
+abline(v=mean(niños_anemia_grave$edad)+1*sd(niños_anemia_grave$edad),col="chartreuse4",lwd=4)
+abline(v=quantile(niños_anemia_grave$edad,0.25,type=3),col="deeppink",lwd=4)
+abline(v=quantile(niños_anemia_grave$edad,0.75,type=3),col="darkorchid4",lwd=4)
+legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+```
+
+Para los casos leves de infantes la mayor concentración se encuentra por los 10 y 45 meses; para los casos moderados, por los 5 y 35 meses; y, para los casos graves, por los 7 y 30 años. Para los tres casos, la información se encuentra muy dispersa, reconociendo solo al gráfico de los casos de anemia moderada como una campana asimétrica hacia la izquierda.
+
+#### Anemia en mujeres
+
+Hallamos el promedio de edad, talla, peso y hemoglobina en muejres con anemia leve, moderada y grave para comparar la información de los tres tipos de anemia.
 
 ```{r}
 
-madres_anemia_leve = filter(RECH5, anemia == "1.leve")
-madres_anemia_moderada = filter(RECH5, anemia == "2.moderado")
-madres_anemia_grave = filter(RECH5, anemia == "3.grave")
+mujeres_anemia_leve = filter(RECH5, anemia == "1.leve")
+mujeres_anemia_moderada = filter(RECH5, anemia == "2.moderado")
+mujeres_anemia_grave = filter(RECH5, anemia == "3.grave")
 
-madres_promedios_anemia_leve <- 
-  data.frame(colMeans(madres_anemia_leve[ ,
-                                          sapply(madres_anemia_leve,
+mujeres_promedios_anemia_leve <- 
+  data.frame(colMeans(mujeres_anemia_leve[ ,
+                                          sapply(mujeres_anemia_leve,
                                                  is.numeric)]))
 
-madres_promedios_anemia_moderada <-
-  data.frame(colMeans(madres_anemia_moderada[ ,
-                                              sapply(madres_anemia_moderada, 
+mujeres_promedios_anemia_moderada <-
+  data.frame(colMeans(mujeres_anemia_moderada[ ,
+                                              sapply(mujeres_anemia_moderada, 
                                                      is.numeric)]))
 
-madres_promedios_anemia_grave <- 
-  data.frame(colMeans(madres_anemia_grave[ ,
-                                           sapply(madres_anemia_grave,
+mujeres_promedios_anemia_grave <- 
+  data.frame(colMeans(mujeres_anemia_grave[ ,
+                                           sapply(mujeres_anemia_grave,
                                                   is.numeric)]))
 
-print(madres_promedios_anemia_leve)
-print(madres_promedios_anemia_moderada)
-print(madres_promedios_anemia_grave)
+print(mujeres_promedios_anemia_leve)
+print(mujeres_promedios_anemia_moderada)
+print(mujeres_promedios_anemia_grave)
 ```
 
-Análisis de las tablas. Se obtuvo el promedio de datos de los participantes por su nivel de anemia. Esto nos da una idea de por qué valores de edad, talla, peso y hemoglobina se puede encontrar un caso de anemia en estado leve, moderado o grave.
+Representación gráfica.
+
+```{r}
+hist(mujeres_anemia_leve$edad, main = "Edad de las mujeres con anemia leve en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue", xlim=c(10,50))
+abline(v=mean(mujeres_anemia_leve$edad),col="red",lwd=4)
+abline(v=median(mujeres_anemia_leve$edad),col="orange",lwd=3)
+abline(v=mean(mujeres_anemia_leve$edad)-1*sd(mujeres_anemia_leve$edad),col="chartreuse4",lwd=4)
+abline(v=mean(mujeres_anemia_leve$edad)+1*sd(mujeres_anemia_leve$edad),col="chartreuse4",lwd=4)
+abline(v=quantile(mujeres_anemia_leve$edad,0.25,type=3),col="deeppink",lwd=4)
+abline(v=quantile(mujeres_anemia_leve$edad,0.75,type=3),col="darkorchid4",lwd=4)
+legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+```
+
+```{r}
+hist(mujeres_anemia_moderada$edad, main = "Edad de las muejeres con anemia moderada en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue", ylim=c(0,250))
+abline(v=mean(mujeres_anemia_moderada$edad),col="red",lwd=4)
+abline(v=median(mujeres_anemia_moderada$edad),col="orange",lwd=3)
+abline(v=mean(mujeres_anemia_moderada$edad)-1*sd(mujeres_anemia_moderada$edad),col="chartreuse4",lwd=4)
+abline(v=mean(mujeres_anemia_moderada$edad)+1*sd(mujeres_anemia_moderada$edad),col="chartreuse4",lwd=4)
+abline(v=quantile(mujeres_anemia_moderada$edad,0.25,type=3),col="deeppink",lwd=4)
+abline(v=quantile(mujeres_anemia_moderada$edad,0.75,type=3),col="darkorchid4",lwd=4)
+legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+```
+
+```{r}
+hist(mujeres_anemia_grave$edad, main = "Edad de las mujeres con anemia grave en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue", ylim=c(0,30))
+abline(v=mean(mujeres_anemia_grave$edad),col="red",lwd=4)
+abline(v=median(mujeres_anemia_grave$edad),col="orange",lwd=3)
+abline(v=mean(mujeres_anemia_grave$edad)-1*sd(mujeres_anemia_grave$edad),col="chartreuse4",lwd=4)
+abline(v=mean(mujeres_anemia_grave$edad)+1*sd(mujeres_anemia_grave$edad),col="chartreuse4",lwd=4)
+abline(v=quantile(mujeres_anemia_grave$edad,0.25,type=3),col="deeppink",lwd=4)
+abline(v=quantile(mujeres_anemia_grave$edad,0.75,type=3),col="darkorchid4",lwd=4)
+legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+```
+
+Para los casos leves de mujeres la mayor concentración se encuentra por los 17 y 38 años; para los casos moderados, por los 20 y 35 meses; y, para los casos graves, por los 22 y 44 años. Igualmente los datos se encuentran muy dispersos, reconociendo que para los casos de anemia leve, hay un descenso mientras aumenta la edad.
 
 ### Análisis de interacción
 
@@ -784,15 +839,15 @@ RECH5$cuestionario_individual_id <-
       "",
       RECH5$cuestionario_individual_id)
 
-Anemia_Riqueza_Madres <- merge(RECH5,
+Anemia_Riqueza_Mujeres <- merge(RECH5,
                                RECH23,
                                by.x = "cuestionario_individual_id",
                                by.y = "cuestionario_hogar_id")
 
-Anemia_Riqueza_Madres$indice_riqueza <- 
-  as.factor(Anemia_Riqueza_Madres$indice_riqueza)
+Anemia_Riqueza_Mujeres$indice_riqueza <- 
+  as.factor(Anemia_Riqueza_Mujeres$indice_riqueza)
 
-Anemia_Riqueza_Madres$anemia <- as.factor(Anemia_Riqueza_Madres$anemia)
+Anemia_Riqueza_Mujeres$anemia <- as.factor(Anemia_Riqueza_Mujeres$anemia)
 
 Riqueza_vs_Nivel_de_Anemia <- data.frame(
   Riqueza = c("Muy Pobre", "Pobre", "Medio", "Rico", "Muy Rico"),
@@ -807,7 +862,7 @@ Riqueza_vs_Nivel_de_Anemia$Total <- rowSums(Riqueza_vs_Nivel_de_Anemia[, 2:4])
 gt(Riqueza_vs_Nivel_de_Anemia) %>%
     tab_header(
         title = "Tabla de Contingencia",
-        subtitle = "Riqueza vs Nivel de Anemia en Madres"
+        subtitle = "Riqueza vs Nivel de Anemia en Mujeres"
     ) %>%
     cols_label(
         Riqueza = "Riqueza",
