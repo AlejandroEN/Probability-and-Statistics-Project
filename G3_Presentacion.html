@@ -363,15 +363,38 @@ Escobar Núñez, Alejandro Ismael
 <section id="análisis-descriptivo-univariado" class="slide level2">
 <h2>2. Análisis Descriptivo Univariado</h2>
 <h3 id="variables-numéricas">2.1 Variables numéricas</h3>
-<div class="quarto-background" data-background="custom-background.jpg">
-<div class="quarto-layout">
-<pre><code>&lt;img src="nive_hemoglobina_niños.png" alt="Image 1"&gt;</code></pre>
-</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="nivel_hemoglobina_niños.png" width="450"></p>
+</figure>
 </div>
 <h3 id="variables-categóricas">2.2 Variables categóricas</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="nivel_anemia_niños.PNG" width="450"></p>
+</figure>
+</div>
 </section>
 <section id="análisis-descriptivo-bivariado" class="slide level2">
 <h2>3. Análisis Descriptivo Bivariado</h2>
+<h3 id="gráficas-relacionadas-a-los-niños">3.1 Gráficas relacionadas a los niños</h3>
+<div class="r-stack">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="edad_niños_anemia_moderada.PNG" class="fragment" width="663"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="indice_riqueza_x_hemoglobina.png" class="fragment" width="665"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="tipo_residencia_x_frecuencia.png" class="fragment" width="661"></p>
+</figure>
+</div>
+</div>
 </section>
 <section id="gráficas-adu" class="slide level2">
 <h2>4. Gráficas ADU</h2>
@@ -386,13 +409,13 @@ Escobar Núñez, Alejandro Ismael
 <p><code>prob_riqueza &lt;- table(RECH23$indice_riqueza) / sum(table(RECH23$indice_riqueza))</code></p>
 <p>Graficamos <code>prob_riqueza</code>:</p>
 
-<img data-src="G3_Presentacion_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"></section>
+<img data-src="probabilidad_riqueza.png" class="r-stretch quarto-figure-center"></section>
 <section id="probabilidad-condicional---eventos-dependientes" class="slide level2">
 <h2>7. Probabilidad Condicional - Eventos Dependientes</h2>
 <p>Seleccionamos dos eventos dependientes:</p>
 <ul>
-<li><p><strong>A1</strong>: Seleccionar una mujer de la muestra que esté embarazada.</p></li>
-<li><p><strong>A2</strong>: Seleccionar una mujer de la muestra que no esté embarazada.</p></li>
+<li><p><span class="math inline">\(A1\)</span>: Seleccionar una mujer de la muestra que esté embarazada.</p></li>
+<li><p><span class="math inline">\(A2\)</span>: Seleccionar una mujer de la muestra que no esté embarazada.</p></li>
 </ul>
 <p>Demostramos su dependencia:</p>
 <p><code>'A1_&amp;_A2' &lt;- nrow(filter(RECH5, is_embarazada == "embarazada" &amp; is_embarazada == "no embarazada")) = 0</code></p>
@@ -401,7 +424,7 @@ P(A1 \cap A2) = 0
 \]</span></p>
 <p>Definimos la condición:</p>
 <ul>
-<li><strong>B</strong>: La mujer seleccionada tiene como mayor nivel educativo alcanzado la secundaria.</li>
+<li><span class="math inline">\(B\)</span>: La mujer seleccionada tiene como mayor nivel educativo alcanzado la secundaria.</li>
 </ul>
 <p>Calculamos las probabilidades utilizando el teorema de Bayes:</p>
 <p><span class="math display">\[
@@ -418,18 +441,15 @@ P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}
 <h2>8. Probabilidad Condicional - Eventos Independientes</h2>
 <p>Seleccionamos dos eventos independientes:</p>
 <ul>
-<li><p><strong>B1</strong>: Seleccionar un niño que tenga anemia dado que vive en un lugar urbano.</p></li>
-<li><p><strong>B2</strong>: Seleccionar un niño que tenga anemia dado que vive en un lugar rural.</p></li>
+<li><p><span class="math inline">\(B1\)</span>: Seleccionar un niño que tenga anemia dado que vive en un lugar urbano.</p></li>
+<li><p><span class="math inline">\(B2\)</span>: Seleccionar un niño que tenga anemia dado que vive en un lugar rural.</p></li>
 </ul>
 <p>Demostramos su independencia:</p>
-<p><span class="math display">\[P(B1 \cap B2) = P(B1)*P(B2)
-\]</span></p>
+<p><span class="math display">\[P(B1 \cap B2) = P(B1) \times P(B2)\]</span></p>
 <p><code>choose((3223 + 1232 + 14),1) * choose((1891 + 967 + 13), 1)/(choose(13570, 1)*choose(6385, 1) = 0.1480822</code></p>
 <p><code>B1 * B2 = 0.1480822</code></p>
 <p>Dado que son independientes, se cumple lo siguiente:</p>
-<p><span class="math display">\[
-P(B1 \mid B2) = B1
-\]</span></p>
+<p><span class="math display">\[P(B1 \mid B2) = B1\]</span></p>
 <p><code>prob_B2_dado_B1 &lt;- B1_interseccion_B2 / B2</code></p>
 <p><code>prob_B2_dado_B1 = 0.3293294</code></p>
 <p><code>B1 = 0.3293294</code></p>
@@ -442,34 +462,34 @@ P(B2 \mid B1) = B2
 </section>
 <section id="variables-aleatorias-discretas---número-de-madres-con-un-determinado-nivel-educativo" class="slide level2">
 <h2>9. Variables Aleatorias Discretas - Número de madres con un determinado Nivel Educativo</h2>
-<p>Vamos a tomar el evento <strong>S</strong>, ‘Seleccionar a una madre que participó en la encuesta y su nivel educativo máximo alcanzado es secundaria’, como nuestro éxito.</p>
+<p>Vamos a tomar el evento <span class="math inline">\(S\)</span>, ‘Seleccionar a una madre que participó en la encuesta y su nivel educativo máximo alcanzado es secundaria’, como nuestro éxito.</p>
 <p><span class="math display">\[
 P(S) = 0.65
 \]</span></p>
-<p><strong>X</strong>: Número de madres cuyo mayor nivel educativo alcanzado sea la secundaria en una muestra sin reemplazo de 100.</p>
+<p><span class="math inline">\(X\)</span>: Número de madres cuyo mayor nivel educativo alcanzado sea la secundaria en una muestra sin reemplazo de 100.</p>
 <p>Vamos a utilizar el modelo hipergeométrico:</p>
 <p><span class="math display">\[
 X\sim G(N, \; r, \; n)
 \]</span></p>
 
-<img data-src="G3_Presentacion_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"><p><span class="math display">\[
+<img data-src="distribuición_hipergeométrica.png" width="549" class="r-stretch quarto-figure-center"><p><span class="math display">\[
 P(X \geq 50)
 \]</span> <code>phyper(50, r, N - r, n, lower.tail = F) = 0.9985772</code></p>
 </section>
 <section id="variables-aleatorias-continuas---hemoglobina-ajustada-en-función-de-la-latitud-gdl" class="slide level2">
 <h2>10. Variables Aleatorias Continuas - Hemoglobina ajustada en función de la latitud (g/dl)</h2>
-<p><strong>X</strong>: Nivel de hemoglobina en g/dl de una madre encuestada.</p>
+<p><span class="math inline">\(X\)</span>: Nivel de hemoglobina en g/dl de una madre encuestada.</p>
 <p>Hallamos el tipo de distribución de nuestra variable aleatoria continua utilizando la librería <code>rriskDistributions</code>:</p>
 
-<img data-src="VAC_Graphic.png" class="r-stretch"><p>El tipo de distribución que más se ajusta a nuestra variable es la distribución normal:</p>
+<img data-src="VAC_Graphic.png" class="r-stretch quarto-figure-center"><p>El tipo de distribución que más se ajusta a nuestra variable es la distribución normal:</p>
 <p><span class="math display">\[ X \sim N(\mu, \; \sigma^2 ) \]</span></p>
-<p>En <strong>R</strong>, los parámetros de una distribución normal son la <strong>media</strong> y la <strong>desviación estándar</strong>.</p>
+<p>En <span class="math inline">\(R\)</span>, los parámetros de una distribución normal son la <strong>media</strong> y la <strong>desviación estándar</strong>.</p>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
 <p>Gráfico de una distribución de probabilidad normal:</p>
 
-<img data-src="G3_Presentacion_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"><p><span class="math display">\[
+<img data-src="curva_teórica_normal.png" class="r-stretch quarto-figure-center"><p><span class="math display">\[
 P(X &lt; 12)
 \]</span></p>
 <p><code>pnorm(12, mu_h,  sigma_h) = 0.2947574</code></p>
@@ -691,44 +711,6 @@ P(X &lt; 12)
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
