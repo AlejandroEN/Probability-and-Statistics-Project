@@ -1,0 +1,195 @@
+---
+format:
+  revealjs: 
+    theme: night
+editor: visual
+fontsize: 13pt
+---
+
+## Introducción
+
+## Análisis Descriptivo
+
+## Análisis Descriptivo Univariado
+
+## Análisis Descriptivo Bivariado
+
+## Gráficas ADU
+
+## Gráficas ADB
+
+## Probabilidad Empírica - Índice de Riqueza
+
+Utilizamos la variable Índice de Riqueza e identificamos las probabilidades de sus eventos mediante la siguiente fórmula:
+
+$$ P(x) = f(x)/n $$
+
+`prob_riqueza <- table(RECH23$indice_riqueza) / sum(table(RECH23$indice_riqueza))`
+
+Graficamos `prob_riqueza`:
+
+```{r}
+
+prob_anemia <- c(0.3150637, 0.2510422, 0.1867001, 0.1395003, 0.1076937)
+colores <- c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854")
+categorias <- c("Muy Pobre", "Pobre", "Medio", "Rico", "Muy Rico")
+
+par(bg = "black", col.axis = "white", col.lab = "white", col.main = "white")
+
+barplot(prob_anemia, col = rev(colores), names.arg = categorias,
+        main = "Probabilidad de Riqueza", 
+        xlab = "Índice de Riqueza", ylab = "Probabilidad", border = "black", 
+        space = 0.2)  
+```
+
+## Probabilidad Condicional - Eventos Dependientes
+
+Seleccionamos dos eventos dependientes:
+
+-   **A1**: Seleccionar una mujer de la muestra que esté embarazada.
+
+-   **A2**: Seleccionar una mujer de la muestra que no esté embarazada.
+
+Demostramos su dependencia:
+
+`'A1_&_A2' <- nrow(filter(RECH5, is_embarazada == "embarazada" & is_embarazada == "no embarazada")) = 0`
+
+$$
+P(A1 \cap A2) = 0
+$$
+
+Definimos la condición:
+
+-   **B**: La mujer seleccionada tiene como mayor nivel educativo alcanzado la secundaria.
+
+Calculamos las probabilidades utilizando el teorema de bayes:
+
+$$
+P(A \mid B) = \frac{P(B \mid A)*P(A)}{P(B)}
+$$
+
+$$ P(A1 \mid B) = 0.02863548 $$
+
+`prob_A1_dado_B <- prob_B_dado_A1_x_prob_A1 / B`
+
+`prob_A1_dado_B = 0.2863548`
+
+$$P(A2 \mid B) = 0.9713645 $$
+
+`prob_A2_dado_B <- prob_b_dado_a2_x_prob_a2/B`
+
+`prob_A2_dado_B = 0.9713645`
+
+## Probabilidad Condicional - Eventos Independientes
+
+Seleccionamos dos eventos independientes:
+
+-   **B1**: Seleccionar un niño que tenga anemia dado que vive en un lugar urbano.
+
+-   **B2**: Seleccionar un niño que tenga anemia dado que vive en un lugar rural.
+
+Demostramos su independencia:
+
+$$P(B1 \cap B2) = P(B1)*P(B2)
+$$
+
+`choose((3223 + 1232 + 14),1) * choose((1891 + 967 + 13), 1)/(choose(13570, 1)*choose(6385, 1) = 0.1480822`
+
+`B1 * B2 = 0.1480822`
+
+Dado que son independientes, se cumple lo siguiente:
+
+$$
+P(B1 \mid B2) = B1
+$$
+
+`prob_B2_dado_B1 <- B1_interseccion_B2 / B2`
+
+`prob_B2_dado_B1 = 0.3293294`
+
+`B1 = 0.3293294`
+
+$$
+P(B2 \mid B1) = B2
+$$
+
+`prob_B1_dado_B2 <- B1_interseccion_B2 / B1 = 0.449476`
+
+`prob_B1_dado_B2 = 0.449476`
+
+`B2 = 0.449476`
+
+## Variables Aleatorias Discretas - Número de madres con un determinado Nivel Educativo
+
+Vamos a tomar el evento **S**, 'Seleccionar a una madre que participó en la encuesta y su nivel educativo máximo alcanzado es secundaria', como nuestro éxito.
+
+$$
+P(S) = 0.65
+$$
+
+**X**: Número de madres cuyo mayor nivel educativo alcanzado sea la secundaria en una muestra sin reemplazo de 100.
+
+Vamos a utilizar el modelo hipergeométrico:
+
+$$
+X\sim G(N, r, n)
+$$
+
+```{r}
+
+n <- 100
+r <- 23642
+N <- 36368
+
+XX <- 0:100
+par(bg = "black", col.axis = "white", col.lab = "white", col.main = "white")
+
+par(mar = c(5, 4, 4, 2) + 0.1)
+
+plot(XX, dhyper(0:n, r, (N - r), n), type = "h", lwd = 2, col = "orange",
+     ylab = "P(X = x)", xlab = "Número de estudiantes con educación secundaria en una muestra de 100",
+     main = "Distribución Hipergeométrica",
+     sub = paste("Total de estudiantes con educación secundaria:", N))
+```
+
+$$
+P(X \geq 50)
+$$ `phyper(50, r, N - r, n, lower.tail = F) = 0.9985772`
+
+## Variables Aleatorias Continuas - Hemoglobina ajustada en función de la latitud (g/dl)
+
+**X**: Nivel de hemoglobina en g/dl de una madre encuestada.
+
+Hallamos el tipo de distribución de nuestra variable aleatoria continua utilizando la librería `rriskDistributions`:
+
+![](images/NORMAL%20EVALUATION.PNG)
+
+El tipo de distribución que más se ajusta a nuestra variable es la distribución normal:
+
+$$ X \sim N(\mu,\sigma^2 ) $$
+
+En **R**, los parámetros de una distribución normal son la **media** y la **desviación estándar**.
+
+## 
+
+Gráfico de una distribución de probabilidad normal:
+
+```{r}
+
+mu_h <- 12.685317
+sigma_h <- 1.270189
+
+par(bg = "black", col.axis = "white", col.lab = "white", col.main = "white")
+
+curve(dnorm(x, mu_h, sigma_h), lwd = 2, col = "orange", ylim = c(0, 0.35), ylab = "Densidad", xlab = "Hemoglobina (g/dl)", main = "Curva Teórica (Normal)", xlim = c(1, 20))
+
+
+```
+
+$$
+P(X < 12)
+$$
+
+`pnorm(12, mu_h,  sigma_h) = 0.2947574`
+
+## Cierre
