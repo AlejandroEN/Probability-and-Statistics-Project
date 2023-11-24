@@ -162,7 +162,7 @@ $$ `phyper(50, r, N - r, n, lower.tail = F) = 0.9985772`
 
 Hallamos el tipo de distribución de nuestra variable aleatoria continua utilizando la librería `rriskDistributions`:
 
-![](images/NORMAL%20EVALUATION.PNG)
+![](VAC_Graphic.png)
 
 El tipo de distribución que más se ajusta a nuestra variable es la distribución normal:
 
