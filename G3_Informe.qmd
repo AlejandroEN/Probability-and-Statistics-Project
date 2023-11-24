@@ -178,6 +178,47 @@ kable(REC44 %>%
 
 #### 3.2.1 Nivel de anemia en niños
 
+```{r}
+
+barras <- barplot(table(REC44$anemia), 
+                  cex.names = 0.7,
+                  col = c("#FF5733", "#FFD700", "#7FFF00", "#00BFFF"), 
+                  main = "Niveles de anemia en niñes",
+                  xlab = "Nivel de anemia", 
+                  ylab = "Frecuencia",
+                  cex.main = 0.8)
+
+text(x = barras,
+     y = sort(REC44$anemia), 
+     pos = 1, 
+     cex = 1, 
+     col = "black", 
+     labels = c("Sin anemia", "Leve", "Moderado", "Grave"))
+```
+
+#### 3.2.2 Nivel de anemia en mujeres
+
+```{r}
+
+barras <- barplot(table(RECH5$anemia), 
+                  cex.names = 0.7,
+                  col = c("#FF5733", "#FFD700", "#7FFF00", "#00BFFF"), 
+                  main = "Niveles de anemia en mujeres",
+                  xlab = "Nivel de anemia", 
+                  ylab = "Frecuencia",
+                  cex.main = 0.8)
+
+text(x = barras,
+     y = sort(RECH5$anemia), 
+     pos = 1, 
+     cex = 1, 
+     col = "black", 
+     labels = c("Sin anemia", "Leve", "Moderado", "Grave"))
+```
+
+## 4. Análisis descriptivo de interacción
+ - - - aquí comienza
+
 #### 3.1.1 Nivel de anemia en niños
 
 Hallamos el promedio de la edad, la talla, el peso y la hemoglobina en niños con anemia leve, moderada y grave para comparar la información de los tres tipos de anemia.
@@ -590,7 +631,7 @@ legend("topright",
 
 Para los casos leves de mujeres la mayor concentración se encuentra por los 17 y 38 años; para los casos moderados, por los 20 y 35 meses; y, para los casos graves, por los 22 y 44 años. Igualmente los datos se encuentran muy dispersos, reconociendo que para los casos de anemia leve, hay un descenso mientras aumenta la edad.
 
-## 4. Análisis descriptivo de interacción
+ - - - - aquí termina
 
 Analizaremos la relación entre el tipo de residencia y el nivel de anemia de los niños.
 
