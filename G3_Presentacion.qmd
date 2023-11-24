@@ -7,6 +7,7 @@ authors:
 format:
   revealjs:
     theme: night
+    embed-resources: true
 editor: visual
 fontsize: 13pt
 ---

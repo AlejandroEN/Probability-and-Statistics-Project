@@ -1,6 +1,8 @@
 ---
 title: "Anemia en infantes y mujeres"
-format: html
+format: 
+  html:
+    embed-resources: true
 editor: visual
 authors:
   - name: "Colque Ordoñez, Patrick Fabrizio "
