@@ -199,7 +199,7 @@ $X$: Número de madres cuyo mayor nivel educativo alcanzado sea la secundaria en
 Vamos a utilizar el modelo hipergeométrico:
 
 $$
-X\sim G(N, \; r, \; n)
+X\sim H(N, \; r, \; n)
 $$
 
 ![](distribuición_hipergeométrica.png){fig-align="center" width="549"}
