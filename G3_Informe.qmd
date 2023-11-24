@@ -38,7 +38,7 @@ La totalidad de la información recopilada en esta encuesta se encuentra disponi
 
 ### 1.4 Instalación y carga de librerías
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 if(!require(readr)) {install.packages("readr")}
 if(!require(dplyr)) {install.packages("dplyr")}
@@ -99,15 +99,15 @@ RECH0 <- read_csv("RECH0_clean.csv")
 
 ### 3.1 Variables numéricas
 
-#### 3.1.1 Hemoglobina de infantes
+#### 3.1.1 Hemoglobina de niños
 
 ```{r, echo=FALSE}
 
 ggplot(filter(REC44, !is.na(hemoglobina)), aes(x = "", y = hemoglobina)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
-  labs(title = "Boxplot del Nivel de Hemoglobina",
+  labs(title = "Hemoglobina en niños",
        x = "",
-       y = "Nivel de Hemoglobina (g/dl)") +
+       y = "Hemoglobina (g/dl)") +
   theme_minimal()
 ```
 
@@ -124,15 +124,15 @@ kable(REC44 %>%
                   Q3 = round(quantile(hemoglobina, 0.75, type = 3), 2)))
 ```
 
-#### 3.1.2 Peso de infantes
+#### 3.1.2 Peso de niños
 
 ```{r, echo=FALSE}
 
 ggplot(filter(REC44, !is.na(peso)), aes(x = "", y = peso)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
-  labs(title = "Boxplot del Nivel de peso",
+  labs(title = "Peso de niños",
        x = "",
-       y = "Nivel de peso kg") +
+       y = "Peso (kg)") +
   theme_minimal()
 ```
 
@@ -149,15 +149,15 @@ kable(REC44 %>%
                   Q3 = round(quantile(peso, 0.75, type = 3), 2)))
 ```
 
-#### 3.1.3 Talla de infantes
+#### 3.1.3 Talla de niños
 
 ```{r, echo=FALSE}
 
 ggplot(filter(REC44, !is.na(talla)), aes(x = "", y = talla)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
-  labs(title = "Boxplot del Nivel de talla",
+  labs(title = "Talla de niños",
        x = "",
-       y = "Nivel de talla (cm)") +
+       y = "Talla (cm)") +
   theme_minimal()
 ```
 
@@ -180,9 +180,9 @@ kable(REC44 %>%
 
 ggplot(filter(RECH5, !is.na(hemoglobina)), aes(x = "", y = hemoglobina)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
-  labs(title = "Boxplot del Nivel de Hemoglobina",
+  labs(title = "Hemoglobina en mujeres",
        x = "",
-       y = "Nivel de Hemoglobina (g/dl)") +
+       y = "Hemoglobina (g/dl)") +
   theme_minimal()
 ```
 
@@ -193,17 +193,11 @@ Descriptores numéricos:
 kable(RECH5 %>% 
 
         summarize(Media = round(mean(hemoglobina), 2),
-
                   Mediana = round(median(hemoglobina), 2),
-
                   Mínimo = min(hemoglobina), Máximo=max(hemoglobina),
-
                   SD = round(sd(hemoglobina), 2),
-
                   Q1 = round(quantile(hemoglobina, 0.25, type = 3), 2),
-
                   Q3 = round(quantile(hemoglobina, 0.75, type = 3), 2)))
-
 ```
 
 #### 3.1.5 Peso de mujeres
@@ -212,9 +206,9 @@ kable(RECH5 %>%
 
 ggplot(filter(RECH5, !is.na(peso)), aes(x = "", y = peso)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
-  labs(title = "Boxplot del Nivel de peso",
+  labs(title = "Peso de mujeres",
        x = "",
-       y = "Nivel de peso kg") +
+       y = "Peso (kg)") +
   theme_minimal()
 ```
 
@@ -224,12 +218,12 @@ Descriptores numéricos:
 
 kable(RECH5
       %>% 
-        summarize(Media = round(mean(talla), 2),
-                  Mediana = round(median(talla), 2),
-                  Mínimo = min(talla), Máximo=max(talla),
-                  SD = round(sd(talla), 2),
-                  Q1 = round(quantile(talla, 0.25, type = 3), 2),
-                  Q3 = round(quantile(talla, 0.75, type = 3), 2)))
+        summarize(Media = round(mean(peso), 2),
+                  Mediana = round(median(peso), 2),
+                  Mínimo = min(peso), Máximo=max(peso),
+                  SD = round(sd(peso), 2),
+                  Q1 = round(quantile(peso, 0.25, type = 3), 2),
+                  Q3 = round(quantile(peso, 0.75, type = 3), 2)))
 ```
 
 #### 3.1.6 Talla de mujeres
@@ -238,9 +232,9 @@ kable(RECH5
 
 ggplot(filter(RECH5, !is.na(talla)), aes(x = "", y = talla)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
-  labs(title = "Boxplot del Nivel de talla",
+  labs(title = "Talla de mujeres",
        x = "",
-       y = "Nivel de talla (cm)") +
+       y = "Talla (cm)") +
   theme_minimal()
 ```
 
@@ -259,7 +253,7 @@ kable(RECH5 %>%
 
 ### 3.2 Variables categóricas
 
-Las siguientes gráficas están orientadas a nuestro primer objetivo, '**Describir los casos de anemia y su severidad en niños y mujeres en el Perú en el año 2022**'.
+Las siguientes gráficas están orientadas a nuestro primer objetivo: "**Describir los casos de anemia y su severidad en niños y mujeres en el Perú en el año 2022**".
 
 #### 3.2.1 Nivel de anemia en niños
 
@@ -268,8 +262,8 @@ Las siguientes gráficas están orientadas a nuestro primer objetivo, '**Describ
 barras <- barplot(table(REC44$anemia), 
                   cex.names = 0.7,
                   col = c("#FF5733", "#FFD700", "#7FFF00", "#00BFFF"), 
-                  main = "Niveles de Anemia en Niños",
-                  xlab = "Nivel de Anemia", 
+                  main = "Niveles de anemia en niños",
+                  xlab = "Nivel de anemia", 
                   ylab = "Frecuencia",
                   cex.main = 0.8)
 
@@ -288,8 +282,8 @@ text(x = barras,
 barras <- barplot(table(RECH5$anemia), 
                   cex.names = 0.7,
                   col = c("#FF5733", "#FFD700", "#7FFF00", "#00BFFF"), 
-                  main = "Niveles de Anemia en Mujeres",
-                  xlab = "Nivel de Anemia", 
+                  main = "Niveles de anemia en mujeres",
+                  xlab = "Nivel de anemia", 
                   ylab = "Frecuencia",
                   cex.main = 0.8)
 
@@ -303,9 +297,9 @@ text(x = barras,
 
 ## 4. Análisis descriptivo de interacción
 
-### 4.1 Edad de niños VS Frecuencias de anemia
+### 4.1 Edad de niños vs. frecuencias de anemia
 
-#### 4.1.1 Edad de niños VS Frecuencia de la anemia leve
+#### 4.1.1 Edad de niños vs. frecuencia de anemia leve
 
 ```{r, echo=FALSE}
 
@@ -329,17 +323,17 @@ niños_promedios_anemia_grave <-
                                                  is.numeric)]))
 
 kable(niños_promedios_anemia_leve,
-      caption = "Promedios Anemia Leve",
+      caption = "Promedios correspondientes a la anemia leve",
       col.names = c("Variable", "Promedio")) %>%
   kable_styling(full_width = FALSE)
 
 kable(niños_promedios_anemia_moderada,
-      caption = "Promedios Anemia Moderada",
+      caption = "Promedios correspondientes a la anemia moderada",
       col.names = c("Variable", "Promedio")) %>%
   kable_styling(full_width = FALSE)
 
 kable(niños_promedios_anemia_grave,
-      caption = "Promedios Anemia Grave",
+      caption = "Promedios correspondientes a la anemia grave",
       col.names = c("Variable", "Promedio")) %>%
   kable_styling(full_width = FALSE)
 ```
@@ -347,9 +341,9 @@ kable(niños_promedios_anemia_grave,
 ```{r, echo=FALSE}
 
 hist(niños_anemia_leve$edad,
-     main = "Edad de los infantes con anemia leve",
+     main = "Edad de niños con anemia leve",
      xlab = "Edad en meses",
-     ylab = "Número de infantes con anemia leve",
+     ylab = "Número de niños con anemia leve",
      col = "skyblue")
 
 abline(v = mean(niños_anemia_leve$edad),
@@ -395,12 +389,12 @@ legend("topright",
        cex = 0.75)
 ```
 
-#### 4.1.2 Edad de niños VS Frecuencia de la anemia moderada
+#### 4.1.2 Edad de niños vs. frecuencia de anemia moderada
 
 ```{r, echo=FALSE}
 
 hist(niños_anemia_moderada$edad,
-     main = "Edad de los niños con anemia moderada",
+     main = "Edad de niños con anemia moderada",
      xlab = "Edad en meses",
      ylab = "Número de niños con anemia moderada",
      col = "skyblue")
@@ -450,12 +444,12 @@ legend("topright",
        cex = 0.75)
 ```
 
-#### 4.1.3 Edad de niños VS Frecuencia de la anemia grave
+#### 4.1.3 Edad de niños vs. frecuencia de anemia grave
 
 ```{r, echo=FALSE}
 
 hist(niños_anemia_grave$edad,
-     main = "Edad de los infantes con anemia grave",
+     main = "Edad de niños con anemia grave",
      xlab = "Edad en meses",
      ylab = "Número de niños con anemia grave",
      col = "skyblue")
@@ -505,11 +499,11 @@ legend("topright",
        cex = 0.75)
 ```
 
-En los casos leves de anemia en infantes, observamos que las concentraciones más significativas se sitúan entre los 10 y 45 meses de edad. En los casos moderados, la mayor concentración se encuentra alrededor de los 5 y 35 meses, mientras que para los casos graves, la concentración más prominente se registra entre los 7 y 30 años. En los tres escenarios, la información se presenta altamente dispersa. Es importante destacar que el gráfico de los casos de anemia moderada exhibe una distribución que sugiere una asimetría hacia la izquierda, similar a una campana.
+En los casos leves de anemia en niños, observamos que las concentraciones más significativas se sitúan entre los 10 y 45 meses de edad. En los casos moderados, la mayor concentración se encuentra alrededor de los 5 y 35 meses, mientras que para los casos graves, la concentración más prominente se registra entre los 7 y 30 años. En los tres escenarios, la información se presenta altamente dispersa. Es importante destacar que el gráfico de los casos de anemia moderada exhibe una distribución que sugiere una asimetría hacia la izquierda, similar a una campana.
 
-### 4.2 Edad de mujeres VS Frecuencias de anemia
+### 4.2 Edad de mujeres vs. frecuencia de anemia
 
-#### 4.2.1 Edad de mujeres VS Frecuencia de la anemia grave
+#### 4.2.1 Edad de mujeres vs. frecuencia de anemia grave
 
 ```{r, echo=FALSE}
 
@@ -535,17 +529,17 @@ mujeres_promedios_anemia_grave <-
                                  is.numeric)]))
 
 kable(mujeres_promedios_anemia_leve,
-      caption = "Promedios Anemia Leve",
+      caption = "Promedios correspondientes a la anemia leve",
       col.names = c("Variable", "Promedio")) %>%
   kable_styling(full_width = FALSE)
 
 kable(mujeres_promedios_anemia_moderada,
-      caption = "Promedios Anemia Moderada",
+      caption = "Promedios correspondientes a la anemia moderada",
       col.names = c("Variable", "Promedio")) %>%
   kable_styling(full_width = FALSE)
 
 kable(mujeres_promedios_anemia_grave,
-      caption = "Promedios Anemia Grave",
+      caption = "Promedios correspondientes a la anemia grave",
       col.names = c("Variable", "Promedio")) %>%
   kable_styling(full_width = FALSE)
 ```
@@ -604,7 +598,7 @@ legend("topright",
        cex = 0.75)
 ```
 
-#### 4.2.2 Edad de mujeres VS Frecuencia de la anemia moderada
+#### 4.2.2 Edad de mujeres vs. frecuencia de anemia moderada
 
 ```{r, echo=FALSE}
 
@@ -660,12 +654,12 @@ legend("topright",
        cex = 0.75)
 ```
 
-#### 4.2.3 Edad de mujeres VS Frecuencia de la anemia grave
+#### 4.2.3 Edad de mujeres vs. frecuencia de anemia grave
 
 ```{r, echo=FALSE}
 
 hist(mujeres_anemia_grave$edad,
-     main = "Edad de las mujeres con anemia grave",
+     main = "Edad de mujeres con anemia grave",
      xlab = "Edad en años",
      ylab = "Número de mujeres con anemia grave",
      col = "skyblue",
@@ -716,17 +710,17 @@ legend("topright",
        cex = 0.75)
 ```
 
-En el caso de mujeres con anemia leve, se destaca que las concentraciones más notables se ubican alrededor de los 17 y 38 años de edad. Para los casos moderados, la mayor concentración se registra en torno a los 20 y 35 meses, mientras que en los casos graves, se observa un pico entre los 22 y 44 años. Al igual que en los casos de infantes, los datos exhiben una alta dispersión. Es relevante señalar que, específicamente en los casos
+En el caso de mujeres con anemia leve, se destaca que las concentraciones más notables se ubican alrededor de los 17 y 38 años de edad. Para los casos moderados, la mayor concentración se registra en torno a los 20 y 35 meses, mientras que en los casos graves, se observa un pico entre los 22 y 44 años. Al igual que en los casos de infantes, los datos exhiben una alta dispersión.
 
-Las siguientes gráficas están orientadas a nuestro segundo objetivo, '**Analizar el índice de anemia en las diversas regiones del Perú en el año 2022**'.
+Las siguientes gráficas están orientadas a nuestro segundo objetivo: "**Analizar el índice de anemia en las diversas regiones del Perú en el año 2022**".
 
-### 4.3 Regiones VS Nivel de anemia
+### 4.3 Regiones vs. nivel de anemia
 
-#### 4.3.1 Regiones VS Nivel de anemia en niños
+#### 4.3.1 Regiones vs. nivel de anemia en niños
 
-Gráfico donde se tomen las tres regiones con mas casos en infantes para luego compararlos.
+Gráfico donde se tomen las tres regiones con más casos en infantes para luego compararlos.
 
-```{r}
+```{r, echo=FALSE}
 
 regiones_casos_infantes <-
   merge(REC0111,
@@ -749,10 +743,10 @@ tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region,
 
 barplot(t(tabla_tres_regiones_i),
         col = 2:4,
-        xlab = "Regiones",
+        xlab = "Región",
         ylab = "Nivel de anemia",
         ylim = c(0, 1000),
-        main = "Distribución según anemia y region")
+        main = "Distribución según anemia y región")
 
 legend("topright",
        legend = c("Leve", "Moderado", "Grave"),
@@ -762,9 +756,9 @@ legend("topright",
        title = "Nivel de anemia")
 ```
 
-#### 4.3.2 Regiones VS Nivel de anemia en mujeres
+#### 4.3.2 Regiones vs. nivel de anemia en mujeres
 
-```{r}
+```{r, echo=FALSE}
 
 regiones_casos_mujeres <-
   merge((select(RECH5,
@@ -788,10 +782,10 @@ tabla_tres_regiones_m <- table(tres_regiones_mas_casos_m$region,
 
 barplot(t(tabla_tres_regiones_m),
         col = 2:4,
-        xlab = "Region",
+        xlab = "Región",
         ylab = "Nivel de anemia",
         ylim = c(0,2000),
-        main = "Distribución según anemia y region")
+        main = "Distribución según anemia y región")
 
 legend("topright",
        legend = c("Leve","Moderado","Grave"),
@@ -801,15 +795,15 @@ legend("topright",
        title = "Nivel de anemia")
 ```
 
-Claramente se observa una tendencia consistente en los tres casos, donde los casos leves son consistentemente predominantes. La elección de focalizar en las tres regiones con mayor incidencia de casos se fundamenta en la necesidad de dirigir mayores esfuerzos y recursos para combatir la enfermedad. Estas regiones identificadas no solo presentan una mayor prevalencia, sino que también pueden ser consideradas como puntos críticos que demandan una atención prioritaria en las estrategias de prevención y control de la anemia.
+Claramente, se observa una tendencia visible en los tres casos, donde los casos leves son consistentemente predominantes. La elección de focalizar en las tres regiones con mayor incidencia de casos se fundamenta en la necesidad de dirigir mayores esfuerzos y recursos para combatir la enfermedad. Estas regiones identificadas no solo presentan una mayor incidencia, sino que también pueden ser consideradas como puntos críticos que demandan una atención prioritaria en las estrategias de prevención y control de la anemia.
 
-Las siguientes gráficas están orientadas a nuestro tercer objetivo, '**Describir las características sociales de los grupos vulnerables (niños y mujeres) a la anemia en el Perú en el año 2022**'.
+Las siguientes gráficas están orientadas a nuestro tercer objetivo: "**Describir las características sociales de los grupos vulnerables (niños y mujeres) a la anemia en el Perú en el año 2022**".
 
 ### 4.4 Características sociales
 
-#### 4.4.1 Boxplots entre hemoglobina e índice de riqueza con las mujeres
+#### 4.4.1 *Boxplots* entre hemoglobina e índice de riqueza de las mujeres
 
-```{r}
+```{r, echo=FALSE}
 
 ds_hemoglobina_riqueza <-
   merge((select(RECH5,
@@ -823,14 +817,14 @@ boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_rique
         col = c("#E63946", "#2A9D8F", "#F4A261", "#264653", "#F4D35E"),
         names = c("Muy pobre", "Pobre", "Medio", "Rico", "Muy rico"),
         xlab = "Índice de riqueza",
-        ylab = "Nivel de hemoglobina (g/dl)")
+        ylab = "Hemoglobina (g/dl)")
 ```
 
-De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
+Entre los índices de riqueza, vemos que en los más pobre existe una mayor dispersión de datos. Sin embargo, no hay mucha distinción en los casos bajos de hemoglobina por cada separación ---que indica si se presenta anemia---.
 
-#### 4.4.2 Tipo de residencia VS Nivel de anemia en Niños
+#### 4.4.2 Tipo de residencia vs. nivel de anemia en niños
 
-```{r}
+```{r, echo=FALSE}
 
 niños_anemia <- bind_rows(niños_anemia_leve,
                           niños_anemia_moderada,
@@ -842,10 +836,15 @@ niños <- inner_join(REC0111,
 
 tabla_niños_residencia <- table(niños$tipo_de_residencia, niños$anemia)
 
-tabla_niños_residencia
+tabla_kable_niños_residencia <- 
+  kable(tabla_niños_residencia,
+        format = "html",
+        table.attr = 'class="table table-striped table-hover"')
+
+tabla_kable_niños_residencia
 ```
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 
 Tipo_de_Residencia_vs_Nivel_de_Anemia <-
   as.data.frame((tabla_niños_residencia / rowSums(tabla_niños_residencia))
@@ -872,9 +871,9 @@ ggplot(Tipo_de_Residencia_vs_Nivel_de_Anemia,
            fill = anemia)) +
 geom_bar(stat = "identity",
          position = "dodge") +
-labs(x = "Tipo de Residencia",
+labs(x = "Tipo de residencia",
      y = "Frecuencia",
-     fill = "Nivel de Anemia en niños") +
+     fill = "Nivel de anemia en niños") +
 theme_minimal()
 
 Tipo_de_Residencia_vs_Nivel_de_Anemia <-
@@ -893,32 +892,28 @@ Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia <-
   recode(Tipo_de_Residencia_vs_Nivel_de_Anemia$tipo_de_residencia,
          `1` = "Urbano",
          `2` = "Rural")
-
-gt(Tipo_de_Residencia_vs_Nivel_de_Anemia) %>%
-  tab_header(title = "Tabla de Contingencia",
-             subtitle = "Tipo de Residencia vs Nivel de Anemia") %>%
-    cols_label(tipo_de_residencia = "Tipo de Residencia",
-               grave = "Grave",
-               leve = "Leve",
-               moderado = "Moderado",
-               total = "Total") %>%
-      fmt_number(columns = vars(grave, leve, moderado, total),
-                 decimals = 0)
 ```
 
 Como podemos observar, la proporción entre los distintos tipos de anemia es bastante similar sea el tipo de residencia urbano o rural.
 
 ## 5. Probabilidad empírica
 
-#### 5.1 Variable A: Índice de riqueza
+### 5.1 Variable A: Índice de riqueza
 
 **Experimento 1:** Escoger un hogar que aceptó participar en la encuesta y observar su **índice de riqueza**.
 
-**Espacio muestral (** $\Omega$ **).**
+**Espacio muestral (** $\Omega$ **):**
 
-```{r}
+```{r, message=FALSE}
 
-unique(RECH23$indice_riqueza)
+unique_values <- data.frame(Unique_Values = unique(RECH23$indice_riqueza))
+
+tabla_kable_unique_values <- 
+  kable(unique_values,
+        format = "html",
+        table.attr = 'class="table table-striped table-hover"')
+
+tabla_kable_unique_values
 ```
 
 $$
@@ -943,27 +938,45 @@ $f(x)$ = número de veces que se cumpla el evento en toda la muestra
 
 $n$ = tamaño de la muestra
 
-```{r}
+```{r, message=FALSE}
 
-prob_riqueza <- table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza))
-prob_riqueza
+prob_riqueza <- table(RECH23$indice_riqueza) / sum(table(RECH23$indice_riqueza))
+
+df_prob_riqueza <- as.data.frame(prob_riqueza)
+
+kable(df_prob_riqueza, 
+      caption = "Probabilidad del índice de riqueza",
+      col.names = c("Índice de riqueza", "Probabilidad"),
+      align = "c")
 ```
 
-```{r}
+```{r, message=FALSE}
 
 colores <- c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
 
 categorias <- c('Muy Pobre', 'Pobre', 'Medio', 'Rico', 'Muy Rico')
 
-barplot(prob_riqueza, col = colores, names.arg = categorias,
-        main = "Probabilidades de Riqueza", xlab = "Categorías", ylab = "Probabilidad", border = "black")
+barplot(prob_riqueza,
+        col = colores, 
+        names.arg = categorias,
+        main = "Probabilidades de riqueza",
+        xlab = "Categorías", 
+        ylab = "Probabilidad", border = "black")
 ```
 
 Comprobamos que todo sume uno (ya que son probabilidades de eventos atómicos en un espacio muestral $\Omega$ ).
 
-```{r}
+```{r, message=FALSE}
 
-sum(table(RECH23$indice_riqueza)/sum(table(RECH23$indice_riqueza)))
+suma_prob_riqueza <- 
+  sum(table(RECH23$indice_riqueza) / sum(table(RECH23$indice_riqueza)))
+
+df_suma_prob_riqueza <- data.frame(Suma_Probabilidad = suma_prob_riqueza)
+
+kable(df_suma_prob_riqueza, 
+      caption = "Suma de probabilidades del índice de riqueza",
+      col.names = "Suma de probabilidades",
+      align = "c")
 ```
 
 Probabilidad de cada evento atómico:
@@ -986,7 +999,7 @@ names(which.min(prob_riqueza))
 
 Al elegir un hogar para el experimento, es más probable que sea muy pobre y menos probable que sea muy rico.
 
-#### 5.2 Variable B: Nivel de anemia
+### 5.2 Variable B: Nivel de anemia
 
 **Experimento 2:** Seleccionar a un niño de entre los hogares que han aceptado participar en la prueba de hemoglobina y evaluar su **nivel de anemia**.
 
@@ -1015,8 +1028,14 @@ $$
 
 ```{r}
 
-prob_anemia <- table(REC44$anemia)/length(REC44$anemia)
-prob_anemia
+prob_anemia <- table(REC44$anemia) / length(REC44$anemia)
+
+df_prob_anemia <- as.data.frame(prob_anemia)
+
+kable(df_prob_anemia, 
+      caption = "Probabilidad de Anemia",
+      col.names = c("Anemia", "Probabilidad"),
+      align = "c")
 ```
 
 ```{r}
@@ -1798,4 +1817,4 @@ pnorm(70, mu_p,  sigma_p, lower.tail =  F)
 
 La probabilidad de que una madre pese más de 70 $kg$, según el resultado proporcionado (0.2921298), indica que hay una probabilidad relativamente baja de que una madre seleccionada al azar tenga un peso de más de 70 $kg$, según la distribución de la variable aleatoria continua ajustada a los datos.
 
-## 9. Conclusión 
+## 9. Conclusión

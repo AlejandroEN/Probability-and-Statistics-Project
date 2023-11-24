@@ -1,4 +1,9 @@
 ---
+title: "Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022"
+authors:
+  - name: "Colque Ordoñez, Patrick Fabrizio "
+  - name: "Rejas Albujar, Alejandro David"
+  - name: "Escobar Núñez, Alejandro Ismael"
 format:
   revealjs: 
     theme: night
@@ -6,23 +11,47 @@ editor: visual
 fontsize: 13pt
 ---
 
-## Introducción
+## 1. Introducción
 
-## Análisis Descriptivo
+### Relevancia
 
-## Análisis Descriptivo Univariado
+La anemia es un problema de salud pública de gran relevancia en nuestro país. La falta de hemoglobina en la sangre puede tener consecuencias graves, especialmente en niños y madres. Además, la anemia puede afectar el desarrollo físico y cognitivo de los niños y aumentar el riesgo de complicaciones en el embarazo para las madres; por lo tanto, comprender la prevalencia y severidad de la anemia en estos grupos es esencial para abordar adecuadamente este problema de salud en el país.
 
-## Análisis Descriptivo Bivariado
+### Objetivos
 
-## Gráficas ADU
+-   Describir los casos de anemia y su severidad en niños y mujeres en el Perú en el año 2022.
 
-## Gráficas ADB
+-   Analizar el índice de anemia en las diversas regiones del Perú en el año 2022.
 
-## Probabilidad Empírica - Índice de Riqueza
+-   Describir las características sociales de los grupos vulnerables (niños y mujeres) a la anemia en el Perú en el año 2022.
+
+### Contexto
+
+En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar, un estudio que recopiló datos de una muestra representativa de viviendas en todo el territorio peruano. Este estudio se basó en tres cuestionarios diseñados específicamente: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.
+
+En el contexto de esta encuesta, se solicitó a los residentes de los hogares su participación en una evaluación destinada a conocer sus niveles de hemoglobina en la sangre, a la que podían optar por unirse o no.
+
+La totalidad de la información recopilada en esta encuesta se encuentra disponible para consulta por parte de cualquier ciudadano en la base de datos del Instituto Nacional de Estadística e Informática (INEI). Los datos se presentan organizados en módulos temáticos, y nuestro enfoque recae en los análisis de los casos de anemia en infantes y mujeres.
+
+## 2. Análisis Descriptivo Univariado
+
+### 2.1 Variables numéricas
+
+![](nive_hemoglobina_niños.png){.fragment width="513"}
+
+### 2.2 Variables categóricas
+
+## 3. Análisis Descriptivo Bivariado
+
+## 4. Gráficas ADU
+
+## 5. Gráficas ADB
+
+## 6. Probabilidad Empírica - Índice de Riqueza
 
 Utilizamos la variable Índice de Riqueza e identificamos las probabilidades de sus eventos mediante la siguiente fórmula:
 
-$$ P(x) = f(x)/n $$
+$$ P(x) = \dfrac{f(x)} {n} $$
 
 `prob_riqueza <- table(RECH23$indice_riqueza) / sum(table(RECH23$indice_riqueza))`
 
@@ -30,19 +59,19 @@ Graficamos `prob_riqueza`:
 
 ```{r}
 
-prob_anemia <- c(0.3150637, 0.2510422, 0.1867001, 0.1395003, 0.1076937)
+prob_riqueza <- c(0.3150637, 0.2510422, 0.1867001, 0.1395003, 0.1076937)
 colores <- c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854")
 categorias <- c("Muy Pobre", "Pobre", "Medio", "Rico", "Muy Rico")
 
 par(bg = "black", col.axis = "white", col.lab = "white", col.main = "white")
 
-barplot(prob_anemia, col = rev(colores), names.arg = categorias,
+barplot(prob_riqueza, col = rev(colores), names.arg = categorias,
         main = "Probabilidad de Riqueza", 
         xlab = "Índice de Riqueza", ylab = "Probabilidad", border = "black", 
         space = 0.2)  
 ```
 
-## Probabilidad Condicional - Eventos Dependientes
+## 7. Probabilidad Condicional - Eventos Dependientes
 
 Seleccionamos dos eventos dependientes:
 
@@ -62,10 +91,10 @@ Definimos la condición:
 
 -   **B**: La mujer seleccionada tiene como mayor nivel educativo alcanzado la secundaria.
 
-Calculamos las probabilidades utilizando el teorema de bayes:
+Calculamos las probabilidades utilizando el teorema de Bayes:
 
 $$
-P(A \mid B) = \frac{P(B \mid A)*P(A)}{P(B)}
+P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}
 $$
 
 $$ P(A1 \mid B) = 0.02863548 $$
@@ -80,7 +109,7 @@ $$P(A2 \mid B) = 0.9713645 $$
 
 `prob_A2_dado_B = 0.9713645`
 
-## Probabilidad Condicional - Eventos Independientes
+## 8. Probabilidad Condicional - Eventos Independientes
 
 Seleccionamos dos eventos independientes:
 
@@ -119,7 +148,7 @@ $$
 
 `B2 = 0.449476`
 
-## Variables Aleatorias Discretas - Número de madres con un determinado Nivel Educativo
+## 9. Variables Aleatorias Discretas - Número de madres con un determinado Nivel Educativo
 
 Vamos a tomar el evento **S**, 'Seleccionar a una madre que participó en la encuesta y su nivel educativo máximo alcanzado es secundaria', como nuestro éxito.
 
@@ -132,7 +161,7 @@ $$
 Vamos a utilizar el modelo hipergeométrico:
 
 $$
-X\sim G(N, r, n)
+X\sim G(N, \; r, \; n)
 $$
 
 ```{r}
@@ -156,7 +185,7 @@ $$
 P(X \geq 50)
 $$ `phyper(50, r, N - r, n, lower.tail = F) = 0.9985772`
 
-## Variables Aleatorias Continuas - Hemoglobina ajustada en función de la latitud (g/dl)
+## 10. Variables Aleatorias Continuas - Hemoglobina ajustada en función de la latitud (g/dl)
 
 **X**: Nivel de hemoglobina en g/dl de una madre encuestada.
 
@@ -166,7 +195,7 @@ Hallamos el tipo de distribución de nuestra variable aleatoria continua utiliza
 
 El tipo de distribución que más se ajusta a nuestra variable es la distribución normal:
 
-$$ X \sim N(\mu,\sigma^2 ) $$
+$$ X \sim N(\mu, \; \sigma^2 ) $$
 
 En **R**, los parámetros de una distribución normal son la **media** y la **desviación estándar**.
 
@@ -192,4 +221,4 @@ $$
 
 `pnorm(12, mu_h,  sigma_h) = 0.2947574`
 
-## Cierre
+## 11. Cierre

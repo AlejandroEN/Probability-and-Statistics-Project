@@ -10,7 +10,7 @@
 <link href="G3_Presentacion_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>g3_presentacion</title>
+  <title>Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -323,35 +323,72 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Análisis de los casos de anemia en infantes y mujeres de 12 a 49 años en el Perú en el año 2022</h1>
 
-<section id="introducción" class="slide level2">
-<h2>Introducción</h2>
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Colque Ordoñez, Patrick Fabrizio 
+</div>
+</div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Rejas Albujar, Alejandro David 
+</div>
+</div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Escobar Núñez, Alejandro Ismael 
+</div>
+</div>
+</div>
+
 </section>
-<section id="análisis-descriptivo" class="slide level2">
-<h2>Análisis Descriptivo</h2>
+<section id="introducción" class="slide level2">
+<h2>1. Introducción</h2>
+<h3 id="relevancia">Relevancia</h3>
+<p>La anemia es un problema de salud pública de gran relevancia en nuestro país. La falta de hemoglobina en la sangre puede tener consecuencias graves, especialmente en niños y madres. Además, la anemia puede afectar el desarrollo físico y cognitivo de los niños y aumentar el riesgo de complicaciones en el embarazo para las madres; por lo tanto, comprender la prevalencia y severidad de la anemia en estos grupos es esencial para abordar adecuadamente este problema de salud en el país.</p>
+<h3 id="objetivos">Objetivos</h3>
+<ul>
+<li><p>Describir los casos de anemia y su severidad en niños y mujeres en el Perú en el año 2022.</p></li>
+<li><p>Analizar el índice de anemia en las diversas regiones del Perú en el año 2022.</p></li>
+<li><p>Describir las características sociales de los grupos vulnerables (niños y mujeres) a la anemia en el Perú en el año 2022.</p></li>
+</ul>
+<h3 id="contexto">Contexto</h3>
+<p>En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar, un estudio que recopiló datos de una muestra representativa de viviendas en todo el territorio peruano. Este estudio se basó en tres cuestionarios diseñados específicamente: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.</p>
+<p>En el contexto de esta encuesta, se solicitó a los residentes de los hogares su participación en una evaluación destinada a conocer sus niveles de hemoglobina en la sangre, a la que podían optar por unirse o no.</p>
+<p>La totalidad de la información recopilada en esta encuesta se encuentra disponible para consulta por parte de cualquier ciudadano en la base de datos del Instituto Nacional de Estadística e Informática (INEI). Los datos se presentan organizados en módulos temáticos, y nuestro enfoque recae en los análisis de los casos de anemia en infantes y mujeres.</p>
 </section>
 <section id="análisis-descriptivo-univariado" class="slide level2">
-<h2>Análisis Descriptivo Univariado</h2>
+<h2>2. Análisis Descriptivo Univariado</h2>
+<h3 id="variables-numéricas">2.1 Variables numéricas</h3>
+<div class="quarto-background" data-background="custom-background.jpg">
+<div class="quarto-layout">
+<pre><code>&lt;img src="nive_hemoglobina_niños.png" alt="Image 1"&gt;</code></pre>
+</div>
+</div>
+<h3 id="variables-categóricas">2.2 Variables categóricas</h3>
 </section>
 <section id="análisis-descriptivo-bivariado" class="slide level2">
-<h2>Análisis Descriptivo Bivariado</h2>
+<h2>3. Análisis Descriptivo Bivariado</h2>
 </section>
 <section id="gráficas-adu" class="slide level2">
-<h2>Gráficas ADU</h2>
+<h2>4. Gráficas ADU</h2>
 </section>
 <section id="gráficas-adb" class="slide level2">
-<h2>Gráficas ADB</h2>
+<h2>5. Gráficas ADB</h2>
 </section>
 <section id="probabilidad-empírica---índice-de-riqueza" class="slide level2">
-<h2>Probabilidad Empírica - Índice de Riqueza</h2>
+<h2>6. Probabilidad Empírica - Índice de Riqueza</h2>
 <p>Utilizamos la variable Índice de Riqueza e identificamos las probabilidades de sus eventos mediante la siguiente fórmula:</p>
-<p><span class="math display">\[ P(x) = f(x)/n \]</span></p>
+<p><span class="math display">\[ P(x) = \dfrac{f(x)} {n} \]</span></p>
 <p><code>prob_riqueza &lt;- table(RECH23$indice_riqueza) / sum(table(RECH23$indice_riqueza))</code></p>
 <p>Graficamos <code>prob_riqueza</code>:</p>
 
 <img data-src="G3_Presentacion_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"></section>
 <section id="probabilidad-condicional---eventos-dependientes" class="slide level2">
-<h2>Probabilidad Condicional - Eventos Dependientes</h2>
+<h2>7. Probabilidad Condicional - Eventos Dependientes</h2>
 <p>Seleccionamos dos eventos dependientes:</p>
 <ul>
 <li><p><strong>A1</strong>: Seleccionar una mujer de la muestra que esté embarazada.</p></li>
@@ -366,9 +403,9 @@ P(A1 \cap A2) = 0
 <ul>
 <li><strong>B</strong>: La mujer seleccionada tiene como mayor nivel educativo alcanzado la secundaria.</li>
 </ul>
-<p>Calculamos las probabilidades utilizando el teorema de bayes:</p>
+<p>Calculamos las probabilidades utilizando el teorema de Bayes:</p>
 <p><span class="math display">\[
-P(A \mid B) = \frac{P(B \mid A)*P(A)}{P(B)}
+P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}
 \]</span></p>
 <p><span class="math display">\[ P(A1 \mid B) = 0.02863548 \]</span></p>
 <p><code>prob_A1_dado_B &lt;- prob_B_dado_A1_x_prob_A1 / B</code></p>
@@ -378,7 +415,7 @@ P(A \mid B) = \frac{P(B \mid A)*P(A)}{P(B)}
 <p><code>prob_A2_dado_B = 0.9713645</code></p>
 </section>
 <section id="probabilidad-condicional---eventos-independientes" class="slide level2">
-<h2>Probabilidad Condicional - Eventos Independientes</h2>
+<h2>8. Probabilidad Condicional - Eventos Independientes</h2>
 <p>Seleccionamos dos eventos independientes:</p>
 <ul>
 <li><p><strong>B1</strong>: Seleccionar un niño que tenga anemia dado que vive en un lugar urbano.</p></li>
@@ -404,7 +441,7 @@ P(B2 \mid B1) = B2
 <p><code>B2 = 0.449476</code></p>
 </section>
 <section id="variables-aleatorias-discretas---número-de-madres-con-un-determinado-nivel-educativo" class="slide level2">
-<h2>Variables Aleatorias Discretas - Número de madres con un determinado Nivel Educativo</h2>
+<h2>9. Variables Aleatorias Discretas - Número de madres con un determinado Nivel Educativo</h2>
 <p>Vamos a tomar el evento <strong>S</strong>, ‘Seleccionar a una madre que participó en la encuesta y su nivel educativo máximo alcanzado es secundaria’, como nuestro éxito.</p>
 <p><span class="math display">\[
 P(S) = 0.65
@@ -412,7 +449,7 @@ P(S) = 0.65
 <p><strong>X</strong>: Número de madres cuyo mayor nivel educativo alcanzado sea la secundaria en una muestra sin reemplazo de 100.</p>
 <p>Vamos a utilizar el modelo hipergeométrico:</p>
 <p><span class="math display">\[
-X\sim G(N, r, n)
+X\sim G(N, \; r, \; n)
 \]</span></p>
 
 <img data-src="G3_Presentacion_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"><p><span class="math display">\[
@@ -420,12 +457,12 @@ P(X \geq 50)
 \]</span> <code>phyper(50, r, N - r, n, lower.tail = F) = 0.9985772</code></p>
 </section>
 <section id="variables-aleatorias-continuas---hemoglobina-ajustada-en-función-de-la-latitud-gdl" class="slide level2">
-<h2>Variables Aleatorias Continuas - Hemoglobina ajustada en función de la latitud (g/dl)</h2>
+<h2>10. Variables Aleatorias Continuas - Hemoglobina ajustada en función de la latitud (g/dl)</h2>
 <p><strong>X</strong>: Nivel de hemoglobina en g/dl de una madre encuestada.</p>
 <p>Hallamos el tipo de distribución de nuestra variable aleatoria continua utilizando la librería <code>rriskDistributions</code>:</p>
 
 <img data-src="VAC_Graphic.png" class="r-stretch"><p>El tipo de distribución que más se ajusta a nuestra variable es la distribución normal:</p>
-<p><span class="math display">\[ X \sim N(\mu,\sigma^2 ) \]</span></p>
+<p><span class="math display">\[ X \sim N(\mu, \; \sigma^2 ) \]</span></p>
 <p>En <strong>R</strong>, los parámetros de una distribución normal son la <strong>media</strong> y la <strong>desviación estándar</strong>.</p>
 </section>
 <section id="section" class="slide level2">
@@ -438,7 +475,7 @@ P(X &lt; 12)
 <p><code>pnorm(12, mu_h,  sigma_h) = 0.2947574</code></p>
 </section>
 <section id="cierre" class="slide level2">
-<h2>Cierre</h2>
+<h2>11. Cierre</h2>
 <div class="footer footer-default">
 
 </div>
