@@ -103,7 +103,7 @@ RECH0 <- read_csv("RECH0_clean.csv")
 
 ```{r, echo=FALSE}
 
-ggplot(filter(REC44, !is.na(hemoglobina)), aes(x = "", y = hemoglobina)) +
+ggplot(filter(REC44, !is.na(hemoglobina_ajustada_latitud)), aes(x = "", y = hemoglobina_ajustada_latitud)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
   labs(title = "Hemoglobina en niños",
        x = "",
@@ -116,12 +116,12 @@ Descriptores numéricos:
 ```{r, echo=FALSE}
 
 kable(REC44 %>% 
-        summarize(Media = round(mean(hemoglobina), 2),
-                  Mediana = round(median(hemoglobina), 2),
-                  Mínimo = min(hemoglobina), Máximo=max(hemoglobina),
-                  SD = round(sd(hemoglobina), 2),
-                  Q1 = round(quantile(hemoglobina, 0.25, type = 3), 2),
-                  Q3 = round(quantile(hemoglobina, 0.75, type = 3), 2)))
+        summarize(Media = round(mean(hemoglobina_ajustada_latitud), 2),
+                  Mediana = round(median(hemoglobina_ajustada_latitud), 2),
+                  Mínimo = min(hemoglobina_ajustada_latitud), Máximo=max(hemoglobina_ajustada_latitud),
+                  SD = round(sd(hemoglobina_ajustada_latitud), 2),
+                  Q1 = round(quantile(hemoglobina_ajustada_latitud, 0.25, type = 3), 2),
+                  Q3 = round(quantile(hemoglobina_ajustada_latitud, 0.75, type = 3), 2)))
 ```
 
 #### 3.1.2 Peso de niños
@@ -178,7 +178,7 @@ kable(REC44 %>%
 
 ```{r, echo=FALSE}
 
-ggplot(filter(RECH5, !is.na(hemoglobina)), aes(x = "", y = hemoglobina)) +
+ggplot(filter(RECH5, !is.na(hemoglobina_ajustada_latitud)), aes(x = "", y = hemoglobina_ajustada_latitud)) +
   geom_boxplot(fill = "#66c2a5", color = "#333333") +
   labs(title = "Hemoglobina en mujeres",
        x = "",
@@ -192,12 +192,12 @@ Descriptores numéricos:
 
 kable(RECH5 %>% 
 
-        summarize(Media = round(mean(hemoglobina), 2),
-                  Mediana = round(median(hemoglobina), 2),
-                  Mínimo = min(hemoglobina), Máximo=max(hemoglobina),
-                  SD = round(sd(hemoglobina), 2),
-                  Q1 = round(quantile(hemoglobina, 0.25, type = 3), 2),
-                  Q3 = round(quantile(hemoglobina, 0.75, type = 3), 2)))
+        summarize(Media = round(mean(hemoglobina_ajustada_latitud), 2),
+                  Mediana = round(median(hemoglobina_ajustada_latitud), 2),
+                  Mínimo = min(hemoglobina_ajustada_latitud), Máximo=max(hemoglobina_ajustada_latitud),
+                  SD = round(sd(hemoglobina_ajustada_latitud), 2),
+                  Q1 = round(quantile(hemoglobina_ajustada_latitud, 0.25, type = 3), 2),
+                  Q3 = round(quantile(hemoglobina_ajustada_latitud, 0.75, type = 3), 2)))
 ```
 
 #### 3.1.5 Peso de mujeres
@@ -807,7 +807,7 @@ Las siguientes gráficas están orientadas a nuestro tercer objetivo: "**Describ
 
 ds_hemoglobina_riqueza <-
   merge((select(RECH5,
-                hemoglobina,
+                hemoglobina_ajustada_latitud,
                 cuestionario_individual_id)),
         RECH23,
         by.x = "cuestionario_individual_id",
@@ -820,7 +820,7 @@ boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_rique
         ylab = "Hemoglobina (g/dl)")
 ```
 
-Entre los índices de riqueza, vemos que en los más pobre existe una mayor dispersión de datos. Sin embargo, no hay mucha distinción en los casos bajos de hemoglobina por cada separación ---que indica si se presenta anemia---.
+No hay mucha distinción en los casos bajos de hemoglobina por cada separación ---que indica si se presenta anemia---.
 
 #### 4.4.2 Tipo de residencia vs. nivel de anemia en niños
 
@@ -1754,8 +1754,6 @@ plot(density(RECH5$peso),
 
 ```{r, echo=FALSE}
 
-library(rriskDistributions)
-
 x <- RECH5$peso
 
 View(x)
@@ -1834,4 +1832,24 @@ pnorm(70, mu_p,  sigma_p, lower.tail =  F)
 
 La probabilidad de que una madre pese más de 70 $kg$, según el resultado proporcionado (0.2921298), indica que hay una probabilidad relativamente baja de que una madre seleccionada al azar tenga un peso de más de 70 $kg$, según la distribución de la variable aleatoria continua ajustada a los datos.
 
-## 9. Conclusión
+## 9. Conclusiones
+
+El estudio de esta base de datos fue una experiencia muy enriquecedora y nos permitió explorar aplicar conceptos de la estadística de una manera muy práctica e intuitiva.
+
+Con respecto al primer objetivo, podemos concluir lo siguiente:
+
+-   Los niños menores a 10 meses son más propensos a desarrollar cualquier tipo de anemia.
+
+-   Las mujeres menores de 20 años son más propensas a desarrollar anemia leve, mientras que las mayores de 30 suelen desarrollar anemia moderada o grave.
+
+Con respecto al segundo objetivo, podemos concluir lo siguiente:
+
+-   Lima, Loreto y Ucayali son las regiones con mayor incidencia de anemia en niños y mujeres.
+
+-   Ucayali es la región con mayor incidencia de anemia moderada, superando a Lima a pesar de tener menos población.
+
+Con respecto al tercer objetivo, podemos concluir lo siguiente:
+
+-   La dispersión del nivel de anemia con respecto al índice de riqueza no varía mucho.
+
+-   Los niños que viven en una residencia rural son más propensos a tener anemia moderada que los que viven en residencia urbana.
