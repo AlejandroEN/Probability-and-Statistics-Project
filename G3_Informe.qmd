@@ -88,18 +88,19 @@ mermaid("gantt
 
 ### Instalación y carga de librerías
 
-```{r echo=FALSE,message=FALSE}
-if(!require(readr)){install.packages('readr')}
-if(!require(dplyr)){install.packages('dplyr')}
-if(!require(ggplot2)){install.packages('ggplot2')}
-if(!require(gt)){install.packages('gt')}
-```
+```{r echo=FALSE, message=FALSE}
 
-```{r}
+if(!require(readr)) {install.packages("readr")}
+if(!require(dplyr)) {install.packages("dplyr")}
+if(!require(ggplot2)) {install.packages("ggplot2")}
+if(!require(gt)) {install.packages("gt")}
+if(!require(rriskDistributions)) {install.packages("rriskDistributions")}
+
 library(readr)
 library(dplyr)
 library(ggplot2)
 library(gt)
+library(rriskDistributions)
 ```
 
 ## 2. Datos
@@ -137,7 +138,7 @@ Debido a la extensión de nuestras tablas, solo incluiremos las variables por ta
 Características de las mujeres de 12 a 49 años.
 
 | Nombre |                     Descripción                     |  Tipo de variable  |
-|:------:|:---------------------------------------------------:|:------------------:|
+|:----------------:|:-----------------------------------:|:----------------:|
 |  HHID  |               Identificación del caso               | Categórica nominal |
 |  HA1   |              Edad de la mujer en años               | Numérica discreta  |
 |  HA2   |           Peso de la mujer en kilogramos            | Numérica continua  |
@@ -166,7 +167,7 @@ Relación entre identificación del cuestionario individual e identificación de
 Características de los infantes de 0 a 59 meses (5 años aproximadamente) seleccionados por hogar.
 
 | Nombre |                   Descripción                    |  Tipo de variable  |
-|:------:|:------------------------------------------------:|:------------------:|
+|:----------------:|:-----------------------------------:|:----------------:|
 |  HW1   |                  Edad en meses                   | Numérica discreta  |
 |  HW2   |                Peso en kilogramos                | Numérica continua  |
 |  HW3   |               Talla en centímetros               | Numérica continua  |
@@ -514,7 +515,7 @@ REC44 <- filter(REC44, estado_medicion_hemoglobina == 0)
 REC44 <- REC44 %>%
          mutate(hemoglobina = hemoglobina / 10,
                 hemoglobina_ajustada_latitud = 
-                hemoglobina_ajustada_latitud / 10)
+                  hemoglobina_ajustada_latitud / 10)
 
 summary(REC44)
 ```
@@ -545,20 +546,20 @@ niños_anemia_moderada = filter(REC44, anemia == "2.moderado")
 niños_anemia_grave = filter(REC44, anemia == "3.grave")
 
 niños_promedios_anemia_leve <- 
-  data.frame(colMeans(niños_anemia_leve[,
-                                          sapply(niños_anemia_leve,
-                                                 is.numeric)]))
+  data.frame(colMeans(niños_anemia_leve[ ,
+                                         sapply(niños_anemia_leve,
+                                                is.numeric)]))
 
 
 niños_promedios_anemia_moderada <- 
-  data.frame(colMeans(niños_anemia_moderada[,
-                                            sapply(niños_anemia_moderada,
-                                                   is.numeric)]))
+  data.frame(colMeans(niños_anemia_moderada[ ,
+                                             sapply(niños_anemia_moderada,
+                                                    is.numeric)]))
 
 niños_promedios_anemia_grave <- 
-  data.frame(colMeans(niños_anemia_grave[,
-                                         sapply(niños_anemia_grave,
-                                                is.numeric)]))
+  data.frame(colMeans(niños_anemia_grave[ ,
+                                          sapply(niños_anemia_grave,
+                                                 is.numeric)]))
 
 print(niños_promedios_anemia_leve)
 print(niños_promedios_anemia_moderada)
@@ -568,36 +569,160 @@ print(niños_promedios_anemia_grave)
 Representamos de forma gráfica las edades de cada niño con nivel de anemia.
 
 ```{r}
-hist(niños_anemia_leve$edad, main = "Edad de los infantes con anemia leve en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue")
-abline(v=mean(niños_anemia_leve$edad),col="red",lwd=4)
-abline(v=median(niños_anemia_leve$edad),col="orange",lwd=3)
-abline(v=mean(niños_anemia_leve$edad)-1*sd(niños_anemia_leve$edad),col="chartreuse4",lwd=4)
-abline(v=mean(niños_anemia_leve$edad)+1*sd(niños_anemia_leve$edad),col="chartreuse4",lwd=4)
-abline(v=quantile(niños_anemia_leve$edad,0.25,type=3),col="deeppink",lwd=4)
-abline(v=quantile(niños_anemia_leve$edad,0.75,type=3),col="darkorchid4",lwd=4)
-legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+
+hist(niños_anemia_leve$edad,
+     main = "Edad de los infantes con anemia leve en meses",
+     xlab = "Edad",
+     ylab = "Número de infantes",
+     col = "skyblue")
+
+abline(v = mean(niños_anemia_leve$edad),
+       col = "red",
+       lwd = 4)
+
+abline(v = median(niños_anemia_leve$edad),
+       col = "orange",
+       lwd = 3)
+
+abline(v = mean(niños_anemia_leve$edad) - 1 * sd(niños_anemia_leve$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = mean(niños_anemia_leve$edad) + 1 * sd(niños_anemia_leve$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = quantile(niños_anemia_leve$edad,
+                    0.25,
+                    type = 3),
+       col = "deeppink",
+       lwd = 4)
+
+abline(v = quantile(niños_anemia_leve$edad,
+                    0.75,
+                    type = 3),
+       col = "darkorchid4",
+       lwd = 4)
+
+legend("topright",
+       legend = c("Media",
+                  "Mediana",
+                  "Media más/menos desv. estándar",
+                  "Cuantil(0.25)",
+                  "Cuantil(0.75)"),
+       col = c("red",
+               "orange",
+               "chartreuse4",
+               "deeppink",
+               "darkorchid4"),
+       lwd = 2,
+       cex = 0.75)
 ```
 
 ```{r}
-hist(niños_anemia_moderada$edad, main = "Edad de los infantes con anemia moderada en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue")
-abline(v=mean(niños_anemia_moderada$edad),col="red",lwd=4)
-abline(v=median(niños_anemia_moderada$edad),col="orange",lwd=3)
-abline(v=mean(niños_anemia_moderada$edad)-1*sd(niños_anemia_moderada$edad),col="chartreuse4",lwd=4)
-abline(v=mean(niños_anemia_moderada$edad)+1*sd(niños_anemia_moderada$edad),col="chartreuse4",lwd=4)
-abline(v=quantile(niños_anemia_moderada$edad,0.25,type=3),col="deeppink",lwd=4)
-abline(v=quantile(niños_anemia_moderada$edad,0.75,type=3),col="darkorchid4",lwd=4)
-legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+
+hist(niños_anemia_moderada$edad,
+     main = "Edad de los infantes con anemia moderada en meses",
+     xlab = "Edad",
+     ylab = "Número de infantes", 
+     col = "skyblue")
+
+abline(v = mean(niños_anemia_moderada$edad),
+       col = "red",
+       lwd = 4)
+
+abline(v = median(niños_anemia_moderada$edad),
+       col = "orange",
+       lwd=3)
+
+abline(v = mean(niños_anemia_moderada$edad) - 1 *
+         sd(niños_anemia_moderada$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = mean(niños_anemia_moderada$edad) + 1 *
+         sd(niños_anemia_moderada$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = quantile(niños_anemia_moderada$edad,
+                    0.25,
+                    type = 3),
+       col = "deeppink",
+       lwd = 4)
+
+abline(v = quantile(niños_anemia_moderada$edad,
+                    0.75,
+                    type = 3),
+       col = "darkorchid4",
+       lwd = 4)
+
+legend("topright",
+       legend = c("Media",
+                  "Mediana",
+                  "Media más/menos desv. estándar",
+                  "Cuantil (0.25)",
+                  "Cuantil (0.75)"),
+       col = c("red",
+               "orange",
+               "chartreuse4",
+               "deeppink",
+               "darkorchid4"),
+       lwd = 2,
+       cex = 0.75)
 ```
 
 ```{r}
-hist(niños_anemia_grave$edad, main = "Edad de los infantes con anemia grave en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue")
-abline(v=mean(niños_anemia_grave$edad),col="red",lwd=4)
-abline(v=median(niños_anemia_grave$edad),col="orange",lwd=3)
-abline(v=mean(niños_anemia_grave$edad)-1*sd(niños_anemia_grave$edad),col="chartreuse4",lwd=4)
-abline(v=mean(niños_anemia_grave$edad)+1*sd(niños_anemia_grave$edad),col="chartreuse4",lwd=4)
-abline(v=quantile(niños_anemia_grave$edad,0.25,type=3),col="deeppink",lwd=4)
-abline(v=quantile(niños_anemia_grave$edad,0.75,type=3),col="darkorchid4",lwd=4)
-legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+
+hist(niños_anemia_grave$edad,
+     main = "Edad de los infantes con anemia grave en meses",
+     xlab = "Edad",
+     ylab = "Número de infantes",
+     col = "skyblue")
+
+abline(v = mean(niños_anemia_grave$edad),
+       col = "red",
+       lwd = 4)
+
+abline(v = median(niños_anemia_grave$edad),
+       col = "orange",
+       lwd = 3)
+
+abline(v = mean(niños_anemia_grave$edad) - 1 * 
+         sd(niños_anemia_grave$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = mean(niños_anemia_grave$edad) + 1 * 
+         sd(niños_anemia_grave$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = quantile(niños_anemia_grave$edad,
+                    0.25,
+                    type = 3),
+       col = "deeppink",
+       lwd = 4)
+
+abline(v = quantile(niños_anemia_grave$edad,
+                    0.75,
+                    type = 3),
+       col = "darkorchid4",
+       lwd = 4)
+
+legend("topright",
+       legend = c("Media",
+                  "Mediana",
+                  "Media más/menos desv. estándar",
+                  "Cuantil (0.25)",
+                  "Cuantil (0.75)"),
+       col = c("red",
+               "orange",
+               "chartreuse4",
+               "deeppink",
+               "darkorchid4"),
+       lwd = 2,
+       cex = 0.75)
 ```
 
 Para los casos leves de infantes la mayor concentración se encuentra por los 10 y 45 meses; para los casos moderados, por los 5 y 35 meses; y, para los casos graves, por los 7 y 30 años. Para los tres casos, la información se encuentra muy dispersa, reconociendo solo al gráfico de los casos de anemia moderada como una campana asimétrica hacia la izquierda.
@@ -618,14 +743,16 @@ mujeres_promedios_anemia_leve <-
                                                  is.numeric)]))
 
 mujeres_promedios_anemia_moderada <-
-  data.frame(colMeans(mujeres_anemia_moderada[ ,
-                                              sapply(mujeres_anemia_moderada, 
-                                                     is.numeric)]))
+  data.frame(colMeans(
+    mujeres_anemia_moderada[ ,
+                             sapply(mujeres_anemia_moderada,
+                                    is.numeric)]))
 
 mujeres_promedios_anemia_grave <- 
-  data.frame(colMeans(mujeres_anemia_grave[ ,
-                                           sapply(mujeres_anemia_grave,
-                                                  is.numeric)]))
+  data.frame(colMeans(
+    mujeres_anemia_grave[ ,
+                          sapply(mujeres_anemia_grave,
+                                 is.numeric)]))
 
 print(mujeres_promedios_anemia_leve)
 print(mujeres_promedios_anemia_moderada)
@@ -635,36 +762,162 @@ print(mujeres_promedios_anemia_grave)
 Representación gráfica.
 
 ```{r}
-hist(mujeres_anemia_leve$edad, main = "Edad de las mujeres con anemia leve en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue", xlim=c(10,50))
-abline(v=mean(mujeres_anemia_leve$edad),col="red",lwd=4)
-abline(v=median(mujeres_anemia_leve$edad),col="orange",lwd=3)
-abline(v=mean(mujeres_anemia_leve$edad)-1*sd(mujeres_anemia_leve$edad),col="chartreuse4",lwd=4)
-abline(v=mean(mujeres_anemia_leve$edad)+1*sd(mujeres_anemia_leve$edad),col="chartreuse4",lwd=4)
-abline(v=quantile(mujeres_anemia_leve$edad,0.25,type=3),col="deeppink",lwd=4)
-abline(v=quantile(mujeres_anemia_leve$edad,0.75,type=3),col="darkorchid4",lwd=4)
-legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+hist(mujeres_anemia_leve$edad,
+     main = "Edad de las mujeres con anemia leve en meses",
+     xlab = "Edad",
+     ylab = "Número de infantes",
+     col = "skyblue", 
+     xlim = c(10, 50))
+
+abline(v = mean(mujeres_anemia_leve$edad),
+       col = "red",
+       lwd = 4)
+
+abline(v = median(mujeres_anemia_leve$edad),
+       col = "orange",
+       lwd = 3)
+
+abline(v = mean(mujeres_anemia_leve$edad) - 1 * 
+         sd(mujeres_anemia_leve$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = mean(mujeres_anemia_leve$edad) + 1 * 
+         sd(mujeres_anemia_leve$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = quantile(mujeres_anemia_leve$edad,
+                    0.25,
+                    type = 3),
+       col = "deeppink",
+       lwd = 4)
+
+abline(v = quantile(mujeres_anemia_leve$edad,
+                    0.75,
+                    type = 3),
+       col = "darkorchid4",
+       lwd = 4)
+
+legend("topright",
+       legend = c("Media",
+                  "Mediana",
+                  "Media más/menos desv. estándar",
+                  "Cuantil (0.25)",
+                  "Cuantil (0.75)"),
+       col = c("red",
+               "orange",
+               "chartreuse4",
+               "deeppink",
+               "darkorchid4"),
+       lwd = 2,
+       cex = 0.75)
 ```
 
 ```{r}
-hist(mujeres_anemia_moderada$edad, main = "Edad de las muejeres con anemia moderada en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue", ylim=c(0,250))
-abline(v=mean(mujeres_anemia_moderada$edad),col="red",lwd=4)
-abline(v=median(mujeres_anemia_moderada$edad),col="orange",lwd=3)
-abline(v=mean(mujeres_anemia_moderada$edad)-1*sd(mujeres_anemia_moderada$edad),col="chartreuse4",lwd=4)
-abline(v=mean(mujeres_anemia_moderada$edad)+1*sd(mujeres_anemia_moderada$edad),col="chartreuse4",lwd=4)
-abline(v=quantile(mujeres_anemia_moderada$edad,0.25,type=3),col="deeppink",lwd=4)
-abline(v=quantile(mujeres_anemia_moderada$edad,0.75,type=3),col="darkorchid4",lwd=4)
-legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+hist(mujeres_anemia_moderada$edad,
+     main = "Edad de las muejeres con anemia moderada en meses",
+     xlab = "Edad",
+     ylab = "Número de infantes",
+     col = "skyblue",
+     ylim=c(0,250))
+
+abline(v = mean(mujeres_anemia_moderada$edad),
+       col = "red",
+       lwd=4)
+
+abline(v = median(mujeres_anemia_moderada$edad),
+       col = "orange",
+       lwd = 3)
+
+abline(v = mean(mujeres_anemia_moderada$edad) - 1 * 
+         sd(mujeres_anemia_moderada$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = mean(mujeres_anemia_moderada$edad) + 1 * 
+         sd(mujeres_anemia_moderada$edad),
+       col = "chartreuse4" , 
+       lwd = 4)
+
+abline(v = quantile(mujeres_anemia_moderada$edad,
+                    0.25,
+                    type = 3),
+       col = "deeppink",
+       lwd = 4)
+
+abline(v = quantile(mujeres_anemia_moderada$edad,
+                    0.75,
+                    type = 3),
+       col = "darkorchid4",
+       lwd = 4)
+
+legend("topright",
+       legend = c("Media",
+                  "Mediana",
+                  "Media más/menos desv. estándar",
+                  "Cuantil(0.25)",
+                  "Cuantil(0.75)"),
+       col = c("red",
+               "orange",
+               "chartreuse4",
+               "deeppink",
+               "darkorchid4"),
+       lwd = 2,
+       cex = 0.75)
 ```
 
 ```{r}
-hist(mujeres_anemia_grave$edad, main = "Edad de las mujeres con anemia grave en meses", xlab = "Edad", ylab = "Número de infantes", col = "skyblue", ylim=c(0,30))
-abline(v=mean(mujeres_anemia_grave$edad),col="red",lwd=4)
-abline(v=median(mujeres_anemia_grave$edad),col="orange",lwd=3)
-abline(v=mean(mujeres_anemia_grave$edad)-1*sd(mujeres_anemia_grave$edad),col="chartreuse4",lwd=4)
-abline(v=mean(mujeres_anemia_grave$edad)+1*sd(mujeres_anemia_grave$edad),col="chartreuse4",lwd=4)
-abline(v=quantile(mujeres_anemia_grave$edad,0.25,type=3),col="deeppink",lwd=4)
-abline(v=quantile(mujeres_anemia_grave$edad,0.75,type=3),col="darkorchid4",lwd=4)
-legend("topright",legend=c("Media","Mediana","Media mas/menos desv. estándar","Cuantil(0.25)","Cuantil(0.75)"),col=c("red","orange","chartreuse4","deeppink","darkorchid4"),lwd=2,cex=0.75)
+hist(mujeres_anemia_grave$edad,
+     main = "Edad de las mujeres con anemia grave en meses",
+     xlab = "Edad", 
+     ylab = "Número de infantes", 
+     col = "skyblue",
+     ylim = c(0, 30))
+
+abline(v = mean(mujeres_anemia_grave$edad),
+       col = "red",
+       lwd = 4)
+
+abline(v = median(mujeres_anemia_grave$edad),
+       col = "orange",
+       lwd = 3)
+
+abline(v = mean(mujeres_anemia_grave$edad) - 1 * 
+         sd(mujeres_anemia_grave$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = mean(mujeres_anemia_grave$edad) + 1 * 
+         sd(mujeres_anemia_grave$edad),
+       col = "chartreuse4",
+       lwd = 4)
+
+abline(v = quantile(mujeres_anemia_grave$edad,
+                    0.25,
+                    type = 3),
+       col = "deeppink",
+       lwd = 4)
+
+abline(v = quantile(mujeres_anemia_grave$edad,
+                    0.75,
+                    type = 3),
+       col = "darkorchid4",
+       lwd = 4)
+
+legend("topright",
+       legend = c("Media",
+                  "Mediana",
+                  "Media más/menos desv. estándar",
+                  "Cuantil(0.25)",
+                  "Cuantil(0.75)"),
+       col = c("red",
+               "orange",
+               "chartreuse4",
+               "deeppink",
+               "darkorchid4"),
+       lwd = 2,
+       cex = 0.75)
 ```
 
 Para los casos leves de mujeres la mayor concentración se encuentra por los 17 y 38 años; para los casos moderados, por los 20 y 35 meses; y, para los casos graves, por los 22 y 44 años. Igualmente los datos se encuentran muy dispersos, reconociendo que para los casos de anemia leve, hay un descenso mientras aumenta la edad.
@@ -679,7 +932,9 @@ niños_anemia <- bind_rows(niños_anemia_leve,
                           niños_anemia_moderada, 
                           niños_anemia_grave)
 
-niños <- inner_join(REC0111, niños_anemia, by = "cuestionario_individual_id")
+niños <- inner_join(REC0111,
+                    niños_anemia, 
+                    by = "cuestionario_individual_id")
 
 tabla_niños_residencia <- table(niños$tipo_de_residencia, niños$anemia)
 
@@ -689,7 +944,8 @@ tabla_niños_residencia
 ```{r}
 
 Tipo_de_Residencia_vs_Nivel_de_Anemia <- 
-  as.data.frame((tabla_niños_residencia / rowSums(tabla_niños_residencia)) * 100)
+  as.data.frame((tabla_niños_residencia / rowSums(tabla_niños_residencia)) 
+                * 100)
 
 colnames(Tipo_de_Residencia_vs_Nivel_de_Anemia) <- c("tipo_de_residencia",
                                                      "anemia",
@@ -708,7 +964,8 @@ Tipo_de_Residencia_vs_Nivel_de_Anemia$anemia <-
 
 ggplot(Tipo_de_Residencia_vs_Nivel_de_Anemia,
        aes(x = tipo_de_residencia,
-           y = frecuencia, fill = anemia)) +
+           y = frecuencia,
+           fill = anemia)) +
 geom_bar(stat = "identity",
          position = "dodge") +
 labs(x = "Tipo de Residencia",
@@ -777,14 +1034,15 @@ Region_vs_Nivel_de_Anemia <-
                         "Tacna",
                         "Tumbes",
                         "Ucayali"),
-  Leve = c(191, 182, 211, 139, 233, 164, 157, 168, 202, 219, 130, 187, 140, 155,
-           521, 325, 241, 101, 199, 165, 215, 218, 106, 214, 331),
-  Moderado = c(83, 66, 82, 36, 96, 47, 57, 102, 155, 115, 44, 75, 59, 48, 162,
-               173, 107, 27, 118, 60, 125, 79, 46, 57, 180),
-  Grave = c(0, 0, 0, 0, 3, 0, 0, 0, 1, 7, 1, 0, 2, 1, 0, 2, 0, 0, 5, 0, 4, 0,
-            1, 0, 0))
+  Leve = c(191, 182, 211, 139, 233, 164, 157, 168, 202, 219, 130, 187,
+           140, 155, 521, 325, 241, 101, 199, 165, 215, 218, 106, 214, 331),
+  Moderado = c(83, 66, 82, 36, 96, 47, 57, 102, 155, 115, 44, 75, 59, 48,
+               162, 173, 107, 27, 118, 60, 125, 79, 46, 57, 180),
+  Grave = c(0, 0, 0, 0, 3, 0, 0, 0, 1, 7, 1, 0, 2, 1, 0, 2, 0, 0, 5, 0, 4,
+            0, 1, 0, 0))
 
-Region_vs_Nivel_de_Anemia$Total <- rowSums(Region_vs_Nivel_de_Anemia[ , 2:4])
+Region_vs_Nivel_de_Anemia$Total <- 
+  rowSums(Region_vs_Nivel_de_Anemia[ , 2:4])
 
 gt(Region_vs_Nivel_de_Anemia) %>%
     tab_header(title = "Tabla de Contingencia",
@@ -794,7 +1052,7 @@ gt(Region_vs_Nivel_de_Anemia) %>%
                  Moderado = "Moderado",
                  Leve = "Leve",
                  Total = "Total") %>%
-        fmt_number(columns = vars(Grave, Leve,Moderado),
+        fmt_number(columns = vars(Grave, Leve, Moderado),
                    decimals = 0)
 ```
 
@@ -1011,7 +1269,7 @@ unique(RECH23$indice_riqueza)
 ```
 
 $$
-\Omega = E1, E2, E3, E4, E5 
+\Omega = E1, \; E2, \; E3, \; E4, \; E5 
 $$
 
 **Eventos atómicos**:
@@ -1029,7 +1287,7 @@ $$
 **Probabilidad de cada evento:**
 
 $$
-P(x) = f(x)/n
+P(x) = \dfrac{f(x)}{n}
 $$\
 
 **f(x)** = número de veces que se cumpla el evento en toda la muestra
@@ -1741,7 +1999,7 @@ Madres_con_anemia / Total
 
 Los resultados se aproximan.
 
-### Peso (kg)
+### Peso ($kg$)
 
 ```{r}
 
@@ -1820,15 +2078,37 @@ Observemos una gráfica de distribución normal en torno a los parámetros descr
 mu_p <- 62.72915
 sigma_p <- 13.28802
 
-hist(RECH5$peso, breaks = 50, freq = FALSE, main = "Histograma de peso", xlab = "Peso (kg)", col = "#66c2a5", border = "#333333")
-lines(density(RECH5$hemoglobina_ajustada_latitud, na.rm = TRUE), col = "#fc8d62", lwd = 3)
+hist(RECH5$peso, 
+     breaks = 50,
+     freq = FALSE, 
+     main = "Histograma de peso",
+     xlab = "Peso (kg)", 
+     col = "#66c2a5",
+     border = "#333333")
 
-ylim <- c(0, max(density(RECH5$peso, na.rm = TRUE)$y))
-lines(density(RECH5$peso, na.rm = TRUE), col = "#fc8d62", lwd = 3)
+lines(density(RECH5$hemoglobina_ajustada_latitud, na.rm = TRUE),
+      col = "#fc8d62",
+      lwd = 3)
 
-curve(dnorm(x, mu_p, sigma_p), lwd = 2, col = "#000000", add = TRUE)
+ylim <- c(0, max(density(RECH5$peso,
+                         na.rm = TRUE)$y))
 
-legend("topright", c("Curva observada (kernel)", "Curva teórica (normal)"), lty = 1, lwd = 2, col = c("#fc8d62", "#8da0cb"), bty = "n", cex = 0.8)
+lines(density(RECH5$peso, na.rm = TRUE),
+      col = "#fc8d62",
+      lwd = 3)
+
+curve(dnorm(x, mu_p, sigma_p),
+      lwd = 2,
+      col = "#000000", 
+      add = TRUE)
+
+legend("topright", 
+       c("Curva observada (kernel)", "Curva teórica (normal)"), 
+       lty = 1, 
+       lwd = 2, 
+       col = c("#fc8d62", "#8da0cb"), 
+       bty = "n",
+       cex = 0.8)
 ```
 
 -   **Definimos nuestra variable aleatoria continua**
