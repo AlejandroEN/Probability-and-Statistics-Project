@@ -174,17 +174,102 @@ kable(REC44 %>%
                   Q3 = round(quantile(talla, 0.75, type = 3), 2)))
 ```
 
+#### 3.1.4 Hemoglobina de mujeres
+
+```{r, echo=FALSE}
+
+ggplot(filter(RECH5, !is.na(hemoglobina)), aes(x = "", y = hemoglobina)) +
+  geom_boxplot(fill = "#66c2a5", color = "#333333") +
+  labs(title = "Boxplot del Nivel de Hemoglobina",
+       x = "",
+       y = "Nivel de Hemoglobina (g/dl)") +
+  theme_minimal()
+```
+
+Descriptores numéricos:
+
+```{r, echo=FALSE}
+
+kable(RECH5 %>% 
+
+        summarize(Media = round(mean(hemoglobina), 2),
+
+                  Mediana = round(median(hemoglobina), 2),
+
+                  Mínimo = min(hemoglobina), Máximo=max(hemoglobina),
+
+                  SD = round(sd(hemoglobina), 2),
+
+                  Q1 = round(quantile(hemoglobina, 0.25, type = 3), 2),
+
+                  Q3 = round(quantile(hemoglobina, 0.75, type = 3), 2)))
+
+```
+
+#### 3.1.5 Peso de mujeres
+
+```{r, echo=FALSE}
+
+ggplot(filter(RECH5, !is.na(peso)), aes(x = "", y = peso)) +
+  geom_boxplot(fill = "#66c2a5", color = "#333333") +
+  labs(title = "Boxplot del Nivel de peso",
+       x = "",
+       y = "Nivel de peso kg") +
+  theme_minimal()
+```
+
+Descriptores numéricos:
+
+```{r, echo=FALSE}
+
+kable(RECH5
+      %>% 
+        summarize(Media = round(mean(talla), 2),
+                  Mediana = round(median(talla), 2),
+                  Mínimo = min(talla), Máximo=max(talla),
+                  SD = round(sd(talla), 2),
+                  Q1 = round(quantile(talla, 0.25, type = 3), 2),
+                  Q3 = round(quantile(talla, 0.75, type = 3), 2)))
+```
+
+#### 3.1.6 Talla de mujeres
+
+```{r, echo=FALSE}
+
+ggplot(filter(RECH5, !is.na(talla)), aes(x = "", y = talla)) +
+  geom_boxplot(fill = "#66c2a5", color = "#333333") +
+  labs(title = "Boxplot del Nivel de talla",
+       x = "",
+       y = "Nivel de talla (cm)") +
+  theme_minimal()
+```
+
+Descriptores numéricos:
+
+```{r, echo=FALSE}
+
+kable(RECH5 %>% 
+        summarize(Media = round(mean(talla), 2),
+                  Mediana = round(median(talla), 2),
+                  Mínimo = min(talla), Máximo=max(talla),
+                  SD = round(sd(talla), 2),
+                  Q1 = round(quantile(talla, 0.25, type = 3), 2),
+                  Q3 = round(quantile(talla, 0.75, type = 3), 2)))
+```
+
 ### 3.2 Variables categóricas
+
+Las siguientes gráficas están orientadas a nuestro primer objetivo, '**Describir los casos de anemia y su severidad en niños y mujeres en el Perú en el año 2022**'.
 
 #### 3.2.1 Nivel de anemia en niños
 
-```{r}
+```{r, echo=FALSE}
 
 barras <- barplot(table(REC44$anemia), 
                   cex.names = 0.7,
                   col = c("#FF5733", "#FFD700", "#7FFF00", "#00BFFF"), 
-                  main = "Niveles de anemia en niñes",
-                  xlab = "Nivel de anemia", 
+                  main = "Niveles de Anemia en Niños",
+                  xlab = "Nivel de Anemia", 
                   ylab = "Frecuencia",
                   cex.main = 0.8)
 
@@ -198,13 +283,13 @@ text(x = barras,
 
 #### 3.2.2 Nivel de anemia en mujeres
 
-```{r}
+```{r, echo=FALSE}
 
 barras <- barplot(table(RECH5$anemia), 
                   cex.names = 0.7,
                   col = c("#FF5733", "#FFD700", "#7FFF00", "#00BFFF"), 
-                  main = "Niveles de anemia en mujeres",
-                  xlab = "Nivel de anemia", 
+                  main = "Niveles de Anemia en Mujeres",
+                  xlab = "Nivel de Anemia", 
                   ylab = "Frecuencia",
                   cex.main = 0.8)
 
@@ -217,11 +302,10 @@ text(x = barras,
 ```
 
 ## 4. Análisis descriptivo de interacción
- - - - aquí comienza
 
-#### 3.1.1 Nivel de anemia en niños
+### 4.1 Edad de niños VS Frecuencias de anemia
 
-Hallamos el promedio de la edad, la talla, el peso y la hemoglobina en niños con anemia leve, moderada y grave para comparar la información de los tres tipos de anemia.
+#### 4.1.1 Edad de niños VS Frecuencia de la anemia leve
 
 ```{r, echo=FALSE}
 
@@ -233,7 +317,6 @@ niños_promedios_anemia_leve <-
   data.frame(colMeans(niños_anemia_leve[ ,
                                          sapply(niños_anemia_leve,
                                                 is.numeric)]))
-
 
 niños_promedios_anemia_moderada <-
   data.frame(colMeans(niños_anemia_moderada[ ,
@@ -261,14 +344,12 @@ kable(niños_promedios_anemia_grave,
   kable_styling(full_width = FALSE)
 ```
 
-Representamos de forma gráfica las edades de cada niño con su nivel de anemia.
-
 ```{r, echo=FALSE}
 
 hist(niños_anemia_leve$edad,
-     main = "Edad de los infantes con anemia leve en meses",
-     xlab = "Edad",
-     ylab = "Número de infantes",
+     main = "Edad de los infantes con anemia leve",
+     xlab = "Edad en meses",
+     ylab = "Número de infantes con anemia leve",
      col = "skyblue")
 
 abline(v = mean(niños_anemia_leve$edad),
@@ -302,9 +383,9 @@ abline(v = quantile(niños_anemia_leve$edad,
 legend("topright",
        legend = c("Media",
                   "Mediana",
-                  "Media más/menos desv. estándar",
-                  "Cuantil(0.25)",
-                  "Cuantil(0.75)"),
+                  "Media +/- desv. estándar",
+                  "Cuantil (0.25)",
+                  "Cuantil (0.75)"),
        col = c("red",
                "orange",
                "chartreuse4",
@@ -314,12 +395,14 @@ legend("topright",
        cex = 0.75)
 ```
 
+#### 4.1.2 Edad de niños VS Frecuencia de la anemia moderada
+
 ```{r, echo=FALSE}
 
 hist(niños_anemia_moderada$edad,
-     main = "Edad de los infantes con anemia moderada en meses",
-     xlab = "Edad",
-     ylab = "Número de infantes",
+     main = "Edad de los niños con anemia moderada",
+     xlab = "Edad en meses",
+     ylab = "Número de niños con anemia moderada",
      col = "skyblue")
 
 abline(v = mean(niños_anemia_moderada$edad),
@@ -355,7 +438,7 @@ abline(v = quantile(niños_anemia_moderada$edad,
 legend("topright",
        legend = c("Media",
                   "Mediana",
-                  "Media más/menos desv. estándar",
+                  "Media +/- desv. estándar",
                   "Cuantil (0.25)",
                   "Cuantil (0.75)"),
        col = c("red",
@@ -367,12 +450,14 @@ legend("topright",
        cex = 0.75)
 ```
 
+#### 4.1.3 Edad de niños VS Frecuencia de la anemia grave
+
 ```{r, echo=FALSE}
 
 hist(niños_anemia_grave$edad,
-     main = "Edad de los infantes con anemia grave en meses",
-     xlab = "Edad",
-     ylab = "Número de infantes",
+     main = "Edad de los infantes con anemia grave",
+     xlab = "Edad en meses",
+     ylab = "Número de niños con anemia grave",
      col = "skyblue")
 
 abline(v = mean(niños_anemia_grave$edad),
@@ -408,7 +493,7 @@ abline(v = quantile(niños_anemia_grave$edad,
 legend("topright",
        legend = c("Media",
                   "Mediana",
-                  "Media más/menos desv. estándar",
+                  "Media +/- desv. estándar",
                   "Cuantil (0.25)",
                   "Cuantil (0.75)"),
        col = c("red",
@@ -420,11 +505,11 @@ legend("topright",
        cex = 0.75)
 ```
 
-Para los casos leves de infantes la mayor concentración se encuentra por los 10 y 45 meses; para los casos moderados, por los 5 y 35 meses; y, para los casos graves, por los 7 y 30 años. Para los tres casos, la información se encuentra muy dispersa, reconociendo solo al gráfico de los casos de anemia moderada como una campana asimétrica hacia la izquierda.
+En los casos leves de anemia en infantes, observamos que las concentraciones más significativas se sitúan entre los 10 y 45 meses de edad. En los casos moderados, la mayor concentración se encuentra alrededor de los 5 y 35 meses, mientras que para los casos graves, la concentración más prominente se registra entre los 7 y 30 años. En los tres escenarios, la información se presenta altamente dispersa. Es importante destacar que el gráfico de los casos de anemia moderada exhibe una distribución que sugiere una asimetría hacia la izquierda, similar a una campana.
 
-#### 3.1.2 Nivel de anemia en mujeres
+### 4.2 Edad de mujeres VS Frecuencias de anemia
 
-Hallamos el promedio de la edad, la talla, el peso y la hemoglobina en mujeres con anemia leve, moderada y grave para comparar la información de los tres tipos de anemia.
+#### 4.2.1 Edad de mujeres VS Frecuencia de la anemia grave
 
 ```{r, echo=FALSE}
 
@@ -465,14 +550,12 @@ kable(mujeres_promedios_anemia_grave,
   kable_styling(full_width = FALSE)
 ```
 
-Representamos de forma gráfica las edades de cada mujer con su nivel de anemia.
-
 ```{r, echo=FALSE}
 
 hist(mujeres_anemia_leve$edad,
-     main = "Edad de las mujeres con anemia leve en meses",
-     xlab = "Edad",
-     ylab = "Número de mujeres",
+     main = "Edad de las mujeres con anemia leve",
+     xlab = "Edad en años",
+     ylab = "Número de mujeres con anemia leve",
      col = "skyblue",
      xlim = c(10, 50))
 
@@ -509,7 +592,7 @@ abline(v = quantile(mujeres_anemia_leve$edad,
 legend("topright",
        legend = c("Media",
                   "Mediana",
-                  "Media más/menos desv. estándar",
+                  "Media +/- desv. estándar",
                   "Cuantil (0.25)",
                   "Cuantil (0.75)"),
        col = c("red",
@@ -521,12 +604,14 @@ legend("topright",
        cex = 0.75)
 ```
 
+#### 4.2.2 Edad de mujeres VS Frecuencia de la anemia moderada
+
 ```{r, echo=FALSE}
 
 hist(mujeres_anemia_moderada$edad,
-     main = "Edad de las muejeres con anemia moderada en meses",
-     xlab = "Edad",
-     ylab = "Número de mujeres",
+     main = "Edad de las mujeres con anemia moderada",
+     xlab = "Edad en años",
+     ylab = "Número de mujeres con anemia moderada",
      col = "skyblue",
      ylim=c(0,250))
 
@@ -563,9 +648,9 @@ abline(v = quantile(mujeres_anemia_moderada$edad,
 legend("topright",
        legend = c("Media",
                   "Mediana",
-                  "Media más/menos desv. estándar",
-                  "Cuantil(0.25)",
-                  "Cuantil(0.75)"),
+                  "Media +/- desv. estándar",
+                  "Cuantil (0.25)",
+                  "Cuantil (0.75)"),
        col = c("red",
                "orange",
                "chartreuse4",
@@ -575,12 +660,14 @@ legend("topright",
        cex = 0.75)
 ```
 
+#### 4.2.3 Edad de mujeres VS Frecuencia de la anemia grave
+
 ```{r, echo=FALSE}
 
 hist(mujeres_anemia_grave$edad,
-     main = "Edad de las mujeres con anemia grave en meses",
-     xlab = "Edad",
-     ylab = "Número de mujeres",
+     main = "Edad de las mujeres con anemia grave",
+     xlab = "Edad en años",
+     ylab = "Número de mujeres con anemia grave",
      col = "skyblue",
      ylim = c(0, 30))
 
@@ -617,9 +704,9 @@ abline(v = quantile(mujeres_anemia_grave$edad,
 legend("topright",
        legend = c("Media",
                   "Mediana",
-                  "Media más/menos desv. estándar",
-                  "Cuantil(0.25)",
-                  "Cuantil(0.75)"),
+                  "Media +/- desv. estándar",
+                  "Cuantil (0.25)",
+                  "Cuantil (0.75)"),
        col = c("red",
                "orange",
                "chartreuse4",
@@ -629,11 +716,119 @@ legend("topright",
        cex = 0.75)
 ```
 
-Para los casos leves de mujeres la mayor concentración se encuentra por los 17 y 38 años; para los casos moderados, por los 20 y 35 meses; y, para los casos graves, por los 22 y 44 años. Igualmente los datos se encuentran muy dispersos, reconociendo que para los casos de anemia leve, hay un descenso mientras aumenta la edad.
+En el caso de mujeres con anemia leve, se destaca que las concentraciones más notables se ubican alrededor de los 17 y 38 años de edad. Para los casos moderados, la mayor concentración se registra en torno a los 20 y 35 meses, mientras que en los casos graves, se observa un pico entre los 22 y 44 años. Al igual que en los casos de infantes, los datos exhiben una alta dispersión. Es relevante señalar que, específicamente en los casos
 
- - - - - aquí termina
+Las siguientes gráficas están orientadas a nuestro segundo objetivo, '**Analizar el índice de anemia en las diversas regiones del Perú en el año 2022**'.
 
-Analizaremos la relación entre el tipo de residencia y el nivel de anemia de los niños.
+### 4.3 Regiones VS Nivel de anemia
+
+#### 4.3.1 Regiones VS Nivel de anemia en niños
+
+Gráfico donde se tomen las tres regiones con mas casos en infantes para luego compararlos.
+
+```{r}
+
+regiones_casos_infantes <-
+  merge(REC0111,
+        (select(REC44,
+                anemia,
+                cuestionario_individual_id))[REC44$anemia!="0.sin_anemia", ],
+        by = "cuestionario_individual_id")
+
+regiones_casos_infantes_orden <- sort(table(regiones_casos_infantes$region),
+                                      decreasing = TRUE)
+
+tres_regiones_mas_casos_i <- head(regiones_casos_infantes_orden, 3)
+
+tres_regiones_mas_casos_i <-
+  regiones_casos_infantes[(regiones_casos_infantes$region %in%
+                             names(tres_regiones_mas_casos_i)), ]
+
+tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region,
+                                tres_regiones_mas_casos_i$anemia))
+
+barplot(t(tabla_tres_regiones_i),
+        col = 2:4,
+        xlab = "Regiones",
+        ylab = "Nivel de anemia",
+        ylim = c(0, 1000),
+        main = "Distribución según anemia y region")
+
+legend("topright",
+       legend = c("Leve", "Moderado", "Grave"),
+       col = 2:4,
+       cex = 1.0,
+       pch = 15,
+       title = "Nivel de anemia")
+```
+
+#### 4.3.2 Regiones VS Nivel de anemia en mujeres
+
+```{r}
+
+regiones_casos_mujeres <-
+  merge((select(RECH5,
+                anemia,
+                cuestionario_individual_id))[RECH5$anemia != "0.sin_anemia", ],
+        REC0111,
+        by.x = "cuestionario_individual_id",
+        by.y = "cuestionario_hogar_id")
+
+regiones_casos_mujeres_orden <- sort(table(regiones_casos_mujeres$region),
+                                     decreasing = TRUE)
+
+tres_regiones_mas_casos_m <- head(regiones_casos_mujeres_orden, 3)
+
+tres_regiones_mas_casos_m <-
+  regiones_casos_mujeres[(regiones_casos_mujeres$region %in%
+                            names(tres_regiones_mas_casos_m)), ]
+
+tabla_tres_regiones_m <- table(tres_regiones_mas_casos_m$region,
+                               tres_regiones_mas_casos_m$anemia)
+
+barplot(t(tabla_tres_regiones_m),
+        col = 2:4,
+        xlab = "Region",
+        ylab = "Nivel de anemia",
+        ylim = c(0,2000),
+        main = "Distribución según anemia y region")
+
+legend("topright",
+       legend = c("Leve","Moderado","Grave"),
+       col = 2:4,
+       cex = 1.0,
+       pch = 15,
+       title = "Nivel de anemia")
+```
+
+Claramente se observa una tendencia consistente en los tres casos, donde los casos leves son consistentemente predominantes. La elección de focalizar en las tres regiones con mayor incidencia de casos se fundamenta en la necesidad de dirigir mayores esfuerzos y recursos para combatir la enfermedad. Estas regiones identificadas no solo presentan una mayor prevalencia, sino que también pueden ser consideradas como puntos críticos que demandan una atención prioritaria en las estrategias de prevención y control de la anemia.
+
+Las siguientes gráficas están orientadas a nuestro tercer objetivo, '**Describir las características sociales de los grupos vulnerables (niños y mujeres) a la anemia en el Perú en el año 2022**'.
+
+### 4.4 Características sociales
+
+#### 4.4.1 Boxplots entre hemoglobina e índice de riqueza con las mujeres
+
+```{r}
+
+ds_hemoglobina_riqueza <-
+  merge((select(RECH5,
+                hemoglobina,
+                cuestionario_individual_id)),
+        RECH23,
+        by.x = "cuestionario_individual_id",
+        by.y = "cuestionario_hogar_id")
+
+boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_riqueza,
+        col = c("#E63946", "#2A9D8F", "#F4A261", "#264653", "#F4D35E"),
+        names = c("Muy pobre", "Pobre", "Medio", "Rico", "Muy rico"),
+        xlab = "Índice de riqueza",
+        ylab = "Nivel de hemoglobina (g/dl)")
+```
+
+De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
+
+#### 4.4.2 Tipo de residencia VS Nivel de anemia en Niños
 
 ```{r}
 
@@ -713,113 +908,9 @@ gt(Tipo_de_Residencia_vs_Nivel_de_Anemia) %>%
 
 Como podemos observar, la proporción entre los distintos tipos de anemia es bastante similar sea el tipo de residencia urbano o rural.
 
-Gráfico donde se tomen las tres regiones con mas casos en infantes para luego compararlos.
+## 5. Probabilidad empírica
 
-```{r}
-
-regiones_casos_infantes <-
-  merge(REC0111,
-        (select(REC44,
-                anemia,
-                cuestionario_individual_id))[REC44$anemia!="0.sin_anemia", ],
-        by = "cuestionario_individual_id")
-
-regiones_casos_infantes_orden <- sort(table(regiones_casos_infantes$region),
-                                      decreasing = TRUE)
-
-tres_regiones_mas_casos_i <- head(regiones_casos_infantes_orden, 3)
-
-tres_regiones_mas_casos_i <-
-  regiones_casos_infantes[(regiones_casos_infantes$region %in%
-                             names(tres_regiones_mas_casos_i)), ]
-
-tabla_tres_regiones_i <- (table(tres_regiones_mas_casos_i$region,
-                                tres_regiones_mas_casos_i$anemia))
-
-barplot(t(tabla_tres_regiones_i),
-        col = 2:4,
-        xlab = "Regiones",
-        ylab = "Nivel de anemia",
-        ylim = c(0, 1000),
-        main = "Distribución según anemia y region")
-
-legend("topright",
-       legend = c("Leve", "Moderado", "Grave"),
-       col = 2:4,
-       cex = 1.0,
-       pch = 15,
-       title = "Nivel de anemia")
-```
-
-Hacemos el mismo proceso con las mujeres seleccionadas.
-
-```{r}
-
-regiones_casos_mujeres <-
-  merge((select(RECH5,
-                anemia,
-                cuestionario_individual_id))[RECH5$anemia != "0.sin_anemia", ],
-        REC0111,
-        by.x = "cuestionario_individual_id",
-        by.y = "cuestionario_hogar_id")
-
-regiones_casos_mujeres_orden <- sort(table(regiones_casos_mujeres$region),
-                                     decreasing = TRUE)
-
-tres_regiones_mas_casos_m <- head(regiones_casos_mujeres_orden, 3)
-
-tres_regiones_mas_casos_m <-
-  regiones_casos_mujeres[(regiones_casos_mujeres$region %in%
-                            names(tres_regiones_mas_casos_m)), ]
-
-tabla_tres_regiones_m <- table(tres_regiones_mas_casos_m$region,
-                               tres_regiones_mas_casos_m$anemia)
-
-barplot(t(tabla_tres_regiones_m),
-        col = 2:4,
-        xlab = "Region",
-        ylab = "Nivel de anemia",
-        ylim = c(0,2000),
-        main = "Distribución según anemia y region")
-
-legend("topright",
-       legend = c("Leve","Moderado","Grave"),
-       col = 2:4,
-       cex = 1.0,
-       pch = 15,
-       title = "Nivel de anemia")
-```
-
-Se nota que para ambos casos, siempre los casos leves son los predominantes.
-
-La elección de las tres regiones con más casos es porque deben ser las regiones donde hay que preocuparse más en combatir a la enfermedad.
-
-Boxplots entre hemoglobina e indice de riqueza con las mujeres
-
-```{r}
-
-ds_hemoglobina_riqueza <-
-  merge((select(RECH5,
-                hemoglobina,
-                cuestionario_individual_id)),
-        RECH23,
-        by.x = "cuestionario_individual_id",
-        by.y = "cuestionario_hogar_id")
-
-boxplot(ds_hemoglobina_riqueza$hemoglobina ~ ds_hemoglobina_riqueza$indice_riqueza,
-        col = c("#E63946", "#2A9D8F", "#F4A261", "#264653", "#F4D35E"),
-        names = c("Muy pobre", "Pobre", "Medio", "Rico", "Muy rico"),
-        xlab = "Índice de riqueza",
-        ylab = "Nivel de hemoglobina (gr/dl)")
-```
-
-De todos los índices de riqueza, con los mas pobres es donde existe mayor dispersión. No hay mucha distinción en los casos bajos de hemoglobina por cada separación (que indica si presenta anemia).
-
-# Probabilidades
-
-## Probabilidad empírica
-
-#### Variable A: Índice de riqueza
+#### 5.1 Variable A: Índice de riqueza
 
 **Experimento 1:** Escoger un hogar que aceptó participar en la encuesta y observar su **índice de riqueza**.
 
@@ -895,7 +986,7 @@ names(which.min(prob_riqueza))
 
 Al elegir un hogar para el experimento, es más probable que sea muy pobre y menos probable que sea muy rico.
 
-#### Variable B: Nivel de anemia
+#### 5.2 Variable B: Nivel de anemia
 
 **Experimento 2:** Seleccionar a un niño de entre los hogares que han aceptado participar en la prueba de hemoglobina y evaluar su **nivel de anemia**.
 
@@ -965,9 +1056,9 @@ names(which.min(prob_anemia))
 
 Es más probable que, entre los niños seleccionados, uno no presente anemia y sea menos probable que esté en un estado grave de la misma.
 
-## Probabilidad condicional
+## 6. Probabilidad condicional
 
-### Eventos dependientes
+### 6.1 Eventos dependientes
 
 -   **A1**: Seleccionar una mujer de la muestra que esté embarazada.
 
@@ -1074,7 +1165,7 @@ $$
 
 Se puede concluir que la probabilidad de que la mujer escogida no esté embarazada dado que su máximo nivel educativo alcanzado es la secundaria es 0.9713645.
 
-### Eventos independientes
+### 6.2 Eventos independientes
 
 -   **B1**: Seleccionar un niño que tenga anemia dado que vive en un lugar urbano.
 
@@ -1170,9 +1261,9 @@ prob_b1c_int_b2c
 (1-B2)*(1-B1)
 ```
 
-## Variables aleatorias discretas
+## 7. Variables aleatorias discretas
 
-### Número de niños con un determinado nivel de anemia
+### 7.1 Número de niños con un determinado nivel de anemia
 
 ```{r}
 table(REC44$anemia)
@@ -1287,7 +1378,7 @@ pgeom(100 - 1, p)
 
 La probabilidad de que se necesite observar 100 niños o menos para encontrar uno con anemia grave es de aproximadamente 0.3082465.
 
-### Número de madres con un determinado nivel educativo
+### 7.2 Número de madres con un determinado nivel educativo
 
 ```{r}
 table(RECH5$nivel_educativo)
@@ -1429,9 +1520,9 @@ phyper(50, r, N - r, n, lower.tail = F)
 
 Dado el resultado, es altamente probable encontrar en esta muestra de tamaño reducido a más de 50 mujeres cuyo máximo nivel educativo fue la secundaria. Esto se debe a la alta probabilidad del evento **S** (**0.65**).
 
-## Variables aleatorias continuas
+## 8. Variables aleatorias continuas
 
-### Hemoglobina ajustada en función de la latitud ($g/dl$)
+### 8.1 Hemoglobina ajustada en función de la latitud ($g/dl$)
 
 ```{r}
 
@@ -1457,14 +1548,6 @@ cat("Varianza:", varianza, "\n")
 cat("Desviación estándar:", desviacion_estandar, "\n")
 cat("Coeficiente de variación:", coeficiente_variacion, "\n")
 ```
-
-1.  **Esperanza (media): 12.68532:** El promedio de los niveles de hemoglobina en la muestra es aproximadamente 12.69 $g/dl$. Esto da una idea general de cuál podría ser el nivel "típico" de hemoglobina en la población estudiada.
-
-2.  **Varianza: 1.613424:** Mide cuánto varían los niveles de hemoglobina alrededor de la media. En este conjunto de datos, la variabilidad es moderada, lo que significa que los niveles de hemoglobina no son todos iguales, pero tampoco están muy dispersos.
-
-3.  **Desviación estándar: 1.270206:** La desviación estándar es una medida de cuánto se espera que los niveles de hemoglobina varíen respecto a la media. Con una desviación estándar de 1.27 $g/dl$, podemos decir que la mayoría de los valores de hemoglobina están a una distancia relativamente cercana del promedio.
-
-4.  **Coeficiente de variación: 0.100132:** Este número (10%) proporciona una perspectiva relativa de la variabilidad en comparación con el promedio. Un coeficiente de variación bajo sugiere que la variabilidad en los niveles de hemoglobina no es muy alta en relación con la media, lo que implica cierta consistencia en los resultados.
 
 -   **Identificamos la distribución**
 
@@ -1586,7 +1669,7 @@ Madres_con_anemia / Total
 
 Los resultados se aproximan.
 
-### Peso ($kg$)
+### 8.2 Peso ($kg$)
 
 ```{r}
 
@@ -1613,14 +1696,6 @@ cat("Desviación estándar:", desviacion_estandar, "\n")
 cat("Coeficiente de variación:", coeficiente_variacion, "\n")
 
 ```
-
-1.  **Esperanza (62.72915):** La esperanza, también conocida como la media, representa el valor promedio de la variable. En este contexto, la esperanza de 62.72915 sugiere que, en promedio, el peso de la población está alrededor de 62.73 unidades.
-
-2.  **Varianza (176.5763)**: La varianza mide cuánto se dispersan los valores de la variable respecto a su media. Una varianza más alta indica mayor dispersión. En este caso, una varianza de 176.5763 implica que hay cierta variabilidad en los pesos de la población alrededor de la media.
-
-3.  **Desviación estándar (13.2882):** La desviación estándar es simplemente la raíz cuadrada de la varianza. Es una medida de la dispersión de los datos. En este contexto, una desviación estándar de 13.2882 indica cuánto suelen variar individualmente los pesos de la población con respecto a la media.
-
-4.  **Coeficiente de variación (0.2118346):** El coeficiente de variación es la proporción entre la desviación estándar y la media, expresado como un porcentaje. Mide la variabilidad relativa de la variable respecto a su media. En este caso, un coeficiente de variación del 21.18% indica que la variabilidad relativa del peso con respecto a la media es del 21.18%, lo cual proporciona una perspectiva de la dispersión relativa en comparación con la media.
 
 -   **Identificamos la distribución**
 
@@ -1721,4 +1796,6 @@ $$
 pnorm(70, mu_p,  sigma_p, lower.tail =  F)
 ```
 
-La probabilidad de que una madre pese más de 70 $kg$, según el resultado proporcionado (0.2921298), indica que hay una probabilidad relativamente baja de que una madre seleccionada al azar tenga un peso de más de 70 $kg$, según la distribución de la variable aleatoria continua ajustada a los datos. Este resultado sugiere que la mayoría de las madres encuestadas tienen un peso inferior a 70 $kg$ según la distribución de la muestra analizada.
+La probabilidad de que una madre pese más de 70 $kg$, según el resultado proporcionado (0.2921298), indica que hay una probabilidad relativamente baja de que una madre seleccionada al azar tenga un peso de más de 70 $kg$, según la distribución de la variable aleatoria continua ajustada a los datos.
+
+## 9. Conclusión 
