@@ -15,7 +15,11 @@ fontsize: 13pt
 
 ### Relevancia
 
-La anemia es un problema de salud pública de gran relevancia en nuestro país. La falta de hemoglobina en la sangre puede tener consecuencias graves, especialmente en niños y madres. Además, la anemia puede afectar el desarrollo físico y cognitivo de los niños y aumentar el riesgo de complicaciones en el embarazo para las madres; por lo tanto, comprender la prevalencia y severidad de la anemia en estos grupos es esencial para abordar adecuadamente este problema de salud en el país.
+-   La anemia es un problema de salud pública de gran relevancia en nuestro país.
+
+-   La falta de hemoglobina en la sangre puede tener consecuencias graves, especialmente en niños y madres.
+
+-   Comprender la prevalencia y severidad de la anemia en estos grupos es esencial para abordar adecuadamente este problema de salud en el país.
 
 ### Objetivos
 
@@ -27,13 +31,41 @@ La anemia es un problema de salud pública de gran relevancia en nuestro país. 
 
 ### Contexto
 
-En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar, un estudio que recopiló datos de una muestra representativa de viviendas en todo el territorio peruano. Este estudio se basó en tres cuestionarios diseñados específicamente: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.
+-   En el mes de mayo del año 2022, se llevó a cabo en nuestro país la Encuesta Demográfica y de Salud Familiar.
 
-En el contexto de esta encuesta, se solicitó a los residentes de los hogares su participación en una evaluación destinada a conocer sus niveles de hemoglobina en la sangre, a la que podían optar por unirse o no.
+-   Tres cuestionarios diseñados específicamente: uno dirigido a todos los miembros de cada hogar, otro enfocado en mujeres cuyas edades se encontraban en el rango de 12 a 49 años, y un tercero destinado a individuos de 15 años o más.
 
-La totalidad de la información recopilada en esta encuesta se encuentra disponible para consulta por parte de cualquier ciudadano en la base de datos del Instituto Nacional de Estadística e Informática (INEI). Los datos se presentan organizados en módulos temáticos, y nuestro enfoque recae en los análisis de los casos de anemia en infantes y mujeres.
+-   Se solicitó a los residentes de los hogares su participación en una evaluación destinada a conocer sus niveles de hemoglobina en la sangre, a la que podían optar por unirse o no.
 
-## 2. Recolección de datos
+## 2. Datos
+
+-   Los datos para este estudio se obtuvieron a partir de la Encuesta Demográfica y de Salud Familiar realizada en mayo de 2022 en el Perú.
+
+<!-- -->
+
+-   Información sobre las características de los hogares y sus integrantes.
+
+-   Información relevante y detallada para nuestros objetivos de investigación.
+
+### 2.1 Población objetivo, muestra y muestreo
+
+-   **Población:** Miembros de los hogares de la Encuesta Demográfica y de Salud Familiar.
+
+-   **Muestra:** Mujeres de 12 a 49 años de edad y niños o niñas menores de 5 años residentes de los hogares particulares recogidos por la encuesta.
+
+-   **Muestreo:** Probabilístico por conglomerados.
+
+### 2.2 Tablas
+
+-   **Tabla RECH0:** Características del hogar
+
+-   **Tabla RECH5:** Peso y talla (anemia).
+
+-   **Tabla REC0111:** Datos básicos del MEF.
+
+-   **Tabla REC44:** Peso y talla (anemia).
+
+-   **Tabla RECH23:** Características del hogar de los participantes.
 
 ## 3. Análisis Descriptivo Univariado
 
@@ -45,16 +77,26 @@ La totalidad de la información recopilada en esta encuesta se encuentra disponi
 
 ![](nivel_anemia_niños.PNG){fig-align="center" width="450"}
 
-## 4. Análisis Descriptivo Bivariado
+## 4. Análisis Descriptivo Bivariado o de Interacción
 
 ### 4.1 Gráficas relacionadas a los niños
 
 ::: r-stack
-![](edad_niños_anemia_moderada.PNG){.fragment fig-align="center" width="663"}
+![](edad_niños_anemia_moderada.PNG){.fragment fig-align="center" width="1017"}
 
-![](indice_riqueza_x_hemoglobina.png){.fragment fig-align="center" width="665"}
+![](tipo_residencia_x_frecuencia.png){.fragment fig-align="center" width="1017"}
 
-![](tipo_residencia_x_frecuencia.png){.fragment fig-align="center" width="661"}
+![](indice_riqueza_x_hemoglobina.png){.fragment fig-align="center" width="1017"}
+:::
+
+## 4. Análisis Descriptivo Bivariado o de Interacción
+
+### 4.1 Regiones vs. nivel de anemia
+
+::: r-stack
+![](anemia_niños_región.png){.fragment fig-align="center"}
+
+![](anemia_mujeres_región.png){.fragment fig-align="center"}
 :::
 
 ## 6. Probabilidad Empírica - Índice de Riqueza
@@ -192,3 +234,23 @@ $$
 `pnorm(12, mu_h,  sigma_h) = 0.2947574`
 
 ## 11. Cierre
+
+El estudio de esta base de datos fue una experiencia muy enriquecedora y nos permitió explorar aplicar conceptos de la estadística de una manera muy práctica e intuitiva.
+
+Con respecto al primer objetivo, podemos concluir lo siguiente:
+
+-   Los niños menores a 10 meses son más propensos a desarrollar cualquier tipo de anemia.
+
+-   Las mujeres menores de 20 años son más propensas a desarrollar anemia leve, mientras que las mayores de 30 suelen desarrollar anemia moderada o grave.
+
+Con respecto al segundo objetivo, podemos concluir lo siguiente:
+
+-   Lima, Loreto y Ucayali son las regiones con mayor incidencia de anemia en niños y mujeres.
+
+-   Ucayali es la región con mayor incidencia de anemia moderada, superando a Lima a pesar de tener menos población.
+
+Con respecto al tercer objetivo, podemos concluir lo siguiente:
+
+-   La dispersión del nivel de anemia con respecto al índice de riqueza no varía mucho.
+
+-   Los niños que viven en una residencia rural son más propensos a tener anemia moderada que los que viven en residencia urbana.

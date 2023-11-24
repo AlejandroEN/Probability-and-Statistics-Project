@@ -1109,7 +1109,7 @@ table(RECH5$is_embarazada)
 
 ```{r, echo=FALSE}
 
-A1 <-nrow(filter(RECH5, is_embarazada == "no embarazada"))/nrow(RECH5)
+A1 <-nrow(filter(RECH5, is_embarazada == "1"))/nrow(RECH5)
 A1
 ```
 
@@ -1117,7 +1117,7 @@ Probabilidad del evento **A2**:
 
 ```{r, echo=FALSE}
 
-A2 <-nrow(filter(RECH5, is_embarazada == "embarazada"))/nrow(RECH5)
+A2 <-nrow(filter(RECH5, is_embarazada == "0"))/nrow(RECH5)
 A2
 ```
 
@@ -1127,7 +1127,7 @@ Probabilidad que ocurra **A1** y **A2**.
 
 ```{r, echo=FALSE}
 
-'A1_&_A2' <- nrow(filter(RECH5, is_embarazada == "embarazada" & is_embarazada == "no embarazada"))
+'A1_&_A2' <- nrow(filter(RECH5, is_embarazada == "1" & is_embarazada == "0"))
 `A1_&_A2`
 ```
 
@@ -1149,7 +1149,7 @@ Probabilidad de que ocurra **B**:
 
 ```{r, echo=FALSE}
 
-B <- sum(RECH5$nivel_educativo == "2.secundaria")/nrow(RECH5)
+B <- sum(RECH5$nivel_educativo == "2")/nrow(RECH5)
 B
 ```
 
@@ -1159,8 +1159,8 @@ $$P(x \mid y)*P(y) = P(x \cap y)$$
 
 ```{r, echo=FALSE}
 
-prob_B_dado_A1_x_prob_A1 <- sum(RECH5$nivel_educativo == "2.secundaria" & RECH5$is_embarazada == 'embarazada') / nrow(RECH5)
-prob_B_dado_A2_x_prob_A2 <- sum(RECH5$nivel_educativo == "2.secundaria" & RECH5$is_embarazada == 'no embarazada') / nrow(RECH5)
+prob_B_dado_A1_x_prob_A1 <- sum(RECH5$nivel_educativo == "2" & RECH5$is_embarazada == '1') / nrow(RECH5)
+prob_B_dado_A2_x_prob_A2 <- sum(RECH5$nivel_educativo == "2" & RECH5$is_embarazada == '0') / nrow(RECH5)
 
 prob_total_B = prob_B_dado_A1_x_prob_A1 + prob_B_dado_A2_x_prob_A2
 
@@ -1191,7 +1191,7 @@ La probabilidad de que la mujer escogida resulte embarazada dado que su máximo 
 
 ```{r, echo=FALSE}
 
-prob_A2_dado_B <- prob_B_dado_A1_x_prob_A1/B
+prob_A2_dado_B <- prob_B_dado_A2_x_prob_A2/B
 prob_A2_dado_B
 ```
 
@@ -1780,6 +1780,7 @@ Observemos una gráfica de distribución normal en torno a los parámetros descr
 mu_p <- 62.72915
 sigma_p <- 13.28802
 
+
 hist(RECH5$peso,
      breaks = 50,
      freq = FALSE,
@@ -1834,8 +1835,6 @@ La probabilidad de que una madre pese más de 70 $kg$, según el resultado propo
 
 ## 9. Conclusiones
 
-El estudio de esta base de datos fue una experiencia muy enriquecedora y nos permitió explorar aplicar conceptos de la estadística de una manera muy práctica e intuitiva.
-
 Con respecto al primer objetivo, podemos concluir lo siguiente:
 
 -   Los niños menores a 10 meses son más propensos a desarrollar cualquier tipo de anemia.
@@ -1844,12 +1843,8 @@ Con respecto al primer objetivo, podemos concluir lo siguiente:
 
 Con respecto al segundo objetivo, podemos concluir lo siguiente:
 
--   Lima, Loreto y Ucayali son las regiones con mayor incidencia de anemia en niños y mujeres.
-
 -   Ucayali es la región con mayor incidencia de anemia moderada, superando a Lima a pesar de tener menos población.
 
 Con respecto al tercer objetivo, podemos concluir lo siguiente:
-
--   La dispersión del nivel de anemia con respecto al índice de riqueza no varía mucho.
 
 -   Los niños que viven en una residencia rural son más propensos a tener anemia moderada que los que viven en residencia urbana.

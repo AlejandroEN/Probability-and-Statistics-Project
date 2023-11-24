@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#hemoglobina-ajustada-en-función-de-la-latitud-gdl" id="toc-hemoglobina-ajustada-en-función-de-la-latitud-gdl" class="nav-link" data-scroll-target="#hemoglobina-ajustada-en-función-de-la-latitud-gdl">8.1 Hemoglobina ajustada en función de la latitud (<span class="math inline">\(g/dl\)</span>)</a></li>
   <li><a href="#peso-kg" id="toc-peso-kg" class="nav-link" data-scroll-target="#peso-kg">8.2 Peso (<span class="math inline">\(kg\)</span>)</a></li>
   </ul></li>
-  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">9. Conclusión</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">9. Conclusiones</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,13 +263,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">12.02</td>
-<td style="text-align: right;">11.9</td>
-<td style="text-align: right;">5.4</td>
-<td style="text-align: right;">18.6</td>
-<td style="text-align: right;">1.46</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">13</td>
+<td style="text-align: right;">11.25</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">12</td>
 </tr>
 </tbody>
 </table>
@@ -380,13 +380,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">13.46</td>
-<td style="text-align: right;">13.3</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">22.6</td>
-<td style="text-align: right;">1.68</td>
-<td style="text-align: right;">12.4</td>
-<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">12.69</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">13.5</td>
 </tr>
 </tbody>
 </table>
@@ -871,7 +871,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="G3_Informe_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Entre los índices de riqueza, vemos que en los más pobre existe una mayor dispersión de datos. Sin embargo, no hay mucha distinción en los casos bajos de hemoglobina por cada separación —que indica si se presenta anemia—.</p>
+<p>No hay mucha distinción en los casos bajos de hemoglobina por cada separación —que indica si se presenta anemia—.</p>
 </section>
 <section id="tipo-de-residencia-vs.-nivel-de-anemia-en-niños" class="level4">
 <h4 class="anchored" data-anchor-id="tipo-de-residencia-vs.-nivel-de-anemia-en-niños">4.4.2 Tipo de residencia vs.&nbsp;nivel de anemia en niños</h4>
@@ -1183,13 +1183,13 @@ P(x) = \dfrac{f(x)}{n}
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
+<pre><code>[1] 0.0266993</code></pre>
 </div>
 </div>
 <p>Probabilidad del evento <strong>A2</strong>:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
+<pre><code>[1] 0.9733007</code></pre>
 </div>
 </div>
 <p>Vamos a probar que ambos eventos son <strong>dependientes</strong>, comprobando que son mutuamente excluyentes.</p>
@@ -1210,17 +1210,17 @@ P(A1 \cap A2) = 0
 <p>Probabilidad de que ocurra <strong>B</strong>:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
+<pre><code>[1] 0.650077</code></pre>
 </div>
 </div>
 <p>Observación:</p>
 <p><span class="math display">\[P(x \mid y)*P(y) = P(x \cap y)\]</span></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Probabilidad total de B encontrada gracias al teorema de probabilidad total: 0 </code></pre>
+<pre><code>Probabilidad total de B encontrada gracias al teorema de probabilidad total: 0.650077 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Probabilidad empírica de B: 0 </code></pre>
+<pre><code>Probabilidad empírica de B: 0.650077 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Las probabilidades coinciden.</code></pre>
@@ -1233,7 +1233,7 @@ P(A \mid B) = \frac{P(B \mid A)*P(A)}{P(B)}
 \]</span></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] NaN</code></pre>
+<pre><code>[1] 0.02863548</code></pre>
 </div>
 </div>
 <p><span class="math display">\[
@@ -1242,7 +1242,7 @@ P(A1 \mid B) = 0.02863548
 <p>La probabilidad de que la mujer escogida resulte embarazada dado que su máximo nivel educativo alcanzado es la secundaria es 0.02863548.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] NaN</code></pre>
+<pre><code>[1] 0.9713645</code></pre>
 </div>
 </div>
 <p><span class="math display">\[
@@ -1968,8 +1968,21 @@ P(X &gt; 70)
 <p>La probabilidad de que una madre pese más de 70 <span class="math inline">\(kg\)</span>, según el resultado proporcionado (0.2921298), indica que hay una probabilidad relativamente baja de que una madre seleccionada al azar tenga un peso de más de 70 <span class="math inline">\(kg\)</span>, según la distribución de la variable aleatoria continua ajustada a los datos.</p>
 </section>
 </section>
-<section id="conclusión" class="level2">
-<h2 class="anchored" data-anchor-id="conclusión">9. Conclusión</h2>
+<section id="conclusiones" class="level2">
+<h2 class="anchored" data-anchor-id="conclusiones">9. Conclusiones</h2>
+<p>Con respecto al primer objetivo, podemos concluir lo siguiente:</p>
+<ul>
+<li><p>Los niños menores a 10 meses son más propensos a desarrollar cualquier tipo de anemia.</p></li>
+<li><p>Las mujeres menores de 20 años son más propensas a desarrollar anemia leve, mientras que las mayores de 30 suelen desarrollar anemia moderada o grave.</p></li>
+</ul>
+<p>Con respecto al segundo objetivo, podemos concluir lo siguiente:</p>
+<ul>
+<li>Ucayali es la región con mayor incidencia de anemia moderada, superando a Lima a pesar de tener menos población.</li>
+</ul>
+<p>Con respecto al tercer objetivo, podemos concluir lo siguiente:</p>
+<ul>
+<li>Los niños que viven en una residencia rural son más propensos a tener anemia moderada que los que viven en residencia urbana.</li>
+</ul>
 </section>
 </section>
 
